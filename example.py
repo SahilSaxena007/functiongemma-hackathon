@@ -49,10 +49,62 @@ cactus_destroy(model)
 
 ############## Print resonse and function call ############## 
 
-print("\n=== Full Response ===\n")
+print("\n=== Full On-Device Response ===\n")
 print(json.dumps(response, indent=2))
 
-print("\n=== Function Calls ===\n")
+print("\n=== Function Calls FunctionGemma ===\n")
 for call in response.get("function_calls", []):
     print(f"Function: {call['name']}")
     print(f"Arguments: {json.dumps(call['arguments'], indent=2)}")
+
+
+############## Gemini via GCP #################
+
+import os
+from google import genai
+from google.genai import types
+
+
+def generate():
+    client = genai.Client(
+        api_key=os.environ.get("GEMINI_API_KEY"),
+    )
+
+    get_weather_tool = types.Tool(
+        function_declarations=[
+            types.FunctionDeclaration(
+                name="get_weather",
+                description="Get current weather for a location",
+                parameters=types.Schema(
+                    type="OBJECT",
+                    properties={
+                        "location": types.Schema(
+                            type="STRING",
+                            description="City name",
+                        ),
+                    },
+                    required=["location"],
+                ),
+            ),
+        ],
+    )
+
+    gemini_response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents="What is the weather in San Francisco?",
+        config=types.GenerateContentConfig(
+            tools=[get_weather_tool],
+        ),
+    )
+
+    print("\n=== Gemini Response ===\n")
+    for candidate in gemini_response.candidates:
+        for part in candidate.content.parts:
+            if part.function_call:
+                print(f"Function: {part.function_call.name}")
+                print(f"Arguments: {json.dumps(dict(part.function_call.args), indent=2)}")
+            elif part.text:
+                print(part.text)
+
+
+generate()
