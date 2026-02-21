@@ -4,7 +4,7 @@ sys.path.insert(0, "cactus/python/src")
 functiongemma_path = "cactus/weights/functiongemma-270m-it"
 
 import json, os, time, re
-from cactus import cactus_init, cactus_complete, cactus_destroy
+from cactus import cactus_init, cactus_complete, cactus_destroy, cactus_reset
 from google import genai
 from google.genai import types
 
@@ -72,7 +72,7 @@ def generate_cloud(messages, tools):
     start_time = time.time()
 
     gemini_response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.5-flash",
         contents=contents,
         config=types.GenerateContentConfig(tools=gemini_tools),
     )
@@ -110,10 +110,14 @@ def _likely_multi_action(messages):
 
 def _estimated_min_calls(messages):
     text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user").lower()
-    count = 1
-    for sep in [", and ", " and ", ",", " then ", " after that ", " also "]:
-        count += text.count(sep)
-    return max(1, min(4, count))
+    # Count likely action verbs instead of delimiter counts to avoid overestimating.
+    verb_hits = re.findall(
+        r"\b(set|send|text|get|check|play|remind|find|look|wake|create|search)\b",
+        text,
+    )
+    if verb_hits:
+        return max(1, min(4, len(verb_hits)))
+    return 2 if _likely_multi_action(messages) else 1
 
 
 def _clean_arg(value, field_name):
@@ -186,7 +190,8 @@ def _is_complete_for_request(calls, messages):
         return False
     if not _likely_multi_action(messages):
         return True
-    return len(calls) >= _estimated_min_calls(messages)
+    needed = _estimated_min_calls(messages)
+    return len(calls) >= needed
 
 
 def _run_local_pass(model, messages, tools, extra_instruction=None, max_tokens=320):
@@ -254,6 +259,18 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
                 "total_time_ms": total_time_ms,
                 "source": "on-device",
                 "confidence": max(pass1["confidence"], pass2["confidence"]),
+            }
+
+        # Local baseline fallback: try vanilla local generation before using cloud.
+        local_baseline = generate_cactus(messages, tools)
+        total_time_ms += local_baseline.get("total_time_ms", 0)
+        baseline_calls = _dedupe_calls(_coerce_and_clean(local_baseline.get("function_calls", []), tools))
+        if _validate_calls(baseline_calls, tools) and _is_complete_for_request(baseline_calls, messages):
+            return {
+                "function_calls": baseline_calls,
+                "total_time_ms": total_time_ms,
+                "source": "on-device",
+                "confidence": local_baseline.get("confidence", 0),
             }
     except Exception:
         pass
