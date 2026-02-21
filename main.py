@@ -13,10 +13,21 @@ def generate_cactus(messages, tools):
     """Run function calling on-device via FunctionGemma + Cactus."""
     model = cactus_init(functiongemma_path)
 
-    cactus_tools = [{
+    cactus_tools = [{ # list of tools in the request
         "type": "function",
         "function": t,
     } for t in tools]
+
+    """"need an algo which breaks the message down into tasks and then strips and normalises the variables from those tasks"""
+    sub_tasks = cactus_complete(
+        model,
+        [{"role": "system", "content": "You goal is to split the message into distinct tasks which can be carried out by one tool."}] + messages,
+        tools=cactus_tools,
+        force_tools=True,
+        max_tokens=256,
+        stop_sequences=["<|im_end|>", "<end_of_turn>"],
+    )
+
 
     raw_str = cactus_complete(
         model,
