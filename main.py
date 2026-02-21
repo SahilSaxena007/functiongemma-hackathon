@@ -1,4 +1,3 @@
-
 import sys
 sys.path.insert(0, "cactus/python/src")
 functiongemma_path = "cactus/weights/functiongemma-270m-it"
@@ -9,41 +8,9 @@ from google import genai
 from google.genai import types
 
 
-def generate_cactus(messages, tools):
-    """Run function calling on-device via FunctionGemma + Cactus."""
-    model = cactus_init(functiongemma_path)
-
-    cactus_tools = [{
-        "type": "function",
-        "function": t,
-    } for t in tools]
-
-    raw_str = cactus_complete(
-        model,
-        [{"role": "system", "content": "You are a helpful assistant that can use tools."}] + messages,
-        tools=cactus_tools,
-        force_tools=True,
-        max_tokens=256,
-        stop_sequences=["<|im_end|>", "<end_of_turn>"],
-    )
-
-    cactus_destroy(model)
-
-    try:
-        raw = json.loads(raw_str)
-    except json.JSONDecodeError:
-        return {
-            "function_calls": [],
-            "total_time_ms": 0,
-            "confidence": 0,
-        }
-
-    return {
-        "function_calls": raw.get("function_calls", []),
-        "total_time_ms": raw.get("total_time_ms", 0),
-        "confidence": raw.get("confidence", 0),
-    }
-
+# ---------------------------------------------------------------------------
+#  Cloud (Gemini)
+# ---------------------------------------------------------------------------
 
 def generate_cloud(messages, tools):
     """Run function calling via Gemini Cloud API."""
@@ -68,7 +35,6 @@ def generate_cloud(messages, tools):
     ]
 
     contents = [m["content"] for m in messages if m["role"] == "user"]
-
     start_time = time.time()
 
     gemini_response = client.models.generate_content(
@@ -95,77 +61,100 @@ def generate_cloud(messages, tools):
 
 
 # ---------------------------------------------------------------------------
-#  Helpers for generate_hybrid
+#  Helpers
 # ---------------------------------------------------------------------------
 
-def _decompose_query(content):
-    """Split a multi-action query into individual single-action sub-queries."""
-    content = content.strip().rstrip('.')
-
-    # First try comma-separated clauses: "do X, do Y, and do Z"
-    parts = re.split(r',\s+and\s+|,\s+', content)
-
-    if len(parts) == 1:
-        # Try " and " / " then " / " after that " but only before action verbs
-        verbs = (r'(?:set|send|get|check|play|remind|find|look|text|search|'
-                 r'wake|start|stop|cancel|create|make|open|close|turn|call|'
-                 r'add|remove|delete|update|book|order|schedule|tell|ask|show)')
-        parts = re.split(
-            r'(?:\s+and\s+|\s+then\s+|\s+after\s+that\s+|\s+also\s+)(?=' + verbs + r')',
-            content,
-            flags=re.IGNORECASE,
-        )
-
-    return [p.strip() for p in parts if p.strip()]
+LOCAL_ROUTER_PROMPT = (
+    "You are a strict function-calling router. "
+    "Output only function calls, never natural language. "
+    "Extract all requested actions from the user request in order. "
+    "If the user asks multiple actions, return multiple calls. "
+    "Resolve pronouns (him/her/them) from earlier actions in the same request. "
+    "For string args, use concise spans, avoid trailing punctuation, and avoid unnecessary leading articles. "
+    "For alarm times, set integer hour/minute."
+)
 
 
-def _resolve_pronouns(text, name):
-    """Replace him/her/them with a known name from prior sub-query results."""
-    text = re.sub(r'\bhim\b', name, text, count=1, flags=re.IGNORECASE)
-    text = re.sub(r'\bher\b', name, text, count=1, flags=re.IGNORECASE)
-    text = re.sub(r'\bthem\b', name, text, count=1, flags=re.IGNORECASE)
-    return text
+def _likely_multi_action(messages):
+    text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user").lower()
+    return (
+        "," in text
+        or " and " in text
+        or " then " in text
+        or " after that " in text
+        or " also " in text
+    )
 
 
-def _extract_name(call):
-    """Extract a proper-noun name from a function call's arguments."""
-    args = call.get("arguments", {})
-    for key in ["query", "recipient", "name", "contact"]:
-        val = args.get(key)
-        if isinstance(val, str) and val and val[0].isupper():
-            return val
-    return None
+def _estimated_min_calls(messages):
+    """
+    Heuristic lower bound for number of calls requested by the user.
+    We intentionally keep this conservative to avoid false negatives.
+    """
+    text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user").lower()
+    separators = [", and ", " and ", ",", " then ", " after that ", " also "]
+    count = 1
+    for sep in separators:
+        count += text.count(sep)
+    return max(1, min(4, count))
 
 
-def _coerce_types(calls, tools):
-    """Convert argument values to match the tool schema types (e.g. str→int)."""
+def _clean_arg(value, field_name):
+    if not isinstance(value, str):
+        return value
+    value = re.sub(r"\s+", " ", value.strip())
+    value = value.strip("\"'")
+    value = re.sub(r"[.!?]+$", "", value).strip()
+    if field_name in {"title", "song"}:
+        value = re.sub(r"^(the|a|an)\s+", "", value, flags=re.IGNORECASE)
+    return value
+
+
+def _coerce_and_clean(calls, tools):
     tool_map = {t["name"]: t for t in tools}
     for call in calls:
-        td = tool_map.get(call["name"])
+        td = tool_map.get(call.get("name"))
         if not td:
             continue
         props = td["parameters"].get("properties", {})
-        for k, v in list(call.get("arguments", {}).items()):
+        args = call.get("arguments", {})
+        for k, v in list(args.items()):
             if k not in props:
                 continue
             expected_type = props[k].get("type")
             if expected_type == "integer" and not isinstance(v, int):
                 try:
                     call["arguments"][k] = int(float(str(v)))
-                except (ValueError, TypeError):
+                except (TypeError, ValueError):
                     pass
-            elif expected_type == "string" and not isinstance(v, str):
-                call["arguments"][k] = str(v)
+            elif expected_type == "string":
+                if not isinstance(v, str):
+                    v = str(v)
+                call["arguments"][k] = _clean_arg(v, k)
     return calls
 
 
+def _dedupe_calls(calls):
+    seen = set()
+    unique = []
+    for call in calls:
+        key = (
+            call.get("name"),
+            json.dumps(call.get("arguments", {}), sort_keys=True, ensure_ascii=True),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(call)
+    return unique
+
+
 def _validate_calls(calls, tools):
-    """Check every call references a real tool and has all required fields filled."""
     if not calls:
         return False
     tool_map = {t["name"]: t for t in tools}
     for call in calls:
-        td = tool_map.get(call["name"])
+        td = tool_map.get(call.get("name"))
         if not td:
             return False
         for field in td["parameters"].get("required", []):
@@ -175,100 +164,149 @@ def _validate_calls(calls, tools):
     return True
 
 
+def _is_complete_for_request(calls, messages):
+    """
+    Completeness check: for multi-action queries, require multiple calls.
+    For single-action queries, at least one call is enough.
+    """
+    if not calls:
+        return False
+    if not _likely_multi_action(messages):
+        return True
+    return len(calls) >= _estimated_min_calls(messages)
+
+
+def _run_local_pass(model, messages, tools, extra_instruction=None, max_tokens=320):
+    cactus_tools = [{"type": "function", "function": t} for t in tools]
+    local_messages = [{"role": "system", "content": LOCAL_ROUTER_PROMPT}] + messages
+    if extra_instruction:
+        local_messages.append({"role": "system", "content": extra_instruction})
+
+    raw_str = cactus_complete(
+        model,
+        local_messages,
+        tools=cactus_tools,
+        force_tools=True,
+        max_tokens=max_tokens,
+        stop_sequences=["<|im_end|>", "<end_of_turn>"],
+        tool_rag_top_k=0,
+        confidence_threshold=0.0,
+    )
+
+    try:
+        raw = json.loads(raw_str)
+    except json.JSONDecodeError:
+        return {"ok": False, "function_calls": [], "total_time_ms": 0, "confidence": 0}
+
+    return {
+        "ok": True,
+        "function_calls": raw.get("function_calls", []),
+        "total_time_ms": raw.get("total_time_ms", 0),
+        "confidence": raw.get("confidence", 0),
+    }
+
+
 # ---------------------------------------------------------------------------
 #  Main hybrid router
 # ---------------------------------------------------------------------------
 
 def generate_hybrid(messages, tools, confidence_threshold=0.99):
-    """
-    Query-decomposition hybrid routing strategy.
-
-    Core idea: decompose multi-action queries into single-action sub-queries,
-    run each through the local model individually (reusing the model handle),
-    and only fall back to cloud if local fails to produce valid calls.
-
-    Layers:
-      1. Decompose — split "do X, do Y, and do Z" into ["do X", "do Y", "do Z"]
-      2. Pronoun resolution — replace "send him" with "send Tom" using prior results
-      3. Local per sub-query — confidence_threshold=0.0, tool_rag_top_k=2, force_tools
-      4. Type coercion — "10" → 10 for integer params
-      5. Validation — all calls must reference real tools with required fields filled
-      6. Cloud fallback — only if local produces no/invalid output
-    """
-    content = messages[-1]["content"]
-    sub_queries = _decompose_query(content)
-
-    # Init model once, reuse across sub-queries
-    model = cactus_init(functiongemma_path)
-    cactus_tools = [{"type": "function", "function": t} for t in tools]
-
-    all_calls = []
-    total_time = 0
-    local_failed = False
-    last_name = None
-
+    """FunctionGemma-first routing with local self-repair and last-resort cloud fallback."""
+    # Treat threshold as advisory (avoid default 0.99 forcing unnecessary cloud/extra retries).
     try:
-        for i, sq in enumerate(sub_queries):
-            if i > 0:
-                cactus_reset(model)
+        configured_threshold = float(confidence_threshold)
+    except (TypeError, ValueError):
+        configured_threshold = 0.0
+    effective_threshold = max(0.0, min(0.6, configured_threshold))
 
-            # Resolve pronouns ("send him" → "send Tom")
-            if last_name and re.search(r'\b(him|her|them)\b', sq, re.IGNORECASE):
-                sq = _resolve_pronouns(sq, last_name)
+    total_time_ms = 0
+    model = None
+    try:
+        model = cactus_init(functiongemma_path)
 
-            raw_str = cactus_complete(
-                model,
-                [{"role": "user", "content": sq}],
-                tools=cactus_tools,
-                force_tools=True,
-                max_tokens=256,
-                stop_sequences=["<|im_end|>", "<end_of_turn>"],
-                tool_rag_top_k=2,
-                confidence_threshold=0.0,
-            )
-
-            try:
-                raw = json.loads(raw_str)
-            except json.JSONDecodeError:
-                print(f"  [DEBUG] JSON decode error for sub-query: {sq}", flush=True)
-                local_failed = True
-                break
-
-            # DEBUG: print raw local output for first 5 benchmark calls
-            print(f"  [DEBUG] sq={sq!r} | handoff={raw.get('cloud_handoff')} | conf={raw.get('confidence'):.3f} | calls={raw.get('function_calls')} | decode_tps={raw.get('decode_tps')}", flush=True)
-
-            total_time += raw.get("total_time_ms", 0)
-            calls = raw.get("function_calls", [])
-
-            if calls:
-                call = calls[0]  # one call per sub-query
-                all_calls.append(call)
-                # Track name for pronoun resolution in subsequent sub-queries
-                name = _extract_name(call)
-                if name:
-                    last_name = name
-            else:
-                print(f"  [DEBUG] No function_calls returned, falling to cloud", flush=True)
-                local_failed = True
-                break
-    finally:
-        cactus_destroy(model)
-
-    # Post-process and validate local results
-    if not local_failed:
-        all_calls = _coerce_types(all_calls, tools)
-        if _validate_calls(all_calls, tools):
+        # Pass 1: direct local extraction
+        pass1 = _run_local_pass(model, messages, tools)
+        total_time_ms += pass1["total_time_ms"]
+        calls = _dedupe_calls(_coerce_and_clean(pass1["function_calls"], tools))
+        valid = _validate_calls(calls, tools)
+        complete = _is_complete_for_request(calls, messages)
+        confident = (effective_threshold <= 0 or pass1["confidence"] >= effective_threshold)
+        if valid and complete and confident:
             return {
-                "function_calls": all_calls,
-                "total_time_ms": total_time,
+                "function_calls": calls,
+                "total_time_ms": total_time_ms,
                 "source": "on-device",
             }
 
-    # Cloud fallback
-    cloud = generate_cloud(messages, tools)
-    cloud["source"] = "cloud (fallback)"
-    cloud["total_time_ms"] += total_time
-    return cloud
+        # Pass 2 (single retry): local self-repair for missing/invalid output.
+        cactus_reset(model)
+        repair_instruction = (
+            "Re-read the user request and output the complete, ordered list of tool calls. "
+            "Include every requested action. "
+            "Return only function calls and ensure all required args are present."
+        )
+        pass2 = _run_local_pass(model, messages, tools, extra_instruction=repair_instruction, max_tokens=384)
+        total_time_ms += pass2["total_time_ms"]
+        merged = _dedupe_calls(_coerce_and_clean(calls + pass2["function_calls"], tools))
+        valid = _validate_calls(merged, tools)
+        complete = _is_complete_for_request(merged, messages)
+        confident = (effective_threshold <= 0 or pass2["confidence"] >= effective_threshold or pass1["confidence"] >= effective_threshold)
+        if valid and complete and confident:
+            return {
+                "function_calls": merged,
+                "total_time_ms": total_time_ms,
+                "source": "on-device",
+            }
+    except Exception:
+        # Fall through to cloud fallback.
+        pass
+    finally:
+        if model is not None:
+            try:
+                cactus_destroy(model)
+            except Exception:
+                pass
+
+    try:
+        cloud = generate_cloud(messages, tools)
+        cloud["function_calls"] = _dedupe_calls(_coerce_and_clean(cloud.get("function_calls", []), tools))
+        cloud["source"] = "cloud (fallback)"
+        cloud["total_time_ms"] += total_time_ms
+        return cloud
+    except Exception:
+        return {
+            "function_calls": [],
+            "total_time_ms": total_time_ms,
+            "source": "fallback-error",
+        }
+
+
+# ---------------------------------------------------------------------------
+#  Convenience helper (unchanged interface)
+# ---------------------------------------------------------------------------
+
+def generate_cactus(messages, tools):
+    """Run function calling on-device via FunctionGemma + Cactus."""
+    model = cactus_init(functiongemma_path)
+    cactus_tools = [{"type": "function", "function": t} for t in tools]
+    raw_str = cactus_complete(
+        model,
+        [{"role": "system", "content": "You are a helpful assistant that can use tools."}] + messages,
+        tools=cactus_tools,
+        force_tools=True,
+        max_tokens=256,
+        stop_sequences=["<|im_end|>", "<end_of_turn>"],
+    )
+    cactus_destroy(model)
+    try:
+        raw = json.loads(raw_str)
+    except json.JSONDecodeError:
+        return {"function_calls": [], "total_time_ms": 0, "confidence": 0}
+    return {
+        "function_calls": raw.get("function_calls", []),
+        "total_time_ms": raw.get("total_time_ms", 0),
+        "confidence": raw.get("confidence", 0),
+    }
 
 
 def print_result(label, result):
@@ -285,8 +323,6 @@ def print_result(label, result):
         print(f"Function: {call['name']}")
         print(f"Arguments: {json.dumps(call['arguments'], indent=2)}")
 
-
-############## Example usage ##############
 
 if __name__ == "__main__":
     tools = [{
@@ -308,11 +344,5 @@ if __name__ == "__main__":
         {"role": "user", "content": "What is the weather in San Francisco?"}
     ]
 
-    on_device = generate_cactus(messages, tools)
-    print_result("FunctionGemma (On-Device Cactus)", on_device)
-
-    cloud = generate_cloud(messages, tools)
-    print_result("Gemini (Cloud)", cloud)
-
     hybrid = generate_hybrid(messages, tools)
-    print_result("Hybrid (On-Device + Cloud Fallback)", hybrid)
+    print_result("Hybrid", hybrid)
