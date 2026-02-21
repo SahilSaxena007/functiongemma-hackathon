@@ -1,0 +1,86 @@
+[1/30] Running: weather_sf (easy)... F1=1.00 | 744ms | cloud (fallback)
+[2/30] Running: alarm_10am (easy)... F1=1.00 | 769ms | cloud (fallback)
+[3/30] Running: message_alice (easy)... F1=1.00 | 1016ms | cloud (fallback)
+[4/30] Running: weather_london (easy)... F1=1.00 | 785ms | cloud (fallback)
+[5/30] Running: alarm_6am (easy)... F1=1.00 | 1066ms | cloud (fallback)
+[6/30] Running: play_bohemian (easy)... F1=1.00 | 919ms | cloud (fallback)
+[7/30] Running: timer_5min (easy)... F1=1.00 | 889ms | cloud (fallback)
+[8/30] Running: reminder_meeting (easy)... Expected: [{'name': 'create_reminder', 'arguments': {'title': 'meeting', 'time': '3:00 PM'}}], Got: [{'name': 'create_reminder', 'arguments': {'title': 'the meeting', 'time': '3:00 PM'}}], F1=0.00
+F1=0.00 | 1279ms | cloud (fallback)
+[9/30] Running: search_bob (easy)... F1=1.00 | 1127ms | cloud (fallback)
+[10/30] Running: weather_paris (easy)... F1=1.00 | 874ms | cloud (fallback)
+[11/30] Running: message_among_three (medium)... F1=1.00 | 1001ms | cloud (fallback)
+[12/30] Running: weather_among_two (medium)... F1=1.00 | 787ms | cloud (fallback)
+[13/30] Running: alarm_among_three (medium)... F1=1.00 | 1073ms | cloud (fallback)
+[14/30] Running: music_among_three (medium)... Expected: [{'name': 'play_music', 'arguments': {'song': 'jazz'}}], Got: [{'name': 'play_music', 'arguments': {'song': 'Jazz'}}], F1=1.00
+F1=1.00 | 786ms | cloud (fallback)
+[15/30] Running: reminder_among_four (medium)... Expected: [{'name': 'create_reminder', 'arguments': {'title': 'call the dentist', 'time': '2:00 PM'}}], Got: [{'name': 'create_reminder', 'arguments': {'time': '2:00 PM', 'title': 'Call the dentist'}}], F1=1.00
+F1=1.00 | 619ms | cloud (fallback)
+[16/30] Running: timer_among_three (medium)... F1=1.00 | 785ms | cloud (fallback)
+[17/30] Running: search_among_four (medium)... F1=1.00 | 1196ms | cloud (fallback)
+[18/30] Running: weather_among_four (medium)... F1=1.00 | 1097ms | cloud (fallback)
+[19/30] Running: message_among_four (medium)... Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Dave', 'message': "I'll be late"}}], Got: [{'name': 'send_message', 'arguments': {'message': "I'll be late.", 'recipient': 'Dave'}}], F1=0.00
+F1=0.00 | 983ms | cloud (fallback)
+[20/30] Running: alarm_among_five (medium)... F1=1.00 | 1238ms | cloud (fallback)
+[21/30] Running: message_and_weather (hard)... F1=1.00 | 1331ms | cloud (fallback)
+[22/30] Running: alarm_and_weather (hard)... Expected: [{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}, {'name': 'get_weather', 'arguments': {'location': 'New York'}}], Got: [{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}], F1=0.67
+F1=0.67 | 2128ms | cloud (fallback)
+[23/30] Running: timer_and_music (hard)... F1=1.00 | 1272ms | cloud (fallback)
+[24/30] Running: reminder_and_message (hard)... F1=1.00 | 1115ms | cloud (fallback)
+[25/30] Running: search_and_message (hard)... Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}, {'name': 'send_message', 'arguments': {'recipient': 'Tom', 'message': 'happy birthday'}}], Got: [{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}], F1=0.67
+F1=0.67 | 1469ms | cloud (fallback)
+[26/30] Running: alarm_and_reminder (hard)... Expected: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'title': 'take medicine', 'time': '7:00 AM'}}], Got: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'title': 'Take medicine', 'time': '7:00 AM'}}], F1=1.00
+F1=1.00 | 1565ms | cloud (fallback)
+[27/30] Running: weather_and_music (hard)... Expected: [{'name': 'get_weather', 'arguments': {'location': 'Miami'}}, {'name': 'play_music', 'arguments': {'song': 'summer hits'}}], Got: [{'name': 'get_weather', 'arguments': {'location': 'Miami'}}], F1=0.67
+F1=0.67 | 1022ms | cloud (fallback)
+[28/30] Running: message_weather_alarm (hard)... Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Emma', 'message': 'good night'}}, {'name': 'get_weather', 'arguments': {'location': 'Chicago'}}, {'name': 'set_alarm', 'arguments': {'hour': 5, 'minute': 0}}], Got: [{'name': 'send_message', 'arguments': {'recipient': 'Emma', 'message': 'Good night!'}}, {'name': 'get_weather', 'arguments': {'location': 'Chicago'}}, {'name': 'set_alarm', 'arguments': {'minute': 0, 'hour': 5}}], F1=0.67
+F1=0.67 | 1364ms | cloud (fallback)
+[29/30] Running: timer_music_reminder (hard)... F1=1.00 | 1662ms | cloud (fallback)
+[30/30] Running: search_message_weather (hard)... Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}, {'name': 'send_message', 'arguments': {'recipient': 'Jake', 'message': "let's meet"}}, {'name': 'get_weather', 'arguments': {'location': 'Seattle'}}], Got: [{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}], F1=0.50
+F1=0.50 | 1211ms | cloud (fallback)
+
+=== Benchmark Results ===
+
+   # | Difficulty | Name                         |  Time (ms) |    F1 | Source
+  ---+------------+------------------------------+------------+-------+---------------------
+   1 | easy       | weather_sf                   |     743.91 |  1.00 | cloud (fallback)
+   2 | easy       | alarm_10am                   |     769.01 |  1.00 | cloud (fallback)
+   3 | easy       | message_alice                |    1016.09 |  1.00 | cloud (fallback)
+   4 | easy       | weather_london               |     784.90 |  1.00 | cloud (fallback)
+   5 | easy       | alarm_6am                    |    1065.71 |  1.00 | cloud (fallback)
+   6 | easy       | play_bohemian                |     919.49 |  1.00 | cloud (fallback)
+   7 | easy       | timer_5min                   |     889.24 |  1.00 | cloud (fallback)
+   8 | easy       | reminder_meeting             |    1279.17 |  0.00 | cloud (fallback)
+   9 | easy       | search_bob                   |    1127.49 |  1.00 | cloud (fallback)
+  10 | easy       | weather_paris                |     874.17 |  1.00 | cloud (fallback)
+  11 | medium     | message_among_three          |    1000.58 |  1.00 | cloud (fallback)
+  12 | medium     | weather_among_two            |     786.81 |  1.00 | cloud (fallback)
+  13 | medium     | alarm_among_three            |    1072.72 |  1.00 | cloud (fallback)
+  14 | medium     | music_among_three            |     785.81 |  1.00 | cloud (fallback)
+  15 | medium     | reminder_among_four          |     618.67 |  1.00 | cloud (fallback)
+  16 | medium     | timer_among_three            |     785.38 |  1.00 | cloud (fallback)
+  17 | medium     | search_among_four            |    1195.51 |  1.00 | cloud (fallback)
+  18 | medium     | weather_among_four           |    1097.42 |  1.00 | cloud (fallback)
+  19 | medium     | message_among_four           |     982.64 |  0.00 | cloud (fallback)
+  20 | medium     | alarm_among_five             |    1237.63 |  1.00 | cloud (fallback)
+  21 | hard       | message_and_weather          |    1330.96 |  1.00 | cloud (fallback)
+  22 | hard       | alarm_and_weather            |    2127.62 |  0.67 | cloud (fallback)
+  23 | hard       | timer_and_music              |    1271.95 |  1.00 | cloud (fallback)
+  24 | hard       | reminder_and_message         |    1114.56 |  1.00 | cloud (fallback)
+  25 | hard       | search_and_message           |    1469.04 |  0.67 | cloud (fallback)
+  26 | hard       | alarm_and_reminder           |    1564.79 |  1.00 | cloud (fallback)
+  27 | hard       | weather_and_music            |    1022.47 |  0.67 | cloud (fallback)
+  28 | hard       | message_weather_alarm        |    1363.63 |  0.67 | cloud (fallback)
+  29 | hard       | timer_music_reminder         |    1661.59 |  1.00 | cloud (fallback)
+  30 | hard       | search_message_weather       |    1211.03 |  0.50 | cloud (fallback)
+
+--- Summary ---
+  easy     avg F1=0.90  avg time=946.92ms  on-device=0/10 cloud=10/10
+  medium   avg F1=0.90  avg time=956.32ms  on-device=0/10 cloud=10/10
+  hard     avg F1=0.82  avg time=1413.76ms  on-device=0/10 cloud=10/10
+  overall  avg F1=0.87  avg time=1105.67ms  total time=33170.00ms
+           on-device=0/30 (0%)  cloud=30/30 (100%)
+
+==================================================
+  TOTAL SCORE: 42.9%
+==================================================
