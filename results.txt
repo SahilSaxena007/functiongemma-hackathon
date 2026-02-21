@@ -1,136 +1,671 @@
-[1/30] Running: weather_sf (easy)...   [DEBUG] sq='What is the weather in San Francisco?' | handoff=False | conf=0.638 | calls=[] | decode_tps=99.98
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 935ms | cloud (fallback)
-[2/30] Running: alarm_10am (easy)...   [DEBUG] sq='Set an alarm for 10 AM' | handoff=False | conf=0.841 | calls=[] | decode_tps=96.38
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1652ms | cloud (fallback)
-[3/30] Running: message_alice (easy)...   [DEBUG] sq='Send a message to Alice saying good morning' | handoff=False | conf=0.630 | calls=[] | decode_tps=90.75
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 978ms | cloud (fallback)
-[4/30] Running: weather_london (easy)...   [DEBUG] sq="What's the weather like in London?" | handoff=False | conf=0.841 | calls=[] | decode_tps=98.73
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1577ms | cloud (fallback)
-[5/30] Running: alarm_6am (easy)...   [DEBUG] sq='Wake me up at 6 AM' | handoff=False | conf=0.827 | calls=[] | decode_tps=92.25
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1057ms | cloud (fallback)
-[6/30] Running: play_bohemian (easy)...   [DEBUG] sq='Play Bohemian Rhapsody' | handoff=False | conf=0.827 | calls=[] | decode_tps=98.61
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1580ms | cloud (fallback)
-[7/30] Running: timer_5min (easy)...   [DEBUG] sq='Set a timer for 5 minutes' | handoff=False | conf=0.767 | calls=[] | decode_tps=90.67
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 966ms | cloud (fallback)
-[8/30] Running: reminder_meeting (easy)...   [DEBUG] sq='Remind me about the meeting at 3:00 PM' | handoff=False | conf=0.863 | calls=[] | decode_tps=90.32
-  [DEBUG] No function_calls returned, falling to cloud
-F1=0.00 | 3199ms | cloud (fallback)
-[9/30] Running: search_bob (easy)...   [DEBUG] sq='Find Bob in my contacts' | handoff=False | conf=0.821 | calls=[] | decode_tps=91.79
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 752ms | cloud (fallback)
-[10/30] Running: weather_paris (easy)...   [DEBUG] sq="How's the weather in Paris?" | handoff=False | conf=0.962 | calls=[] | decode_tps=96.85
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 2732ms | cloud (fallback)
-[11/30] Running: message_among_three (medium)...   [DEBUG] sq='Send a message to John saying hello' | handoff=False | conf=0.605 | calls=[] | decode_tps=76.7
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1179ms | cloud (fallback)
-[12/30] Running: weather_among_two (medium)...   [DEBUG] sq="What's the weather in Tokyo?" | handoff=False | conf=0.696 | calls=[] | decode_tps=85.58
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 911ms | cloud (fallback)
-[13/30] Running: alarm_among_three (medium)...   [DEBUG] sq='Set an alarm for 8:15 AM' | handoff=False | conf=0.552 | calls=[] | decode_tps=71.93
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1066ms | cloud (fallback)
-[14/30] Running: music_among_three (medium)...   [DEBUG] sq='Play some jazz music' | handoff=False | conf=0.859 | calls=[] | decode_tps=88.94
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1680ms | cloud (fallback)
-[15/30] Running: reminder_among_four (medium)...   [DEBUG] sq='Remind me to call the dentist at 2:00 PM' | handoff=False | conf=0.808 | calls=[] | decode_tps=88.96
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 3353ms | cloud (fallback)
-[16/30] Running: timer_among_three (medium)...   [DEBUG] sq='Set a timer for 10 minutes' | handoff=False | conf=0.759 | calls=[] | decode_tps=86.25
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1123ms | cloud (fallback)
-[17/30] Running: search_among_four (medium)...   [DEBUG] sq='Look up Sarah in my contacts' | handoff=False | conf=0.532 | calls=[] | decode_tps=76.42
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1503ms | cloud (fallback)
-[18/30] Running: weather_among_four (medium)...   [DEBUG] sq="What's the weather in Berlin?" | handoff=False | conf=0.489 | calls=[] | decode_tps=82.18
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1199ms | cloud (fallback)
-[19/30] Running: message_among_four (medium)...   [DEBUG] sq="Text Dave saying I'll be late" | handoff=False | conf=0.874 | calls=[] | decode_tps=86.48
-  [DEBUG] No function_calls returned, falling to cloud
+[1/30] Running: weather_sf (easy)... [DBG] 
+======================================================================
+[DBG] USER: What is the weather in San Francisco?
+[DBG] TOOLS: ['get_weather']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   intent scores: {'get_weather': 10}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.560  99ms
+[DBG]   step2: valid=0/0  conf=0.560
+[DBG]   step2 rejected → step3: best keyword match = get_weather
+[DBG]   cactus → calls=[]  conf=0.613  90ms
+[DBG]   step3: valid=0/0  conf=0.613
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'San Francisco'}}]  707ms
+[DBG]   cloud result: [{'name': 'get_weather', 'arguments': {'location': 'San Francisco'}}]
+F1=1.00 | 807ms | cloud (fallback)
+[2/30] Running: alarm_10am (easy)... [DBG] 
+======================================================================
+[DBG] USER: Set an alarm for 10 AM.
+[DBG] TOOLS: ['set_alarm']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {'set_alarm': 11}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.496  111ms
+[DBG]   step2: valid=0/0  conf=0.496
+[DBG]   step2 rejected → step3: best keyword match = set_alarm
+[DBG]   cactus → calls=[]  conf=0.483  110ms
+[DBG]   step3: valid=0/0  conf=0.483
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'set_alarm', 'arguments': {'hour': 10, 'minute': 0}}]  1498ms
+[DBG]   cloud result: [{'name': 'set_alarm', 'arguments': {'hour': 10, 'minute': 0}}]
+F1=1.00 | 1609ms | cloud (fallback)
+[3/30] Running: message_alice (easy)... [DBG] 
+======================================================================
+[DBG] USER: Send a message to Alice saying good morning.
+[DBG] TOOLS: ['send_message']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   intent scores: {'send_message': 17}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.556  92ms
+[DBG]   step2: valid=0/0  conf=0.556
+[DBG]   step2 rejected → step3: best keyword match = send_message
+[DBG]   cactus → calls=[]  conf=0.682  107ms
+[DBG]   step3: valid=0/0  conf=0.682
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'send_message', 'arguments': {'message': 'good morning', 'recipient': 'Alice'}}]  1670ms
+[DBG]   cloud result: [{'name': 'send_message', 'arguments': {'message': 'good morning', 'recipient': 'Alice'}}]
+F1=1.00 | 1761ms | cloud (fallback)
+[4/30] Running: weather_london (easy)... [DBG] 
+======================================================================
+[DBG] USER: What's the weather like in London?
+[DBG] TOOLS: ['get_weather']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   intent scores: {'get_weather': 10}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.340  86ms
+[DBG]   step2: valid=0/0  conf=0.340
+[DBG]   step2 rejected → step3: best keyword match = get_weather
+[DBG]   cactus → calls=[]  conf=0.275  92ms
+[DBG]   step3: valid=0/0  conf=0.275
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'London'}}]  1087ms
+[DBG]   cloud result: [{'name': 'get_weather', 'arguments': {'location': 'London'}}]
+F1=1.00 | 1173ms | cloud (fallback)
+[5/30] Running: alarm_6am (easy)... [DBG] 
+======================================================================
+[DBG] USER: Wake me up at 6 AM.
+[DBG] TOOLS: ['set_alarm']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.906  103ms
+[DBG]   step2: valid=0/0  conf=0.906
+[DBG]   step2 rejected → step3: best keyword match = None
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'set_alarm', 'arguments': {'minute': 0, 'hour': 6}}]  1005ms
+[DBG]   cloud result: [{'name': 'set_alarm', 'arguments': {'minute': 0, 'hour': 6}}]
+F1=1.00 | 1108ms | cloud (fallback)
+[6/30] Running: play_bohemian (easy)... [DBG] 
+======================================================================
+[DBG] USER: Play Bohemian Rhapsody.
+[DBG] TOOLS: ['play_music']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   intent scores: {'play_music': 7}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.648  90ms
+[DBG]   step2: valid=0/0  conf=0.648
+[DBG]   step2 rejected → step3: best keyword match = play_music
+[DBG]   cactus → calls=[]  conf=0.488  92ms
+[DBG]   step3: valid=0/0  conf=0.488
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'play_music', 'arguments': {'song': 'Bohemian Rhapsody'}}]  598ms
+[DBG]   cloud result: [{'name': 'play_music', 'arguments': {'song': 'Bohemian Rhapsody'}}]
+F1=1.00 | 688ms | cloud (fallback)
+[7/30] Running: timer_5min (easy)... [DBG] 
+======================================================================
+[DBG] USER: Set a timer for 5 minutes.
+[DBG] TOOLS: ['set_timer']
+[DBG]   kw[set_timer] = ['countdown', 'minutes', 'set', 'set timer', 'timer']
+[DBG]   intent scores: {'set_timer': 18}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.559  101ms
+[DBG]   step2: valid=0/0  conf=0.559
+[DBG]   step2 rejected → step3: best keyword match = set_timer
+[DBG]   cactus → calls=[]  conf=0.638  102ms
+[DBG]   step3: valid=0/0  conf=0.638
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'set_timer', 'arguments': {'minutes': 5}}]  1189ms
+[DBG]   cloud result: [{'name': 'set_timer', 'arguments': {'minutes': 5}}]
+F1=1.00 | 1290ms | cloud (fallback)
+[8/30] Running: reminder_meeting (easy)... [DBG] 
+======================================================================
+[DBG] USER: Remind me about the meeting at 3:00 PM.
+[DBG] TOOLS: ['create_reminder']
+[DBG]   kw[create_reminder] = ['create', 'create reminder', 'reminder', 'time', 'title']
+[DBG]   intent scores: {}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.402  98ms
+[DBG]   step2: valid=0/0  conf=0.402
+[DBG]   step2 rejected → step3: best keyword match = None
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'create_reminder', 'arguments': {'title': 'the meeting', 'time': '3:00 PM'}}]  1240ms
+[DBG]   cloud result: [{'name': 'create_reminder', 'arguments': {'title': 'the meeting', 'time': '3:00 PM'}}]
 F1=0.00 | 1338ms | cloud (fallback)
-[20/30] Running: alarm_among_five (medium)...   [DEBUG] sq='Set an alarm for 9 AM' | handoff=False | conf=0.754 | calls=[] | decode_tps=84.55
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1343ms | cloud (fallback)
-[21/30] Running: message_and_weather (hard)...   [DEBUG] sq='Send a message to Bob saying hi' | handoff=False | conf=0.862 | calls=[] | decode_tps=89.44
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 2302ms | cloud (fallback)
-[22/30] Running: alarm_and_weather (hard)...   [DEBUG] sq='Set an alarm for 7:30 AM' | handoff=False | conf=0.627 | calls=[] | decode_tps=76.12
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1120ms | cloud (fallback)
-[23/30] Running: timer_and_music (hard)...   [DEBUG] sq='Set a timer for 20 minutes' | handoff=False | conf=0.677 | calls=[] | decode_tps=80.22
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1243ms | cloud (fallback)
-[24/30] Running: reminder_and_message (hard)...   [DEBUG] sq='Remind me about groceries at 5:00 PM' | handoff=False | conf=0.777 | calls=[] | decode_tps=76.73
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1252ms | cloud (fallback)
-[25/30] Running: search_and_message (hard)...   [DEBUG] sq='Find Tom in my contacts' | handoff=False | conf=0.759 | calls=[] | decode_tps=70.03
-  [DEBUG] No function_calls returned, falling to cloud
-F1=0.67 | 1436ms | cloud (fallback)
-[26/30] Running: alarm_and_reminder (hard)...   [DEBUG] sq='Set an alarm for 6:45 AM' | handoff=False | conf=0.737 | calls=[] | decode_tps=86.48
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 2214ms | cloud (fallback)
-[27/30] Running: weather_and_music (hard)...   [DEBUG] sq='Check the weather in Miami' | handoff=False | conf=0.944 | calls=[] | decode_tps=89.95
-  [DEBUG] No function_calls returned, falling to cloud
-F1=0.67 | 3351ms | cloud (fallback)
-[28/30] Running: message_weather_alarm (hard)...   [DEBUG] sq='Text Emma saying good night' | handoff=False | conf=0.966 | calls=[] | decode_tps=0.0
-  [DEBUG] No function_calls returned, falling to cloud
-F1=0.50 | 1069ms | cloud (fallback)
-[29/30] Running: timer_music_reminder (hard)...   [DEBUG] sq='Set a 15 minute timer' | handoff=False | conf=0.887 | calls=[] | decode_tps=0.0
-  [DEBUG] No function_calls returned, falling to cloud
-F1=0.50 | 1182ms | cloud (fallback)
-[30/30] Running: search_message_weather (hard)...   [DEBUG] sq='Look up Jake in my contacts' | handoff=False | conf=0.684 | calls=[] | decode_tps=86.3
-  [DEBUG] No function_calls returned, falling to cloud
-F1=1.00 | 1566ms | cloud (fallback)
+[9/30] Running: search_bob (easy)... [DBG] 
+======================================================================
+[DBG] USER: Find Bob in my contacts.
+[DBG] TOOLS: ['search_contacts']
+[DBG]   kw[search_contacts] = ['contact', 'contacts', 'name', 'query', 'search', 'search contacts']
+[DBG]   intent scores: {'search_contacts': 18}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.574  84ms
+[DBG]   step2: valid=0/0  conf=0.574
+[DBG]   step2 rejected → step3: best keyword match = search_contacts
+[DBG]   cactus → calls=[]  conf=0.614  87ms
+[DBG]   step3: valid=0/0  conf=0.614
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'search_contacts', 'arguments': {'query': 'Bob'}}]  652ms
+[DBG]   cloud result: [{'name': 'search_contacts', 'arguments': {'query': 'Bob'}}]
+F1=1.00 | 736ms | cloud (fallback)
+[10/30] Running: weather_paris (easy)... [DBG] 
+======================================================================
+[DBG] USER: How's the weather in Paris?
+[DBG] TOOLS: ['get_weather']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   intent scores: {'get_weather': 10}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.642  92ms
+[DBG]   step2: valid=0/0  conf=0.642
+[DBG]   step2 rejected → step3: best keyword match = get_weather
+[DBG]   cactus → calls=[]  conf=0.547  92ms
+[DBG]   step3: valid=0/0  conf=0.547
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'Paris'}}]  1456ms
+[DBG]   cloud result: [{'name': 'get_weather', 'arguments': {'location': 'Paris'}}]
+F1=1.00 | 1548ms | cloud (fallback)
+[11/30] Running: message_among_three (medium)... [DBG] 
+======================================================================
+[DBG] USER: Send a message to John saying hello.
+[DBG] TOOLS: ['get_weather', 'send_message', 'set_alarm']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {'send_message': 17}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.535  169ms
+[DBG]   step2: valid=0/0  conf=0.535
+[DBG]   step2 rejected → step3: best keyword match = send_message
+[DBG]   cactus → calls=[]  conf=0.551  115ms
+[DBG]   step3: valid=0/0  conf=0.551
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'send_message', 'arguments': {'recipient': 'John', 'message': 'hello'}}]  756ms
+[DBG]   cloud result: [{'name': 'send_message', 'arguments': {'recipient': 'John', 'message': 'hello'}}]
+F1=1.00 | 926ms | cloud (fallback)
+[12/30] Running: weather_among_two (medium)... [DBG] 
+======================================================================
+[DBG] USER: What's the weather in Tokyo?
+[DBG] TOOLS: ['get_weather', 'send_message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   intent scores: {'get_weather': 10}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.289  132ms
+[DBG]   step2: valid=0/0  conf=0.289
+[DBG]   step2 rejected → step3: best keyword match = get_weather
+[DBG]   cactus → calls=[]  conf=0.349  115ms
+[DBG]   step3: valid=0/0  conf=0.349
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'Tokyo'}}]  853ms
+[DBG]   cloud result: [{'name': 'get_weather', 'arguments': {'location': 'Tokyo'}}]
+F1=1.00 | 985ms | cloud (fallback)
+[13/30] Running: alarm_among_three (medium)... [DBG] 
+======================================================================
+[DBG] USER: Set an alarm for 8:15 AM.
+[DBG] TOOLS: ['send_message', 'set_alarm', 'get_weather']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   intent scores: {'set_alarm': 11}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.422  216ms
+[DBG]   step2: valid=0/0  conf=0.422
+[DBG]   step2 rejected → step3: best keyword match = set_alarm
+[DBG]   cactus → calls=[]  conf=0.438  118ms
+[DBG]   step3: valid=0/0  conf=0.438
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'set_alarm', 'arguments': {'hour': 8, 'minute': 15}}]  964ms
+[DBG]   cloud result: [{'name': 'set_alarm', 'arguments': {'hour': 8, 'minute': 15}}]
+F1=1.00 | 1180ms | cloud (fallback)
+[14/30] Running: music_among_three (medium)... [DBG] 
+======================================================================
+[DBG] USER: Play some jazz music.
+[DBG] TOOLS: ['set_alarm', 'play_music', 'get_weather']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   intent scores: {'play_music': 15}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.421  145ms
+[DBG]   step2: valid=0/0  conf=0.421
+[DBG]   step2 rejected → step3: best keyword match = play_music
+[DBG]   cactus → calls=[]  conf=0.423  93ms
+[DBG]   step3: valid=0/0  conf=0.423
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'play_music', 'arguments': {'song': 'jazz'}}]  931ms
+[DBG]   cloud result: [{'name': 'play_music', 'arguments': {'song': 'jazz'}}]
+F1=1.00 | 1076ms | cloud (fallback)
+[15/30] Running: reminder_among_four (medium)... [DBG] 
+======================================================================
+[DBG] USER: Remind me to call the dentist at 2:00 PM.
+[DBG] TOOLS: ['get_weather', 'send_message', 'create_reminder', 'set_alarm']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[create_reminder] = ['create', 'create reminder', 'reminder', 'time', 'title']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.396  188ms
+[DBG]   step2: valid=0/0  conf=0.396
+[DBG]   step2 rejected → step3: best keyword match = None
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'create_reminder', 'arguments': {'title': 'Call the dentist', 'time': '2:00 PM'}}]  2346ms
+[DBG]   cloud result: [{'name': 'create_reminder', 'arguments': {'title': 'Call the dentist', 'time': '2:00 PM'}}]
+F1=1.00 | 2534ms | cloud (fallback)
+[16/30] Running: timer_among_three (medium)... [DBG] 
+======================================================================
+[DBG] USER: Set a timer for 10 minutes.
+[DBG] TOOLS: ['set_alarm', 'set_timer', 'play_music']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   kw[set_timer] = ['countdown', 'minutes', 'set', 'set timer', 'timer']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   intent scores: {'set_alarm': 13, 'set_timer': 18}
+[DBG]   split: ['Set a timer for 10 minutes.']
+[DBG]   re-split (bare 'and'): ['Set a timer for 10 minutes.']
+[DBG]   assignments: [('Set a timer for 10 minutes.', 'set_timer')]
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.461  163ms
+[DBG]   step2: valid=0/0  conf=0.461
+[DBG]   step2 rejected → step3: best keyword match = set_timer
+[DBG]   cactus → calls=[]  conf=0.506  94ms
+[DBG]   step3: valid=0/0  conf=0.506
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'set_timer', 'arguments': {'minutes': 10}}]  909ms
+[DBG]   cloud result: [{'name': 'set_timer', 'arguments': {'minutes': 10}}]
+F1=1.00 | 1072ms | cloud (fallback)
+[17/30] Running: search_among_four (medium)... [DBG] 
+======================================================================
+[DBG] USER: Look up Sarah in my contacts.
+[DBG] TOOLS: ['send_message', 'get_weather', 'search_contacts', 'set_alarm']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[search_contacts] = ['contact', 'contacts', 'name', 'query', 'search', 'search contacts']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {'send_message': 7, 'search_contacts': 18}
+[DBG]   split: ['Look up Sarah in my contacts.']
+[DBG]   re-split (bare 'and'): ['Look up Sarah in my contacts.']
+[DBG]   assignments: [('Look up Sarah in my contacts.', 'search_contacts')]
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.674  207ms
+[DBG]   step2: valid=0/0  conf=0.674
+[DBG]   step2 rejected → step3: best keyword match = search_contacts
+[DBG]   cactus → calls=[]  conf=0.659  104ms
+[DBG]   step3: valid=0/0  conf=0.659
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'search_contacts', 'arguments': {'query': 'Sarah'}}]  778ms
+[DBG]   cloud result: [{'name': 'search_contacts', 'arguments': {'query': 'Sarah'}}]
+F1=1.00 | 985ms | cloud (fallback)
+[18/30] Running: weather_among_four (medium)... [DBG] 
+======================================================================
+[DBG] USER: What's the weather in Berlin?
+[DBG] TOOLS: ['send_message', 'set_alarm', 'play_music', 'get_weather']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   intent scores: {'get_weather': 10}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.578  146ms
+[DBG]   step2: valid=0/0  conf=0.578
+[DBG]   step2 rejected → step3: best keyword match = get_weather
+[DBG]   cactus → calls=[]  conf=0.303  87ms
+[DBG]   step3: valid=0/0  conf=0.303
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'Berlin'}}]  1016ms
+[DBG]   cloud result: [{'name': 'get_weather', 'arguments': {'location': 'Berlin'}}]
+F1=1.00 | 1162ms | cloud (fallback)
+[19/30] Running: message_among_four (medium)... [DBG] 
+======================================================================
+[DBG] USER: Text Dave saying I'll be late.
+[DBG] TOOLS: ['get_weather', 'set_timer', 'send_message', 'play_music']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[set_timer] = ['countdown', 'minutes', 'set', 'set timer', 'timer']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   intent scores: {}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.565  157ms
+[DBG]   step2: valid=0/0  conf=0.565
+[DBG]   step2 rejected → step3: best keyword match = None
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'send_message', 'arguments': {'message': "I'll be late.", 'recipient': 'Dave'}}]  943ms
+[DBG]   cloud result: [{'name': 'send_message', 'arguments': {'message': "I'll be late.", 'recipient': 'Dave'}}]
+F1=0.00 | 1100ms | cloud (fallback)
+[20/30] Running: alarm_among_five (medium)... [DBG] 
+======================================================================
+[DBG] USER: Set an alarm for 9 AM.
+[DBG] TOOLS: ['send_message', 'get_weather', 'play_music', 'set_timer', 'set_alarm']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   kw[set_timer] = ['countdown', 'minutes', 'set', 'set timer', 'timer']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {'set_timer': 3, 'set_alarm': 11}
+[DBG]   split: ['Set an alarm for 9 AM.']
+[DBG]   re-split (bare 'and'): ['Set an alarm for 9 AM.']
+[DBG]   assignments: [('Set an alarm for 9 AM.', 'set_alarm')]
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.679  167ms
+[DBG]   step2: valid=0/0  conf=0.679
+[DBG]   step2 rejected → step3: best keyword match = set_alarm
+[DBG]   cactus → calls=[]  conf=0.426  114ms
+[DBG]   step3: valid=0/0  conf=0.426
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'set_alarm', 'arguments': {'minute': 0, 'hour': 9}}]  924ms
+[DBG]   cloud result: [{'name': 'set_alarm', 'arguments': {'minute': 0, 'hour': 9}}]
+F1=1.00 | 1091ms | cloud (fallback)
+[21/30] Running: message_and_weather (hard)... [DBG] 
+======================================================================
+[DBG] USER: Send a message to Bob saying hi and get the weather in London.
+[DBG] TOOLS: ['get_weather', 'send_message', 'set_alarm']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {'get_weather': 13, 'send_message': 17}
+[DBG]   split: ['Send a message to Bob saying hi', 'get the weather in London.']
+[DBG]   assignments: [('Send a message to Bob saying hi', 'send_message'), ('get the weather in London.', 'get_weather')]
+[DBG] ▶ MULTI-INTENT: 2 sub-tasks
+[DBG]   [0] sub='Send a message to Bob saying hi' → tool=send_message
+[DBG]   cactus → calls=[]  conf=0.596  117ms
+[DBG]   [0] valid=0
+[DBG]   [0] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'send_message', 'arguments': {'recipient': 'Bob', 'message': 'hi'}}]  927ms
+[DBG]   [0] cloud got 1 calls
+[DBG]   [1] sub='get the weather in London.' → tool=get_weather
+[DBG]   cactus → calls=[]  conf=0.370  94ms
+[DBG]   [1] valid=0
+[DBG]   [1] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'London'}}]  785ms
+[DBG]   [1] cloud got 1 calls
+[DBG] ▶ MULTI RESULT: 2 total calls, src=on-device (partial cloud), 1923ms
+[DBG]   calls: [{'name': 'send_message', 'arguments': {'recipient': 'Bob', 'message': 'hi'}}, {'name': 'get_weather', 'arguments': {'location': 'London'}}]
+F1=1.00 | 1923ms | on-device (partial cloud)
+[22/30] Running: alarm_and_weather (hard)... [DBG] 
+======================================================================
+[DBG] USER: Set an alarm for 7:30 AM and check the weather in New York.
+[DBG] TOOLS: ['get_weather', 'set_alarm', 'send_message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   intent scores: {'get_weather': 10, 'set_alarm': 11}
+[DBG]   split: ['Set an alarm for 7:30 AM', 'check the weather in New York.']
+[DBG]   assignments: [('Set an alarm for 7:30 AM', 'set_alarm'), ('check the weather in New York.', 'get_weather')]
+[DBG] ▶ MULTI-INTENT: 2 sub-tasks
+[DBG]   [0] sub='Set an alarm for 7:30 AM' → tool=set_alarm
+[DBG]   cactus → calls=[]  conf=0.444  118ms
+[DBG]   [0] valid=0
+[DBG]   [0] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}]  1222ms
+[DBG]   [0] cloud got 1 calls
+[DBG]   [1] sub='check the weather in New York.' → tool=get_weather
+[DBG]   cactus → calls=[]  conf=0.421  85ms
+[DBG]   [1] valid=0
+[DBG]   [1] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'New York'}}]  781ms
+[DBG]   [1] cloud got 1 calls
+[DBG] ▶ MULTI RESULT: 2 total calls, src=on-device (partial cloud), 2206ms
+[DBG]   calls: [{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}, {'name': 'get_weather', 'arguments': {'location': 'New York'}}]
+F1=1.00 | 2206ms | on-device (partial cloud)
+[23/30] Running: timer_and_music (hard)... [DBG] 
+======================================================================
+[DBG] USER: Set a timer for 20 minutes and play lo-fi beats.
+[DBG] TOOLS: ['set_timer', 'play_music', 'get_weather', 'set_alarm']
+[DBG]   kw[set_timer] = ['countdown', 'minutes', 'set', 'set timer', 'timer']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {'set_timer': 18, 'play_music': 7, 'set_alarm': 13}
+[DBG]   split: ['Set a timer for 20 minutes', 'play lo-fi beats.']
+[DBG]   re-split (bare 'and'): ['Set a timer for 20 minutes', 'play lo-fi beats.']
+[DBG]   assignments: [('Set a timer for 20 minutes', 'set_timer'), ('play lo-fi beats.', 'play_music')]
+[DBG] ▶ MULTI-INTENT: 2 sub-tasks
+[DBG]   [0] sub='Set a timer for 20 minutes' → tool=set_timer
+[DBG]   cactus → calls=[]  conf=0.607  87ms
+[DBG]   [0] valid=0
+[DBG]   [0] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'set_timer', 'arguments': {'minutes': 20}}]  1075ms
+[DBG]   [0] cloud got 1 calls
+[DBG]   [1] sub='play lo-fi beats.' → tool=play_music
+[DBG]   cactus → calls=[]  conf=0.518  86ms
+[DBG]   [1] valid=0
+[DBG]   [1] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'play_music', 'arguments': {'song': 'lo-fi beats'}}]  1053ms
+[DBG]   [1] cloud got 1 calls
+[DBG] ▶ MULTI RESULT: 2 total calls, src=on-device (partial cloud), 2301ms
+[DBG]   calls: [{'name': 'set_timer', 'arguments': {'minutes': 20}}, {'name': 'play_music', 'arguments': {'song': 'lo-fi beats'}}]
+F1=1.00 | 2301ms | on-device (partial cloud)
+[24/30] Running: reminder_and_message (hard)... [DBG] 
+======================================================================
+[DBG] USER: Remind me about groceries at 5:00 PM and text Lisa saying see you tonight.
+[DBG] TOOLS: ['create_reminder', 'send_message', 'get_weather', 'set_alarm']
+[DBG]   kw[create_reminder] = ['create', 'create reminder', 'reminder', 'time', 'title']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   intent scores: {}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.628  228ms
+[DBG]   step2: valid=0/0  conf=0.628
+[DBG]   step2 rejected → step3: best keyword match = None
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'create_reminder', 'arguments': {'title': 'groceries', 'time': '5:00 PM'}}, {'name': 'send_message', 'arguments': {'recipient': 'Lisa', 'message': 'see you tonight'}}]  1165ms
+[DBG]   cloud result: [{'name': 'create_reminder', 'arguments': {'title': 'groceries', 'time': '5:00 PM'}}, {'name': 'send_message', 'arguments': {'recipient': 'Lisa', 'message': 'see you tonight'}}]
+F1=1.00 | 1393ms | cloud (fallback)
+[25/30] Running: search_and_message (hard)... [DBG] 
+======================================================================
+[DBG] USER: Find Tom in my contacts and send him a message saying happy birthday.
+[DBG] TOOLS: ['search_contacts', 'send_message', 'get_weather', 'play_music']
+[DBG]   kw[search_contacts] = ['contact', 'contacts', 'name', 'query', 'search', 'search contacts']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   intent scores: {'search_contacts': 18, 'send_message': 24}
+[DBG]   split: ['Find Tom in my contacts', 'send him a message saying happy birthday.']
+[DBG]   assignments: [('Find Tom in my contacts', 'search_contacts'), ('send him a message saying happy birthday.', 'send_message')]
+[DBG] ▶ MULTI-INTENT: 2 sub-tasks
+[DBG]   [0] sub='Find Tom in my contacts' → tool=search_contacts
+[DBG]   cactus → calls=[]  conf=0.694  192ms
+[DBG]   [0] valid=0
+[DBG]   [0] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}]  629ms
+[DBG]   [0] cloud got 1 calls
+[DBG]   [1] sub='send him a message saying happy birthday.' → tool=send_message
+[DBG]   cactus → calls=[]  conf=0.425  118ms
+[DBG]   [1] valid=0
+[DBG]   [1] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[]  1565ms
+[DBG]   [1] cloud got 0 calls
+[DBG] ▶ MULTI RESULT: 1 total calls, src=on-device (partial cloud), 2504ms
+[DBG]   calls: [{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}]
+F1=0.67 | 2504ms | on-device (partial cloud)
+[26/30] Running: alarm_and_reminder (hard)... [DBG] 
+======================================================================
+[DBG] USER: Set an alarm for 6:45 AM and remind me to take medicine at 7:00 AM.
+[DBG] TOOLS: ['set_alarm', 'create_reminder', 'send_message', 'play_music']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   kw[create_reminder] = ['create', 'create reminder', 'reminder', 'time', 'title']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   intent scores: {'set_alarm': 11}
+[DBG]   → single intent
+[DBG] ▶ SINGLE-INTENT
+[DBG]   cactus → calls=[]  conf=0.595  237ms
+[DBG]   step2: valid=0/0  conf=0.595
+[DBG]   step2 rejected → step3: best keyword match = set_alarm
+[DBG]   cactus → calls=[]  conf=0.427  124ms
+[DBG]   step3: valid=0/0  conf=0.427
+[DBG] ▶ CLOUD FALLBACK (step 4)
+[DBG]   cloud → calls=[{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'time': '7:00 AM', 'title': 'Take medicine'}}]  1053ms
+[DBG]   cloud result: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'time': '7:00 AM', 'title': 'Take medicine'}}]
+F1=1.00 | 1290ms | cloud (fallback)
+[27/30] Running: weather_and_music (hard)... [DBG] 
+======================================================================
+[DBG] USER: Check the weather in Miami and play summer hits.
+[DBG] TOOLS: ['get_weather', 'play_music', 'set_timer', 'send_message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   kw[set_timer] = ['countdown', 'minutes', 'set', 'set timer', 'timer']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   intent scores: {'get_weather': 10, 'play_music': 7}
+[DBG]   split: ['Check the weather in Miami', 'play summer hits.']
+[DBG]   assignments: [('Check the weather in Miami', 'get_weather'), ('play summer hits.', 'play_music')]
+[DBG] ▶ MULTI-INTENT: 2 sub-tasks
+[DBG]   [0] sub='Check the weather in Miami' → tool=get_weather
+[DBG]   cactus → calls=[]  conf=0.651  85ms
+[DBG]   [0] valid=0
+[DBG]   [0] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'Miami'}}]  871ms
+[DBG]   [0] cloud got 1 calls
+[DBG]   [1] sub='play summer hits.' → tool=play_music
+[DBG]   cactus → calls=[]  conf=0.376  87ms
+[DBG]   [1] valid=0
+[DBG]   [1] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'play_music', 'arguments': {'song': 'summer hits'}}]  1170ms
+[DBG]   [1] cloud got 1 calls
+[DBG] ▶ MULTI RESULT: 2 total calls, src=on-device (partial cloud), 2213ms
+[DBG]   calls: [{'name': 'get_weather', 'arguments': {'location': 'Miami'}}, {'name': 'play_music', 'arguments': {'song': 'summer hits'}}]
+F1=1.00 | 2213ms | on-device (partial cloud)
+[28/30] Running: message_weather_alarm (hard)... [DBG] 
+======================================================================
+[DBG] USER: Text Emma saying good night, check the weather in Chicago, and set an alarm for 5 AM.
+[DBG] TOOLS: ['send_message', 'get_weather', 'set_alarm', 'play_music', 'set_timer']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   kw[set_timer] = ['countdown', 'minutes', 'set', 'set timer', 'timer']
+[DBG]   intent scores: {'get_weather': 10, 'set_alarm': 11, 'set_timer': 3}
+[DBG]   split: ['Text Emma saying good night', 'check the weather in Chicago', 'set an alarm for 5 AM.']
+[DBG]   assignments: [('check the weather in Chicago', 'get_weather'), ('set an alarm for 5 AM.', 'set_alarm')]
+[DBG] ▶ MULTI-INTENT: 2 sub-tasks
+[DBG]   [0] sub='check the weather in Chicago' → tool=get_weather
+[DBG]   cactus → calls=[]  conf=0.337  96ms
+[DBG]   [0] valid=0
+[DBG]   [0] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'Chicago'}}]  4140ms
+[DBG]   [0] cloud got 1 calls
+[DBG]   [1] sub='set an alarm for 5 AM.' → tool=set_alarm
+[DBG]   cactus → calls=[]  conf=0.424  117ms
+[DBG]   [1] valid=0
+[DBG]   [1] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'set_alarm', 'arguments': {'hour': 5, 'minute': 0}}]  1002ms
+[DBG]   [1] cloud got 1 calls
+[DBG] ▶ MULTI RESULT: 2 total calls, src=on-device (partial cloud), 5355ms
+[DBG]   calls: [{'name': 'get_weather', 'arguments': {'location': 'Chicago'}}, {'name': 'set_alarm', 'arguments': {'hour': 5, 'minute': 0}}]
+F1=0.80 | 5355ms | on-device (partial cloud)
+[29/30] Running: timer_music_reminder (hard)... [DBG] 
+======================================================================
+[DBG] USER: Set a 15 minute timer, play classical music, and remind me to stretch at 4:00 PM.
+[DBG] TOOLS: ['set_timer', 'play_music', 'create_reminder', 'get_weather', 'send_message']
+[DBG]   kw[set_timer] = ['countdown', 'minutes', 'set', 'set timer', 'timer']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   kw[create_reminder] = ['create', 'create reminder', 'reminder', 'time', 'title']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   intent scores: {'set_timer': 11, 'play_music': 15, 'create_reminder': 4}
+[DBG]   split: ['Set a 15 minute timer', 'play classical music', 'remind me to stretch at 4:00 PM.']
+[DBG]   assignments: [('Set a 15 minute timer', 'set_timer'), ('play classical music', 'play_music')]
+[DBG] ▶ MULTI-INTENT: 2 sub-tasks
+[DBG]   [0] sub='Set a 15 minute timer' → tool=set_timer
+[DBG]   cactus → calls=[]  conf=0.693  87ms
+[DBG]   [0] valid=0
+[DBG]   [0] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'set_timer', 'arguments': {'minutes': 15}}]  3406ms
+[DBG]   [0] cloud got 1 calls
+[DBG]   [1] sub='play classical music' → tool=play_music
+[DBG]   cactus → calls=[]  conf=0.402  97ms
+[DBG]   [1] valid=0
+[DBG]   [1] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'play_music', 'arguments': {'song': 'classical music'}}]  604ms
+[DBG]   [1] cloud got 1 calls
+[DBG] ▶ MULTI RESULT: 2 total calls, src=on-device (partial cloud), 4194ms
+[DBG]   calls: [{'name': 'set_timer', 'arguments': {'minutes': 15}}, {'name': 'play_music', 'arguments': {'song': 'classical music'}}]
+F1=0.80 | 4194ms | on-device (partial cloud)
+[30/30] Running: search_message_weather (hard)... [DBG] 
+======================================================================
+[DBG] USER: Look up Jake in my contacts, send him a message saying let's meet, and check the weather in Seattle.
+[DBG] TOOLS: ['search_contacts', 'send_message', 'get_weather', 'set_alarm', 'play_music']
+[DBG]   kw[search_contacts] = ['contact', 'contacts', 'name', 'query', 'search', 'search contacts']
+[DBG]   kw[send_message] = ['contact', 'content', 'message', 'name', 'person', 'recipient', 'send', 'send message']
+[DBG]   kw[get_weather] = ['city', 'get', 'get weather', 'location', 'name', 'weather']
+[DBG]   kw[set_alarm] = ['alarm', 'hour', 'minute', 'set', 'set alarm', 'time']
+[DBG]   kw[play_music] = ['music', 'name', 'play', 'play music', 'playlist', 'song']
+[DBG]   intent scores: {'search_contacts': 18, 'send_message': 24, 'get_weather': 10}
+[DBG]   split: ['Look up Jake in my contacts', "send him a message saying let's meet", 'check the weather in Seattle.']
+[DBG]   assignments: [('Look up Jake in my contacts', 'search_contacts'), ("send him a message saying let's meet", 'send_message'), ('check the weather in Seattle.', 'get_weather')]
+[DBG] ▶ MULTI-INTENT: 3 sub-tasks
+[DBG]   [0] sub='Look up Jake in my contacts' → tool=search_contacts
+[DBG]   cactus → calls=[]  conf=0.754  284ms
+[DBG]   [0] valid=0
+[DBG]   [0] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}]  660ms
+[DBG]   [0] cloud got 1 calls
+[DBG]   [1] sub='send him a message saying let's meet' → tool=send_message
+[DBG]   cactus → calls=[]  conf=0.459  116ms
+[DBG]   [1] valid=0
+[DBG]   [1] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[]  659ms
+[DBG]   [1] cloud got 0 calls
+[DBG]   [2] sub='check the weather in Seattle.' → tool=get_weather
+[DBG]   cactus → calls=[]  conf=0.429  96ms
+[DBG]   [2] valid=0
+[DBG]   [2] ✗ local failed → cloud fallback for sub-task
+[DBG]   cloud → calls=[{'name': 'get_weather', 'arguments': {'location': 'Seattle'}}]  808ms
+[DBG]   [2] cloud got 1 calls
+[DBG] ▶ MULTI RESULT: 2 total calls, src=on-device (partial cloud), 2623ms
+[DBG]   calls: [{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}, {'name': 'get_weather', 'arguments': {'location': 'Seattle'}}]
+F1=0.80 | 2623ms | on-device (partial cloud)
 
 === Benchmark Results ===
 
    # | Difficulty | Name                         |  Time (ms) |    F1 | Source
   ---+------------+------------------------------+------------+-------+---------------------
-   1 | easy       | weather_sf                   |     935.04 |  1.00 | cloud (fallback)
-   2 | easy       | alarm_10am                   |    1651.86 |  1.00 | cloud (fallback)
-   3 | easy       | message_alice                |     977.90 |  1.00 | cloud (fallback)
-   4 | easy       | weather_london               |    1577.11 |  1.00 | cloud (fallback)
-   5 | easy       | alarm_6am                    |    1056.84 |  1.00 | cloud (fallback)
-   6 | easy       | play_bohemian                |    1580.25 |  1.00 | cloud (fallback)
-   7 | easy       | timer_5min                   |     966.00 |  1.00 | cloud (fallback)
-   8 | easy       | reminder_meeting             |    3198.79 |  0.00 | cloud (fallback)
-   9 | easy       | search_bob                   |     752.40 |  1.00 | cloud (fallback)
-  10 | easy       | weather_paris                |    2731.94 |  1.00 | cloud (fallback)
-  11 | medium     | message_among_three          |    1179.01 |  1.00 | cloud (fallback)
-  12 | medium     | weather_among_two            |     910.61 |  1.00 | cloud (fallback)
-  13 | medium     | alarm_among_three            |    1065.59 |  1.00 | cloud (fallback)
-  14 | medium     | music_among_three            |    1680.11 |  1.00 | cloud (fallback)
-  15 | medium     | reminder_among_four          |    3352.56 |  1.00 | cloud (fallback)
-  16 | medium     | timer_among_three            |    1123.38 |  1.00 | cloud (fallback)
-  17 | medium     | search_among_four            |    1503.08 |  1.00 | cloud (fallback)
-  18 | medium     | weather_among_four           |    1198.61 |  1.00 | cloud (fallback)
-  19 | medium     | message_among_four           |    1337.51 |  0.00 | cloud (fallback)
-  20 | medium     | alarm_among_five             |    1343.44 |  1.00 | cloud (fallback)
-  21 | hard       | message_and_weather          |    2301.80 |  1.00 | cloud (fallback)
-  22 | hard       | alarm_and_weather            |    1120.10 |  1.00 | cloud (fallback)
-  23 | hard       | timer_and_music              |    1243.19 |  1.00 | cloud (fallback)
-  24 | hard       | reminder_and_message         |    1252.08 |  1.00 | cloud (fallback)
-  25 | hard       | search_and_message           |    1435.91 |  0.67 | cloud (fallback)
-  26 | hard       | alarm_and_reminder           |    2214.27 |  1.00 | cloud (fallback)
-  27 | hard       | weather_and_music            |    3350.79 |  0.67 | cloud (fallback)
-  28 | hard       | message_weather_alarm        |    1069.41 |  0.50 | cloud (fallback)
-  29 | hard       | timer_music_reminder         |    1181.93 |  0.50 | cloud (fallback)
-  30 | hard       | search_message_weather       |    1565.56 |  1.00 | cloud (fallback)
+   1 | easy       | weather_sf                   |     806.86 |  1.00 | cloud (fallback)
+   2 | easy       | alarm_10am                   |    1608.55 |  1.00 | cloud (fallback)
+   3 | easy       | message_alice                |    1761.45 |  1.00 | cloud (fallback)
+   4 | easy       | weather_london               |    1172.88 |  1.00 | cloud (fallback)
+   5 | easy       | alarm_6am                    |    1108.26 |  1.00 | cloud (fallback)
+   6 | easy       | play_bohemian                |     687.58 |  1.00 | cloud (fallback)
+   7 | easy       | timer_5min                   |    1289.92 |  1.00 | cloud (fallback)
+   8 | easy       | reminder_meeting             |    1337.84 |  0.00 | cloud (fallback)
+   9 | easy       | search_bob                   |     736.21 |  1.00 | cloud (fallback)
+  10 | easy       | weather_paris                |    1548.00 |  1.00 | cloud (fallback)
+  11 | medium     | message_among_three          |     925.67 |  1.00 | cloud (fallback)
+  12 | medium     | weather_among_two            |     985.22 |  1.00 | cloud (fallback)
+  13 | medium     | alarm_among_three            |    1180.06 |  1.00 | cloud (fallback)
+  14 | medium     | music_among_three            |    1076.04 |  1.00 | cloud (fallback)
+  15 | medium     | reminder_among_four          |    2533.72 |  1.00 | cloud (fallback)
+  16 | medium     | timer_among_three            |    1071.93 |  1.00 | cloud (fallback)
+  17 | medium     | search_among_four            |     984.95 |  1.00 | cloud (fallback)
+  18 | medium     | weather_among_four           |    1162.09 |  1.00 | cloud (fallback)
+  19 | medium     | message_among_four           |    1100.20 |  0.00 | cloud (fallback)
+  20 | medium     | alarm_among_five             |    1090.90 |  1.00 | cloud (fallback)
+  21 | hard       | message_and_weather          |    1922.79 |  1.00 | on-device (partial cloud)
+  22 | hard       | alarm_and_weather            |    2205.79 |  1.00 | on-device (partial cloud)
+  23 | hard       | timer_and_music              |    2300.68 |  1.00 | on-device (partial cloud)
+  24 | hard       | reminder_and_message         |    1393.15 |  1.00 | cloud (fallback)
+  25 | hard       | search_and_message           |    2504.01 |  0.67 | on-device (partial cloud)
+  26 | hard       | alarm_and_reminder           |    1289.93 |  1.00 | cloud (fallback)
+  27 | hard       | weather_and_music            |    2212.84 |  1.00 | on-device (partial cloud)
+  28 | hard       | message_weather_alarm        |    5355.35 |  0.80 | on-device (partial cloud)
+  29 | hard       | timer_music_reminder         |    4193.69 |  0.80 | on-device (partial cloud)
+  30 | hard       | search_message_weather       |    2623.26 |  0.80 | on-device (partial cloud)
 
 --- Summary ---
-  easy     avg F1=0.90  avg time=1542.81ms  on-device=0/10 cloud=10/10
-  medium   avg F1=0.90  avg time=1469.39ms  on-device=0/10 cloud=10/10
-  hard     avg F1=0.83  avg time=1673.50ms  on-device=0/10 cloud=10/10
-  overall  avg F1=0.88  avg time=1561.90ms  total time=46857.07ms
+  easy     avg F1=0.90  avg time=1205.75ms  on-device=0/10 cloud=10/10
+  medium   avg F1=0.90  avg time=1211.08ms  on-device=0/10 cloud=10/10
+  hard     avg F1=0.91  avg time=2600.15ms  on-device=0/10 cloud=10/10
+  overall  avg F1=0.90  avg time=1672.33ms  total time=50169.82ms
            on-device=0/30 (0%)  cloud=30/30 (100%)
 
 ==================================================
-  TOTAL SCORE: 43.3%
+  TOTAL SCORE: 45.2%
 ==================================================
