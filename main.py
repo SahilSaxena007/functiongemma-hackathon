@@ -3,7 +3,7 @@ import sys
 sys.path.insert(0, "cactus/python/src")
 functiongemma_path = "cactus/weights/functiongemma-270m-it"
 
-import json, os, time, re
+import json, os, time, re, traceback
 from cactus import cactus_init, cactus_complete, cactus_destroy, cactus_reset
 from google import genai
 from google.genai import types
@@ -101,6 +101,35 @@ LOCAL_ROUTER_PROMPT = (
     "If there are multiple actions, output multiple calls. "
     "Resolve pronouns like him/her/them using earlier actions in the same request."
 )
+
+
+def _hybrid_debug_enabled():
+    return os.environ.get("HYBRID_DEBUG", "0") == "1"
+
+
+def _hybrid_debug(event, **data):
+    """Opt-in structured debug logging for router decisions."""
+    if not _hybrid_debug_enabled():
+        return
+
+    payload = {
+        "ts": round(time.time(), 3),
+        "event": event,
+        "data": data,
+    }
+    line = json.dumps(payload, ensure_ascii=True, default=str)
+    print(f"[HYBRID_DEBUG] {line}", flush=True)
+
+    log_path = os.environ.get("HYBRID_DEBUG_LOG", "hybrid_debug.log")
+    try:
+        with open(log_path, "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+    except Exception:
+        pass
+
+
+def _call_names(calls):
+    return [c.get("name") for c in calls]
 
 
 def _likely_multi_action(messages):
@@ -230,13 +259,36 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
     """
     total_time_ms = 0
     model = None
+    user_text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user")
+    _hybrid_debug(
+        "start",
+        user_text=user_text,
+        tool_count=len(tools),
+        tool_names=[t.get("name") for t in tools],
+        confidence_threshold=confidence_threshold,
+    )
+
     try:
         model = cactus_init(functiongemma_path)
+        _hybrid_debug("local_model_init_ok")
 
         pass1 = _run_local_pass(model, messages, tools)
         total_time_ms += pass1["total_time_ms"]
         calls = _dedupe_calls(_coerce_and_clean(pass1["function_calls"], tools))
-        if _validate_calls(calls, tools) and _is_complete_for_request(calls, messages):
+        pass1_valid = _validate_calls(calls, tools)
+        pass1_complete = _is_complete_for_request(calls, messages)
+        _hybrid_debug(
+            "pass1_result",
+            confidence=pass1.get("confidence"),
+            total_time_ms=pass1.get("total_time_ms"),
+            call_count=len(calls),
+            call_names=_call_names(calls),
+            valid=pass1_valid,
+            complete=pass1_complete,
+            needed_calls=_estimated_min_calls(messages) if _likely_multi_action(messages) else 1,
+        )
+        if pass1_valid and pass1_complete:
+            _hybrid_debug("return_on_device", stage="pass1")
             return {
                 "function_calls": calls,
                 "total_time_ms": total_time_ms,
@@ -245,6 +297,7 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
             }
 
         cactus_reset(model)
+        _hybrid_debug("local_model_reset_for_pass2")
         repair_instruction = (
             "Re-read the request and return the complete ordered list of tool calls. "
             "Include all requested actions with required arguments. "
@@ -253,7 +306,19 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
         pass2 = _run_local_pass(model, messages, tools, extra_instruction=repair_instruction, max_tokens=384)
         total_time_ms += pass2["total_time_ms"]
         merged = _dedupe_calls(_coerce_and_clean(calls + pass2["function_calls"], tools))
-        if _validate_calls(merged, tools) and _is_complete_for_request(merged, messages):
+        pass2_valid = _validate_calls(merged, tools)
+        pass2_complete = _is_complete_for_request(merged, messages)
+        _hybrid_debug(
+            "pass2_result",
+            confidence=pass2.get("confidence"),
+            total_time_ms=pass2.get("total_time_ms"),
+            merged_call_count=len(merged),
+            merged_call_names=_call_names(merged),
+            valid=pass2_valid,
+            complete=pass2_complete,
+        )
+        if pass2_valid and pass2_complete:
+            _hybrid_debug("return_on_device", stage="pass2")
             return {
                 "function_calls": merged,
                 "total_time_ms": total_time_ms,
@@ -265,29 +330,49 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
         local_baseline = generate_cactus(messages, tools)
         total_time_ms += local_baseline.get("total_time_ms", 0)
         baseline_calls = _dedupe_calls(_coerce_and_clean(local_baseline.get("function_calls", []), tools))
-        if _validate_calls(baseline_calls, tools) and _is_complete_for_request(baseline_calls, messages):
+        base_valid = _validate_calls(baseline_calls, tools)
+        base_complete = _is_complete_for_request(baseline_calls, messages)
+        _hybrid_debug(
+            "baseline_local_result",
+            confidence=local_baseline.get("confidence"),
+            total_time_ms=local_baseline.get("total_time_ms"),
+            call_count=len(baseline_calls),
+            call_names=_call_names(baseline_calls),
+            valid=base_valid,
+            complete=base_complete,
+        )
+        if base_valid and base_complete:
+            _hybrid_debug("return_on_device", stage="baseline")
             return {
                 "function_calls": baseline_calls,
                 "total_time_ms": total_time_ms,
                 "source": "on-device",
                 "confidence": local_baseline.get("confidence", 0),
             }
-    except Exception:
-        pass
+    except Exception as exc:
+        _hybrid_debug("local_exception", error=str(exc), traceback=traceback.format_exc())
     finally:
         if model is not None:
             try:
                 cactus_destroy(model)
+                _hybrid_debug("local_model_destroy_ok")
             except Exception:
-                pass
+                _hybrid_debug("local_model_destroy_error", traceback=traceback.format_exc())
 
     try:
         cloud = generate_cloud(messages, tools)
         cloud["function_calls"] = _dedupe_calls(_coerce_and_clean(cloud.get("function_calls", []), tools))
         cloud["source"] = "cloud (fallback)"
         cloud["total_time_ms"] += total_time_ms
+        _hybrid_debug(
+            "return_cloud_fallback",
+            total_time_ms=cloud.get("total_time_ms"),
+            call_count=len(cloud.get("function_calls", [])),
+            call_names=_call_names(cloud.get("function_calls", [])),
+        )
         return cloud
-    except Exception:
+    except Exception as exc:
+        _hybrid_debug("cloud_exception", error=str(exc), traceback=traceback.format_exc())
         return {
             "function_calls": [],
             "total_time_ms": total_time_ms,
