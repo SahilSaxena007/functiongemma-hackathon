@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CareFlow Calendar Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Bitter:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Rubric 2 + Rubric 3 Demo</p>
+      <h1>CareFlow Calendar Agent</h1>
+      <p class="story">
+        A daughter caring for her father can speak one command and instantly update Google Calendar:
+        reminders, appointments, and reschedules with local-first hybrid routing.
+      </p>
+      <div class="chips">
+        <button class="chip" data-text="Schedule Dad's cardiology appointment tomorrow at 2:30 PM for 60 minutes.">Create appointment</button>
+        <button class="chip" data-text="Reschedule cardiology appointment to Friday at 4:00 PM.">Reschedule event</button>
+        <button class="chip" data-text="Show my agenda for tomorrow.">List tomorrow agenda</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Text to Action</h2>
+      <textarea id="textPrompt" rows="4" placeholder="Example: Update my Google Calendar based on this: schedule medication reminder tomorrow at 9 AM for 15 minutes."></textarea>
+      <button id="runText" class="primary">Run Text Command</button>
+    </section>
+
+    <section class="panel">
+      <h2>Voice to Action</h2>
+      <p class="small">Record in browser or upload a `.wav` file, then run cactus_transcribe + hybrid routing + Google Calendar execution.</p>
+      <div class="voiceRow">
+        <button id="startRec">Start Recording</button>
+        <button id="stopRec" disabled>Stop</button>
+        <button id="runRecorded" disabled>Run Recorded Audio</button>
+      </div>
+      <div class="voiceRow">
+        <input id="wavFile" type="file" accept=".wav,audio/wav">
+        <button id="runUpload">Run Uploaded WAV</button>
+      </div>
+      <p id="recordingState" class="small"></p>
+    </section>
+
+    <section class="panel">
+      <h2>Execution Trace</h2>
+      <p id="status">Idle.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Transcript / Input</h3>
+          <pre id="transcript">-</pre>
+        </div>
+        <div class="card">
+          <h3>Routing</h3>
+          <pre id="routing">-</pre>
+        </div>
+        <div class="card">
+          <h3>Function Calls</h3>
+          <pre id="calls">-</pre>
+        </div>
+        <div class="card">
+          <h3>Tool Execution</h3>
+          <pre id="execution">-</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
