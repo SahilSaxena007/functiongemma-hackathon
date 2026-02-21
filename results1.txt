@@ -1,589 +1,536 @@
 [1/30] Running: weather_sf (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: What is the weather in San Francisco?'}]]
+[[{'role': 'user', 'content': 'What is the weather in San Francisco?'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: What is the weather in San Francisco?'}]
+[{'role': 'user', 'content': 'What is the weather in San Francisco?'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"San Francisco"}}],"confidence":1.0000,"time_to_first_token_ms":79.87,"total_time_ms":219.44,"prefill_tps":1777.84,"decode_tps":93.14,"ram_usage_mb":215.40,"prefill_tokens":142,"decode_tokens":14,"total_tokens":156}
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"San Francisco"}}],"confidence":1.0000,"time_to_first_token_ms":87.37,"total_time_ms":242.14,"prefill_tps":1854.20,"decode_tps":83.99,"ram_usage_mb":214.96,"prefill_tokens":162,"decode_tokens":14,"total_tokens":176}
 === CONFIDENCE: 1
 ===== MESSAGES 
  [{'role': 'user', 'content': 'What is the weather in San Francisco?'}]
-F1=1.00 | 219ms | on-device
+F1=1.00 | 242ms | on-device
 [2/30] Running: alarm_10am (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Set an alarm for 10 AM'}]]
+[[{'role': 'user', 'content': 'Set an alarm for 10 AM.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Set an alarm for 10 AM'}]
+[{'role': 'user', 'content': 'Set an alarm for 10 AM.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":10,"minute":0}}],"confidence":0.9967,"time_to_first_token_ms":99.84,"total_time_ms":276.02,"prefill_tps":1702.74,"decode_tps":85.14,"ram_usage_mb":199.19,"prefill_tokens":170,"decode_tokens":16,"total_tokens":186}
-=== CONFIDENCE: 0.9967
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":10,"minute":9}}],"confidence":0.9912,"time_to_first_token_ms":117.68,"total_time_ms":305.30,"prefill_tps":1622.99,"decode_tps":79.95,"ram_usage_mb":201.66,"prefill_tokens":191,"decode_tokens":16,"total_tokens":207}
+=== CONFIDENCE: 0.9912
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Set an alarm for 10 AM.'}]
-F1=1.00 | 276ms | on-device
+Expected: [{'name': 'set_alarm', 'arguments': {'hour': 10, 'minute': 0}}], Got: [{'name': 'set_alarm', 'arguments': {'hour': 10, 'minute': 9}}], F1=0.00
+F1=0.00 | 305ms | on-device
 [3/30] Running: message_alice (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Send a message to Alice saying good morning.'}]]
+[[{'role': 'user', 'content': 'Send a message to Alice saying good morning.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Send a message to Alice saying good morning.'}]
+[{'role': 'user', 'content': 'Send a message to Alice saying good morning.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I would be happy to help with Task 2. Could you please provide the recipient'ordinating information?","function_calls":[],"confidence":0.9370,"time_to_first_token_ms":94.53,"total_time_ms":346.52,"prefill_tps":1819.57,"decode_tps":79.37,"ram_usage_mb":198.30,"prefill_tokens":172,"decode_tokens":21,"total_tokens":193}
-=== CONFIDENCE: 0.937
+{"success":true,"error":null,"cloud_handoff":false,"response":"I would be happy to send a message to Alice. Could you please provide her name or contact information?","function_calls":[],"confidence":0.9772,"time_to_first_token_ms":113.25,"total_time_ms":344.66,"prefill_tps":1695.42,"decode_tps":86.43,"ram_usage_mb":199.52,"prefill_tokens":192,"decode_tokens":21,"total_tokens":213}
+=== CONFIDENCE: 0.9772
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Send a message to Alice saying good morning.'}]
 Expected 1 function calls, got 0
 Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Alice', 'message': 'good morning'}}], Got: [], F1=0.00
-F1=0.00 | 347ms | on-device
+F1=0.00 | 345ms | on-device
 [4/30] Running: weather_london (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Request 4 : Get the weather like in London ?'}], [{'role': 'user', 'content': 'Task 3 : Get the weather like in London ?'}]]
+[[{'role': 'user', 'content': "What's the weather like in London?"}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Request 4 : Get the weather like in London ?'}]
+[{'role': 'user', 'content': "What's the weather like in London?"}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location：<escape>London<escape>}":}}],"confidence":1.0000,"time_to_first_token_ms":88.61,"total_time_ms":226.80,"prefill_tps":1591.26,"decode_tps":86.84,"ram_usage_mb":199.94,"prefill_tokens":141,"decode_tokens":13,"total_tokens":154}
-SUBTASK: 1
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 3 : Get the weather like in London ?'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"London"}}],"confidence":1.0000,"time_to_first_token_ms":86.76,"total_time_ms":227.67,"prefill_tps":1625.17,"decode_tps":85.16,"ram_usage_mb":199.94,"prefill_tokens":141,"decode_tokens":13,"total_tokens":154}
-=== CONFIDENCE: 0
-F1=1.00 | 1516ms | cloud (fallback)
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"London"}}],"confidence":1.0000,"time_to_first_token_ms":104.81,"total_time_ms":248.99,"prefill_tps":1555.27,"decode_tps":83.23,"ram_usage_mb":204.10,"prefill_tokens":163,"decode_tokens":13,"total_tokens":176}
+=== CONFIDENCE: 1
+===== MESSAGES 
+ [{'role': 'user', 'content': "What's the weather like in London?"}]
+F1=1.00 | 249ms | on-device
 [5/30] Running: alarm_6am (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1：Wake me up at 6 AM'}]]
+[[{'role': 'user', 'content': 'Wake me up at 6 AM.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1：Wake me up at 6 AM'}]
+[{'role': 'user', 'content': 'Wake me up at 6 AM.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with managing or optimizing tasks related to waking you up. My current capabilities are limited to assisting with setting alarms for specific times and functions within my current set of tools. I cannot generate personalized wake-up routines or manage complex task schedules.","function_calls":[],"confidence":0.9642,"time_to_first_token_ms":96.01,"total_time_ms":661.09,"prefill_tps":1791.41,"decode_tps":93.79,"ram_usage_mb":204.32,"prefill_tokens":172,"decode_tokens":54,"total_tokens":226}
-=== CONFIDENCE: 0.9642
+{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with waking you up at a specific time. My current capabilities are limited to assisting with alarm setting through function management using the provided tools. I cannot control your sleep schedule or access external personal data for wakeups remotely.","function_calls":[],"confidence":0.9619,"time_to_first_token_ms":124.05,"total_time_ms":686.56,"prefill_tps":1531.63,"decode_tps":87.11,"ram_usage_mb":200.96,"prefill_tokens":190,"decode_tokens":50,"total_tokens":240}
+=== CONFIDENCE: 0.9619
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Wake me up at 6 AM.'}]
 Expected 1 function calls, got 0
 Expected: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 0}}], Got: [], F1=0.00
-F1=0.00 | 661ms | on-device
+F1=0.00 | 687ms | on-device
 [6/30] Running: play_bohemian (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Play Bohemian Rhapsody'}]]
+[[{'role': 'user', 'content': 'Play Bohemian Rhapsody.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Play Bohemian Rhapsody'}]
+[{'role': 'user', 'content': 'Play Bohemian Rhapsody.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"play_music","arguments":{"song":"Bohemian Rhapsody"}}],"confidence":0.9962,"time_to_first_token_ms":85.60,"total_time_ms":262.38,"prefill_tps":1635.44,"decode_tps":84.85,"ram_usage_mb":201.80,"prefill_tokens":140,"decode_tokens":16,"total_tokens":156}
-=== CONFIDENCE: 0.9962
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"play_music","arguments":{"song":"Bohemian Rhapsody"}}],"confidence":0.9976,"time_to_first_token_ms":86.33,"total_time_ms":284.01,"prefill_tps":1864.96,"decode_tps":80.94,"ram_usage_mb":200.87,"prefill_tokens":161,"decode_tokens":17,"total_tokens":178}
+=== CONFIDENCE: 0.9976
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Play Bohemian Rhapsody.'}]
-F1=1.00 | 262ms | on-device
+F1=1.00 | 284ms | on-device
 [7/30] Running: timer_5min (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1 : Set a timer for 5 minutes'}]]
+[[{'role': 'user', 'content': 'Set a timer for 5 minutes.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1 : Set a timer for 5 minutes'}]
+[{'role': 'user', 'content': 'Set a timer for 5 minutes.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_timer","arguments":{"minutes":5}}],"confidence":1.0000,"time_to_first_token_ms":79.21,"total_time_ms":197.23,"prefill_tps":1767.39,"decode_tps":84.73,"ram_usage_mb":202.10,"prefill_tokens":140,"decode_tokens":11,"total_tokens":151}
-=== CONFIDENCE: 1
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_timer","arguments":{"minutes":-5}}],"confidence":0.9998,"time_to_first_token_ms":84.99,"total_time_ms":207.22,"prefill_tps":1894.32,"decode_tps":81.81,"ram_usage_mb":201.51,"prefill_tokens":161,"decode_tokens":11,"total_tokens":172}
+=== CONFIDENCE: 0.9998
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Set a timer for 5 minutes.'}]
-F1=1.00 | 197ms | on-device
+Expected: [{'name': 'set_timer', 'arguments': {'minutes': 5}}], Got: [{'name': 'set_timer', 'arguments': {'minutes': -5}}], F1=0.00
+F1=0.00 | 207ms | on-device
 [8/30] Running: reminder_meeting (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Remind me about the meeting at 3:00 PM'}]]
+[[{'role': 'user', 'content': 'Remind me about the meeting at 3:00 PM.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Remind me about the meeting at 3:00 PM'}]
+[{'role': 'user', 'content': 'Remind me about the meeting at 3:00 PM.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"create_reminder","arguments":{"time":"2024-06-19T45-08-07","title":"Remind me about the meeting"}}],"confidence":0.9925,"time_to_first_token_ms":106.98,"total_time_ms":551.87,"prefill_tps":1701.25,"decode_tps":92.16,"ram_usage_mb":202.96,"prefill_tokens":182,"decode_tokens":42,"total_tokens":224}
-=== CONFIDENCE: 0.9925
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"create_reminder","arguments":{"time":"2024-9-7","title":"Reminder about the meeting"}}],"confidence":0.9932,"time_to_first_token_ms":104.97,"total_time_ms":463.43,"prefill_tps":1933.83,"decode_tps":78.11,"ram_usage_mb":201.58,"prefill_tokens":203,"decode_tokens":29,"total_tokens":232}
+=== CONFIDENCE: 0.9932
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Remind me about the meeting at 3:00 PM.'}]
-Expected: [{'name': 'create_reminder', 'arguments': {'title': 'meeting', 'time': '3:00 PM'}}], Got: [{'name': 'create_reminder', 'arguments': {'time': '2024-06-19T45-08-07', 'title': 'Remind me about the meeting'}}], F1=0.00
-F1=0.00 | 552ms | on-device
+Expected: [{'name': 'create_reminder', 'arguments': {'title': 'meeting', 'time': '3:00 PM'}}], Got: [{'name': 'create_reminder', 'arguments': {'time': '2024-9-7', 'title': 'Reminder about the meeting'}}], F1=0.00
+F1=0.00 | 463ms | on-device
 [9/30] Running: search_bob (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1：Find Bob in my contacts'}]]
+[[{'role': 'user', 'content': 'Find Bob in my contacts.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'search_contacts', 'description': 'Search for a contact by name', 'parameters': {'type': 'object', 'properties': {'query': {'type': 'string', 'description': 'Name to search for'}}, 'required': ['query']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1：Find Bob in my contacts'}]
+[{'role': 'user', 'content': 'Find Bob in my contacts.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly help with that. To perform Task 1, could you please provide the name of Bob you are looking for?","function_calls":[],"confidence":0.9825,"time_to_first_token_ms":91.13,"total_time_ms":365.52,"prefill_tps":1580.16,"decode_tps":91.11,"ram_usage_mb":202.54,"prefill_tokens":144,"decode_tokens":26,"total_tokens":170}
-=== CONFIDENCE: 0.9825
+{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly help with that! To find Bob, could you please provide his name?","function_calls":[],"confidence":0.9841,"time_to_first_token_ms":90.25,"total_time_ms":302.27,"prefill_tps":1794.95,"decode_tps":80.18,"ram_usage_mb":202.79,"prefill_tokens":162,"decode_tokens":18,"total_tokens":180}
+=== CONFIDENCE: 0.9841
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Find Bob in my contacts.'}]
 Expected 1 function calls, got 0
 Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Bob'}}], Got: [], F1=0.00
-F1=0.00 | 366ms | on-device
+F1=0.00 | 302ms | on-device
 [10/30] Running: weather_paris (easy)... SPLIT RESULTS
-[[{'role': 'user', 'content': "Request - How's the weather in Paris?"}], [{'role': 'user', 'content': ' Task - Find Paris’ weather  '}]]
+[[{'role': 'user', 'content': "How's the weather in Paris?"}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': "Request - How's the weather in Paris?"}]
+[{'role': 'user', 'content': "How's the weather in Paris?"}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Paris"}}],"confidence":1.0000,"time_to_first_token_ms":83.71,"total_time_ms":207.25,"prefill_tps":1672.42,"decode_tps":97.14,"ram_usage_mb":203.88,"prefill_tokens":140,"decode_tokens":13,"total_tokens":153}
-SUBTASK: 1
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': ' Task - Find Paris’ weather  '}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Paris"}}],"confidence":1.0000,"time_to_first_token_ms":85.23,"total_time_ms":215.17,"prefill_tps":1666.12,"decode_tps":92.35,"ram_usage_mb":203.63,"prefill_tokens":142,"decode_tokens":13,"total_tokens":155}
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Paris"}}],"confidence":1.0000,"time_to_first_token_ms":89.77,"total_time_ms":241.03,"prefill_tps":1804.69,"decode_tps":79.33,"ram_usage_mb":201.74,"prefill_tokens":162,"decode_tokens":13,"total_tokens":175}
 === CONFIDENCE: 1
 ===== MESSAGES 
  [{'role': 'user', 'content': "How's the weather in Paris?"}]
-Expected 1 function calls, got 2
-Expected: [{'name': 'get_weather', 'arguments': {'location': 'Paris'}}], Got: [{'name': 'get_weather', 'arguments': {'location': 'Paris'}}, {'name': 'get_weather', 'arguments': {'location': 'Paris'}}], F1=0.67
-F1=0.67 | 422ms | on-device
+F1=1.00 | 241ms | on-device
 [11/30] Running: message_among_three (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Send a message to John saying hello.'}]]
+[[{'role': 'user', 'content': 'Send a message to John saying hello.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Send a message to John saying hello.'}]
+[{'role': 'user', 'content': 'Send a message to John saying hello.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I need to know who John is talking to before I can send that message. Could you please specify his recipient or name?","function_calls":[],"confidence":0.9737,"time_to_first_token_ms":194.28,"total_time_ms":483.62,"prefill_tps":1281.66,"decode_tps":82.95,"ram_usage_mb":210.22,"prefill_tokens":249,"decode_tokens":25,"total_tokens":274}
-=== CONFIDENCE: 0.9737
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"send_message","arguments":{"message":"Hi John, I hope you'доброжела!","recipient":"John"}}],"confidence":0.9519,"time_to_first_token_ms":207.43,"total_time_ms":561.26,"prefill_tps":1296.82,"decode_tps":79.13,"ram_usage_mb":208.80,"prefill_tokens":269,"decode_tokens":29,"total_tokens":298}
+=== CONFIDENCE: 0.9519
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Send a message to John saying hello.'}]
-Expected 1 function calls, got 0
-Expected: [{'name': 'send_message', 'arguments': {'recipient': 'John', 'message': 'hello'}}], Got: [], F1=0.00
-F1=0.00 | 484ms | on-device
+Expected: [{'name': 'send_message', 'arguments': {'recipient': 'John', 'message': 'hello'}}], Got: [{'name': 'send_message', 'arguments': {'message': "Hi John, I hope you'доброжела!", 'recipient': 'John'}}], F1=0.00
+F1=0.00 | 561ms | on-device
 [12/30] Running: weather_among_two (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Request 1 : Get the current weather in Tokyo .'}], [{'role': 'user', 'content': 'Task 2 : Get the current weather in Tokyo .'}]]
+[[{'role': 'user', 'content': "What's the weather in Tokyo?"}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Request 1 : Get the current weather in Tokyo .'}]
+[{'role': 'user', 'content': "What's the weather in Tokyo?"}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Tokyo"}}],"confidence":1.0000,"time_to_first_token_ms":115.87,"total_time_ms":277.05,"prefill_tps":1898.71,"decode_tps":74.45,"ram_usage_mb":209.30,"prefill_tokens":220,"decode_tokens":13,"total_tokens":233}
-SUBTASK: 1
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 2 : Get the current weather in Tokyo .'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Tokyo"}}],"confidence":1.0000,"time_to_first_token_ms":116.56,"total_time_ms":281.44,"prefill_tps":1887.39,"decode_tps":72.78,"ram_usage_mb":209.05,"prefill_tokens":220,"decode_tokens":13,"total_tokens":233}
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Tokyo"}}],"confidence":1.0000,"time_to_first_token_ms":134.25,"total_time_ms":283.41,"prefill_tps":1795.21,"decode_tps":80.45,"ram_usage_mb":209.66,"prefill_tokens":241,"decode_tokens":13,"total_tokens":254}
 === CONFIDENCE: 1
 ===== MESSAGES 
  [{'role': 'user', 'content': "What's the weather in Tokyo?"}]
-Expected 1 function calls, got 2
-Expected: [{'name': 'get_weather', 'arguments': {'location': 'Tokyo'}}], Got: [{'name': 'get_weather', 'arguments': {'location': 'Tokyo'}}, {'name': 'get_weather', 'arguments': {'location': 'Tokyo'}}], F1=0.67
-F1=0.67 | 558ms | on-device
+F1=1.00 | 283ms | on-device
 [13/30] Running: alarm_among_three (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1：Set an alarm for 8 AM'}]]
+[[{'role': 'user', 'content': 'Set an alarm for 8:15 AM.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1：Set an alarm for 8 AM'}]
+[{'role': 'user', 'content': 'Set an alarm for 8:15 AM.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":8,"minute":060}}],"confidence":0.9937,"time_to_first_token_ms":165.90,"total_time_ms":388.03,"prefill_tps":1513.00,"decode_tps":72.03,"ram_usage_mb":211.05,"prefill_tokens":251,"decode_tokens":17,"total_tokens":268}
-=== CONFIDENCE: 0
-F1=1.00 | 867ms | cloud (fallback)
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":-4,"minute":30}}],"confidence":0.9933,"time_to_first_token_ms":203.20,"total_time_ms":387.33,"prefill_tps":1338.56,"decode_tps":81.47,"ram_usage_mb":210.97,"prefill_tokens":272,"decode_tokens":16,"total_tokens":288}
+=== CONFIDENCE: 0.9933
+===== MESSAGES 
+ [{'role': 'user', 'content': 'Set an alarm for 8:15 AM.'}]
+Expected: [{'name': 'set_alarm', 'arguments': {'hour': 8, 'minute': 15}}], Got: [{'name': 'set_alarm', 'arguments': {'hour': -4, 'minute': 30}}], F1=0.00
+F1=0.00 | 387ms | on-device
 [14/30] Running: music_among_three (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1：Play some jazz music.'}]]
+[[{'role': 'user', 'content': 'Play some jazz music.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1：Play some jazz music.'}]
+[{'role': 'user', 'content': 'Play some jazz music.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I would be happy to help with Task 1! To generate relevant requests, could you please specify the specific song or playlist you are interested in?","function_calls":[],"confidence":0.9732,"time_to_first_token_ms":147.99,"total_time_ms":532.51,"prefill_tps":1493.36,"decode_tps":75.42,"ram_usage_mb":212.18,"prefill_tokens":221,"decode_tokens":30,"total_tokens":251}
-=== CONFIDENCE: 0.9732
+{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly suggest some options for your playlist. Could you please specify the name of the song or playlist you would like to play?","function_calls":[],"confidence":0.9791,"time_to_first_token_ms":173.66,"total_time_ms":490.67,"prefill_tps":1370.45,"decode_tps":82.02,"ram_usage_mb":209.76,"prefill_tokens":238,"decode_tokens":27,"total_tokens":265}
+=== CONFIDENCE: 0.9791
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Play some jazz music.'}]
 Expected 1 function calls, got 0
 Expected: [{'name': 'play_music', 'arguments': {'song': 'jazz'}}], Got: [], F1=0.00
-F1=0.00 | 533ms | on-device
+F1=0.00 | 491ms | on-device
 [15/30] Running: reminder_among_four (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1 : Remind me to call the dentist at 2 PM'}]]
+[[{'role': 'user', 'content': 'Remind me to call the dentist at 2:00 PM.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1 : Remind me to call the dentist at 2 PM'}]
+[{'role': 'user', 'content': 'Remind me to call the dentist at 2:00 PM.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"create_reminder","arguments":{"time":"2024-9-7","title":"Call the Dentist"}}],"confidence":0.9929,"time_to_first_token_ms":179.68,"total_time_ms":537.16,"prefill_tps":1441.49,"decode_tps":75.53,"ram_usage_mb":212.43,"prefill_tokens":259,"decode_tokens":28,"total_tokens":287}
-=== CONFIDENCE: 0.9929
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"create_reminder","arguments":{"time":"2023-9-7T14T00:00:05"}}],"confidence":0.9856,"time_to_first_token_ms":196.06,"total_time_ms":609.88,"prefill_tps":1443.46,"decode_tps":74.91,"ram_usage_mb":210.97,"prefill_tokens":283,"decode_tokens":32,"total_tokens":315}
+=== CONFIDENCE: 0.9856
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Remind me to call the dentist at 2:00 PM.'}]
-Expected: [{'name': 'create_reminder', 'arguments': {'title': 'call the dentist', 'time': '2:00 PM'}}], Got: [{'name': 'create_reminder', 'arguments': {'time': '2024-9-7', 'title': 'Call the Dentist'}}], F1=0.00
-F1=0.00 | 537ms | on-device
+Expected: [{'name': 'create_reminder', 'arguments': {'title': 'call the dentist', 'time': '2:00 PM'}}], Got: [{'name': 'create_reminder', 'arguments': {'time': '2023-9-7T14T00:00:05'}}], F1=0.00
+F1=0.00 | 610ms | on-device
 [16/30] Running: timer_among_three (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1:\\nSet a timer for 10 minutes.'}]]
+[[{'role': 'user', 'content': 'Set a timer for 10 minutes.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1:\\nSet a timer for 10 minutes.'}]
+[{'role': 'user', 'content': 'Set a timer for 10 minutes.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_timer","arguments":{"minutes":300}}],"confidence":1.0000,"time_to_first_token_ms":140.04,"total_time_ms":299.17,"prefill_tps":1578.12,"decode_tps":75.41,"ram_usage_mb":213.83,"prefill_tokens":221,"decode_tokens":13,"total_tokens":234}
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_timer","arguments":{"minutes":10}}],"confidence":1.0000,"time_to_first_token_ms":170.01,"total_time_ms":310.51,"prefill_tps":1411.67,"decode_tps":78.29,"ram_usage_mb":210.76,"prefill_tokens":240,"decode_tokens":12,"total_tokens":252}
 === CONFIDENCE: 1
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Set a timer for 10 minutes.'}]
-Expected: [{'name': 'set_timer', 'arguments': {'minutes': 10}}], Got: [{'name': 'set_timer', 'arguments': {'minutes': 300}}], F1=0.00
-F1=0.00 | 299ms | on-device
+F1=1.00 | 311ms | on-device
 [17/30] Running: search_among_four (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Request None'}]]
+[[{'role': 'user', 'content': 'Look up Sarah in my contacts.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'search_contacts', 'description': 'Search for a contact by name', 'parameters': {'type': 'object', 'properties': {'query': {'type': 'string', 'description': 'Name to search for'}}, 'required': ['query']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Request None'}]
+[{'role': 'user', 'content': 'Look up Sarah in my contacts.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with managing or querying weather information. My current capabilities are limited to assisting with tasks related to weather analysis and setting alarms using the provided tools. I cannot provide access to external services or data regarding geographical conditions like weather.","function_calls":[],"confidence":0.9614,"time_to_first_token_ms":165.19,"total_time_ms":751.70,"prefill_tps":1271.23,"decode_tps":83.55,"ram_usage_mb":214.08,"prefill_tokens":210,"decode_tokens":50,"total_tokens":260}
-=== CONFIDENCE: 0.9614
+{"success":true,"error":null,"cloud_handoff":false,"response":"Could you please provide Sarah'replaceable name so I can look it up?","function_calls":[],"confidence":0.9247,"time_to_first_token_ms":168.01,"total_time_ms":338.11,"prefill_tps":1267.80,"decode_tps":82.30,"ram_usage_mb":209.72,"prefill_tokens":213,"decode_tokens":15,"total_tokens":228}
+=== CONFIDENCE: 0.9247
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Look up Sarah in my contacts.'}]
 Expected 1 function calls, got 0
 Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Sarah'}}], Got: [], F1=0.00
-F1=0.00 | 752ms | on-device
+F1=0.00 | 338ms | on-device
 [18/30] Running: weather_among_four (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': "Task 1：What's the weather in Berlin?"}]]
+[[{'role': 'user', 'content': "What's the weather in Berlin?"}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': "Task 1：What's the weather in Berlin?"}]
+[{'role': 'user', 'content': "What's the weather in Berlin?"}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist you with finding real-time weather information for specific cities like Berlin due to my current limitations as a language model focused on music and alarm control tools. My available functions are designed for specific tasks such as playing music and setting alarms. You would need direct access to a meteorological website or service for that information.","function_calls":[],"confidence":0.9746,"time_to_first_token_ms":174.93,"total_time_ms":954.99,"prefill_tps":1280.52,"decode_tps":85.89,"ram_usage_mb":211.58,"prefill_tokens":224,"decode_tokens":68,"total_tokens":292}
-=== CONFIDENCE: 0.9746
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Berlin"}}],"confidence":1.0000,"time_to_first_token_ms":165.47,"total_time_ms":304.95,"prefill_tps":1287.26,"decode_tps":86.03,"ram_usage_mb":211.37,"prefill_tokens":213,"decode_tokens":13,"total_tokens":226}
+=== CONFIDENCE: 1
 ===== MESSAGES 
  [{'role': 'user', 'content': "What's the weather in Berlin?"}]
-Expected 1 function calls, got 0
-Expected: [{'name': 'get_weather', 'arguments': {'location': 'Berlin'}}], Got: [], F1=0.00
-F1=0.00 | 955ms | on-device
+F1=1.00 | 305ms | on-device
 [19/30] Running: message_among_four (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Text Dave saying I’ll be late'}]]
+[[{'role': 'user', 'content': "Text Dave saying I'll be late."}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Text Dave saying I’ll be late'}]
+[{'role': 'user', 'content': "Text Dave saying I'll be late."}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but none of the available tools can directly process text messages or manage calendar reminders related to tasks like \"Text Dave saying I'ponder\" without specific context or external services. My current capabilities are limited to managing communication through these specified functions.","function_calls":[],"confidence":0.9344,"time_to_first_token_ms":178.49,"total_time_ms":734.65,"prefill_tps":1260.57,"decode_tps":88.10,"ram_usage_mb":214.24,"prefill_tokens":225,"decode_tokens":50,"total_tokens":275}
-=== CONFIDENCE: 0.9344
+{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with drafting or generating text related to contacting someone via text messages. My current capabilities are focused on managing timers and sending messages using these specific tools. I cannot generate professional or offensive language regarding personal interactions like Dave's statement of being late.","function_calls":[],"confidence":0.9611,"time_to_first_token_ms":163.34,"total_time_ms":870.01,"prefill_tps":1475.42,"decode_tps":76.42,"ram_usage_mb":210.80,"prefill_tokens":241,"decode_tokens":55,"total_tokens":296}
+=== CONFIDENCE: 0.9611
 ===== MESSAGES 
  [{'role': 'user', 'content': "Text Dave saying I'll be late."}]
 Expected 1 function calls, got 0
 Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Dave', 'message': "I'll be late"}}], Got: [], F1=0.00
-F1=0.00 | 735ms | on-device
+F1=0.00 | 870ms | on-device
 [20/30] Running: alarm_among_five (medium)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Set an alarm for 9 AM'}]]
+[[{'role': 'user', 'content': 'Set an alarm for 9 AM.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Set an alarm for 9 AM'}]
+[{'role': 'user', 'content': 'Set an alarm for 9 AM.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":9,"minute":0}}],"confidence":0.9959,"time_to_first_token_ms":173.70,"total_time_ms":364.94,"prefill_tps":1427.77,"decode_tps":73.21,"ram_usage_mb":212.79,"prefill_tokens":248,"decode_tokens":15,"total_tokens":263}
-=== CONFIDENCE: 0.9959
-===== MESSAGES 
- [{'role': 'user', 'content': 'Set an alarm for 9 AM.'}]
-F1=1.00 | 365ms | on-device
-[21/30] Running: message_and_weather (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Send a message to Bob saying hi'}], [{'role': 'user', 'content': ' Task 2: Get the weather in London'}]]
-SUBTASK: 0
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Send a message to Bob saying hi'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"send_message","arguments":{"message":"Hi, Bob! Welcome wave.","recipient":"Bob's email address"}}],"confidence":0.9835,"time_to_first_token_ms":164.90,"total_time_ms":547.09,"prefill_tps":1503.92,"decode_tps":73.26,"ram_usage_mb":213.97,"prefill_tokens":248,"decode_tokens":29,"total_tokens":277}
-SUBTASK: 1
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': ' Task 2: Get the weather in London'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location：<escape>London<escape>}":}}],"confidence":1.0000,"time_to_first_token_ms":130.85,"total_time_ms":293.29,"prefill_tps":1666.07,"decode_tps":73.87,"ram_usage_mb":213.97,"prefill_tokens":218,"decode_tokens":13,"total_tokens":231}
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":9,"minute":0600}}],"confidence":0.9877,"time_to_first_token_ms":170.46,"total_time_ms":403.69,"prefill_tps":1402.06,"decode_tps":72.89,"ram_usage_mb":212.54,"prefill_tokens":239,"decode_tokens":18,"total_tokens":257}
 === CONFIDENCE: 0
-Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Bob', 'message': 'hi'}}, {'name': 'get_weather', 'arguments': {'location': 'London'}}], Got: [{'name': 'send_message', 'arguments': {'recipient': 'Bob', 'message': 'Hi'}}, {'name': 'get_weather', 'arguments': {'location': 'London'}}], F1=1.00
-F1=1.00 | 1291ms | cloud (fallback)
+F1=1.00 | 1192ms | cloud (fallback)
+[21/30] Running: message_and_weather (hard)... SPLIT RESULTS
+[[{'role': 'user', 'content': 'Send a message to Bob saying hi '}], [{'role': 'user', 'content': ' get the weather in London.'}]]
+SUBTASK: 0
+=====>SUBTASK TOOLS
+[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
+======>SUBTASK MESSAGES
+[{'role': 'user', 'content': 'Send a message to Bob saying hi '}]
+R=====> SUBTASK RAW RESPONSE
+{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly draft such a message for you. To send it, could you please provide the recipient's name?","function_calls":[],"confidence":0.9764,"time_to_first_token_ms":170.24,"total_time_ms":464.88,"prefill_tps":1580.14,"decode_tps":78.06,"ram_usage_mb":215.54,"prefill_tokens":269,"decode_tokens":24,"total_tokens":293}
+SUBTASK: 1
+=====>SUBTASK TOOLS
+[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
+======>SUBTASK MESSAGES
+[{'role': 'user', 'content': ' get the weather in London.'}]
+R=====> SUBTASK RAW RESPONSE
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"London"}}],"confidence":1.0000,"time_to_first_token_ms":122.01,"total_time_ms":296.50,"prefill_tps":1958.82,"decode_tps":68.77,"ram_usage_mb":215.41,"prefill_tokens":239,"decode_tokens":13,"total_tokens":252}
+=== CONFIDENCE: 0.9764
+===== MESSAGES 
+ [{'role': 'user', 'content': 'Send a message to Bob saying hi and get the weather in London.'}]
+Expected 2 function calls, got 1
+Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Bob', 'message': 'hi'}}, {'name': 'get_weather', 'arguments': {'location': 'London'}}], Got: [{'name': 'get_weather', 'arguments': {'location': 'London'}}], F1=0.67
+F1=0.67 | 761ms | on-device
 [22/30] Running: alarm_and_weather (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1 : Set an alarm for 7 AM'}], [{'role': 'user', 'content': 'Task 2 : Check the weather in New York'}]]
+[[{'role': 'user', 'content': 'Set an alarm for 7:30 AM '}], [{'role': 'user', 'content': ' check the weather in New York.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1 : Set an alarm for 7 AM'}]
+[{'role': 'user', 'content': 'Set an alarm for 7:30 AM '}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":-7,"minute":-2}}],"confidence":0.9977,"time_to_first_token_ms":161.64,"total_time_ms":357.83,"prefill_tps":1534.28,"decode_tps":71.36,"ram_usage_mb":215.40,"prefill_tokens":248,"decode_tokens":15,"total_tokens":263}
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":-4,"minute":30}}],"confidence":0.9950,"time_to_first_token_ms":175.43,"total_time_ms":379.87,"prefill_tps":1550.50,"decode_tps":73.37,"ram_usage_mb":216.88,"prefill_tokens":272,"decode_tokens":16,"total_tokens":288}
 SUBTASK: 1
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 2 : Check the weather in New York'}]
+[{'role': 'user', 'content': ' check the weather in New York.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly help with that. Could you please specify the location you would like me to check the current weather for?","function_calls":[],"confidence":0.9832,"time_to_first_token_ms":124.22,"total_time_ms":429.76,"prefill_tps":1763.02,"decode_tps":75.28,"ram_usage_mb":215.40,"prefill_tokens":219,"decode_tokens":24,"total_tokens":243}
-=== CONFIDENCE: 0.9832
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"New York"}}],"confidence":0.9999,"time_to_first_token_ms":125.36,"total_time_ms":293.57,"prefill_tps":1914.43,"decode_tps":77.29,"ram_usage_mb":216.90,"prefill_tokens":240,"decode_tokens":14,"total_tokens":254}
+=== CONFIDENCE: 0.995
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Set an alarm for 7:30 AM and check the weather in New York.'}]
-Expected 2 function calls, got 1
-Expected: [{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}, {'name': 'get_weather', 'arguments': {'location': 'New York'}}], Got: [{'name': 'set_alarm', 'arguments': {'hour': -7, 'minute': -2}}], F1=0.00
-F1=0.00 | 788ms | on-device
+Expected: [{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}, {'name': 'get_weather', 'arguments': {'location': 'New York'}}], Got: [{'name': 'set_alarm', 'arguments': {'hour': -4, 'minute': 30}}, {'name': 'get_weather', 'arguments': {'location': 'New York'}}], F1=0.50
+F1=0.50 | 673ms | on-device
 [23/30] Running: timer_and_music (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Set a timer for 20 minutes'}], [{'role': 'user', 'content': 'Task 2 &amp;3：Play lo-fi beats'}]]
+[[{'role': 'user', 'content': 'Set a timer for 20 minutes '}], [{'role': 'user', 'content': ' play lo-fi beats.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Set a timer for 20 minutes'}]
+[{'role': 'user', 'content': 'Set a timer for 20 minutes '}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I need your desired time to set up this task. Could you please provide your preferred hour and minute?","function_calls":[],"confidence":0.9715,"time_to_first_token_ms":157.13,"total_time_ms":416.29,"prefill_tps":1400.11,"decode_tps":77.17,"ram_usage_mb":216.30,"prefill_tokens":220,"decode_tokens":21,"total_tokens":241}
+{"success":true,"error":null,"cloud_handoff":false,"response":"I cannot directly set timers with my current tools. I can help manage alarms or play music if you have specific requests related to those functions. Could you please specify what time you would like to set the timer for?","function_calls":[],"confidence":0.9705,"time_to_first_token_ms":164.38,"total_time_ms":740.45,"prefill_tps":1472.23,"decode_tps":72.91,"ram_usage_mb":216.22,"prefill_tokens":242,"decode_tokens":43,"total_tokens":285}
 SUBTASK: 1
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 2 &amp;3：Play lo-fi beats'}]
+[{'role': 'user', 'content': ' play lo-fi beats.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with tasks related to music playback or generating specific programming requests. My current capabilities are limited to assisting with managing tools such as playing music and setting timers using the provided functions. I cannot generate code or perform complex programming assistance in natural language.","function_calls":[],"confidence":0.9578,"time_to_first_token_ms":115.72,"total_time_ms":747.89,"prefill_tps":1693.73,"decode_tps":83.84,"ram_usage_mb":217.13,"prefill_tokens":196,"decode_tokens":54,"total_tokens":250}
-=== CONFIDENCE: 0.9578
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"play_music","arguments":{"song":"lo-fi beats"}}],"confidence":0.9988,"time_to_first_token_ms":124.31,"total_time_ms":323.72,"prefill_tps":1689.28,"decode_tps":75.22,"ram_usage_mb":216.22,"prefill_tokens":210,"decode_tokens":16,"total_tokens":226}
+=== CONFIDENCE: 0.9705
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Set a timer for 20 minutes and play lo-fi beats.'}]
-Expected 2 function calls, got 0
-Expected: [{'name': 'set_timer', 'arguments': {'minutes': 20}}, {'name': 'play_music', 'arguments': {'song': 'lo-fi beats'}}], Got: [], F1=0.00
-F1=0.00 | 1164ms | on-device
+Expected 2 function calls, got 1
+Expected: [{'name': 'set_timer', 'arguments': {'minutes': 20}}, {'name': 'play_music', 'arguments': {'song': 'lo-fi beats'}}], Got: [{'name': 'play_music', 'arguments': {'song': 'lo-fi beats'}}], F1=0.67
+F1=0.67 | 1064ms | on-device
 [24/30] Running: reminder_and_message (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Remind me about groceries at 5:00 PM'}], [{'role': 'user', 'content': ' Task 2: Text Lisa saying see you tonight'}]]
+[[{'role': 'user', 'content': 'Remind me about groceries at 5:00 PM '}], [{'role': 'user', 'content': ' text Lisa saying see you tonight.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Remind me about groceries at 5:00 PM'}]
+[{'role': 'user', 'content': 'Remind me about groceries at 5:00 PM '}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"create_reminder","arguments":{"time":"2024-10-31T17:30:00","title":"Grocery Reminder"}}],"confidence":0.9956,"time_to_first_token_ms":211.14,"total_time_ms":644.73,"prefill_tps":1231.41,"decode_tps":85.33,"ram_usage_mb":218.87,"prefill_tokens":260,"decode_tokens":38,"total_tokens":298}
+{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with managing your personal reminders or scheduling grocery appointments right now. My current capabilities are limited to assisting with weather and communication tasks using these tools. I recommend contacting them directly for assistance regarding grocery management or other relevant services.","function_calls":[],"confidence":0.9604,"time_to_first_token_ms":437.92,"total_time_ms":1019.94,"prefill_tps":561.75,"decode_tps":84.19,"ram_usage_mb":237.76,"prefill_tokens":246,"decode_tokens":50,"total_tokens":296}
 SUBTASK: 1
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': ' Task 2: Text Lisa saying see you tonight'}]
+[{'role': 'user', 'content': ' text Lisa saying see you tonight.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I am sorry, but I cannot assist with drafting text updates for task two regarding \"Lisa\" and \"see you tonight.\" My current capabilities are focused on managing reminders and creating them using the specified tools. I can not generate or draft such content.","function_calls":[],"confidence":0.9740,"time_to_first_token_ms":157.07,"total_time_ms":724.30,"prefill_tps":1617.13,"decode_tps":86.38,"ram_usage_mb":218.87,"prefill_tokens":254,"decode_tokens":50,"total_tokens":304}
-=== CONFIDENCE: 0.974
+{"success":true,"error":null,"cloud_handoff":false,"response":"I am sorry, but I cannot assist with writing personalized messages or composing text based on specific requests like \"Lisa saying see you tonight.\" My current capabilities are focused on managing alarms and creating reminders using the provided tools. I can help set alarms for specific times if you provide those details.","function_calls":[],"confidence":0.9705,"time_to_first_token_ms":188.65,"total_time_ms":875.30,"prefill_tps":1452.46,"decode_tps":81.55,"ram_usage_mb":235.19,"prefill_tokens":274,"decode_tokens":57,"total_tokens":331}
+=== CONFIDENCE: 0.9604
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Remind me about groceries at 5:00 PM and text Lisa saying see you tonight.'}]
-Expected 2 function calls, got 1
-Expected: [{'name': 'create_reminder', 'arguments': {'title': 'groceries', 'time': '5:00 PM'}}, {'name': 'send_message', 'arguments': {'recipient': 'Lisa', 'message': 'see you tonight'}}], Got: [{'name': 'create_reminder', 'arguments': {'time': '2024-10-31T17:30:00', 'title': 'Grocery Reminder'}}], F1=0.00
-F1=0.00 | 1369ms | on-device
+Expected 2 function calls, got 0
+Expected: [{'name': 'create_reminder', 'arguments': {'title': 'groceries', 'time': '5:00 PM'}}, {'name': 'send_message', 'arguments': {'recipient': 'Lisa', 'message': 'see you tonight'}}], Got: [], F1=0.00
+F1=0.00 | 1895ms | on-device
 [25/30] Running: search_and_message (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1 : Find Tom in my contacts'}], [{'role': 'user', 'content': 'Task 2 : Send Tom a message that says happy birthday'}]]
+[[{'role': 'user', 'content': 'Find Tom in my contacts '}], [{'role': 'user', 'content': ' send him a message saying happy birthday.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'search_contacts', 'description': 'Search for a contact by name', 'parameters': {'type': 'object', 'properties': {'query': {'type': 'string', 'description': 'Name to search for'}}, 'required': ['query']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1 : Find Tom in my contacts'}]
+[{'role': 'user', 'content': 'Find Tom in my contacts '}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I need to know the name of the person you would like me to search for in your contacts. Could you please provide their name?","function_calls":[],"confidence":0.9777,"time_to_first_token_ms":176.09,"total_time_ms":463.75,"prefill_tps":1238.00,"decode_tps":90.39,"ram_usage_mb":218.27,"prefill_tokens":218,"decode_tokens":27,"total_tokens":245}
+{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with locating contacts or finding individuals within organizations like Tom'agiarism. My current capabilities are limited to assisting with tasks such as managing music playlists and retrieving weather information using the provided tools.","function_calls":[],"confidence":0.9551,"time_to_first_token_ms":165.22,"total_time_ms":626.36,"prefill_tps":1277.08,"decode_tps":91.08,"ram_usage_mb":240.27,"prefill_tokens":211,"decode_tokens":43,"total_tokens":254}
 SUBTASK: 1
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'search_contacts', 'description': 'Search for a contact by name', 'parameters': {'type': 'object', 'properties': {'query': {'type': 'string', 'description': 'Name to search for'}}, 'required': ['query']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 2 : Send Tom a message that says happy birthday'}]
+[{'role': 'user', 'content': ' send him a message saying happy birthday.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"send_message","arguments":{"message":"Happy Birthday Tom!","recipient":"Tom@example.com"}}],"confidence":0.9907,"time_to_first_token_ms":138.11,"total_time_ms":414.45,"prefill_tps":1600.19,"decode_tps":90.47,"ram_usage_mb":218.27,"prefill_tokens":221,"decode_tokens":26,"total_tokens":247}
-=== CONFIDENCE: 0.9777
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"send_message","arguments":{"message":"Happy Birthday","recipient":"John Doe"}}],"confidence":0.9878,"time_to_first_token_ms":150.52,"total_time_ms":387.97,"prefill_tps":1614.39,"decode_tps":84.23,"ram_usage_mb":240.16,"prefill_tokens":243,"decode_tokens":21,"total_tokens":264}
+=== CONFIDENCE: 0.9551
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Find Tom in my contacts and send him a message saying happy birthday.'}]
 Expected 2 function calls, got 1
-Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}, {'name': 'send_message', 'arguments': {'recipient': 'Tom', 'message': 'happy birthday'}}], Got: [{'name': 'send_message', 'arguments': {'message': 'Happy Birthday Tom!', 'recipient': 'Tom@example.com'}}], F1=0.00
-F1=0.00 | 878ms | on-device
+Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}, {'name': 'send_message', 'arguments': {'recipient': 'Tom', 'message': 'happy birthday'}}], Got: [{'name': 'send_message', 'arguments': {'message': 'Happy Birthday', 'recipient': 'John Doe'}}], F1=0.00
+F1=0.00 | 1014ms | on-device
 [26/30] Running: alarm_and_reminder (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Set an alarm for 6:45 AM'}], [{'role': 'user', 'content': 'Task 2: Remind me to take medicine at 7:00 AM'}]]
+[[{'role': 'user', 'content': 'Set an alarm for 6:45 AM '}], [{'role': 'user', 'content': ' remind me to take medicine at 7:00 AM.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Set an alarm for 6:45 AM'}]
+[{'role': 'user', 'content': 'Set an alarm for 6:45 AM '}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with setting up or managing alarms as requested by this tool. My current capabilities are limited to assisting with managing reminders using the specified tools. I cannot generate or configure personal alarms or manage schedules.","function_calls":[],"confidence":0.9689,"time_to_first_token_ms":180.30,"total_time_ms":770.27,"prefill_tps":1430.92,"decode_tps":74.58,"ram_usage_mb":217.74,"prefill_tokens":258,"decode_tokens":45,"total_tokens":303}
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":6,"minute":45}}],"confidence":0.9965,"time_to_first_token_ms":165.54,"total_time_ms":365.30,"prefill_tps":1473.94,"decode_tps":75.09,"ram_usage_mb":222.29,"prefill_tokens":244,"decode_tokens":16,"total_tokens":260}
 SUBTASK: 1
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 2: Remind me to take medicine at 7:00 AM'}]
+[{'role': 'user', 'content': ' remind me to take medicine at 7:00 AM.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"create_reminder","arguments":{"time":"2300 AM"}}],"confidence":0.9880,"time_to_first_token_ms":164.04,"total_time_ms":392.16,"prefill_tps":1591.09,"decode_tps":70.14,"ram_usage_mb":217.74,"prefill_tokens":261,"decode_tokens":17,"total_tokens":278}
-=== CONFIDENCE: 0.9689
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"create_reminder","arguments":{"time":"2300","title":"Take medicine"}}],"confidence":0.9921,"time_to_first_token_ms":177.85,"total_time_ms":486.04,"prefill_tps":1580.02,"decode_tps":71.38,"ram_usage_mb":222.22,"prefill_tokens":281,"decode_tokens":23,"total_tokens":304}
+=== CONFIDENCE: 0.9921
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Set an alarm for 6:45 AM and remind me to take medicine at 7:00 AM.'}]
-Expected 2 function calls, got 1
-Expected: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'title': 'take medicine', 'time': '7:00 AM'}}], Got: [{'name': 'create_reminder', 'arguments': {'time': '2300 AM'}}], F1=0.00
-F1=0.00 | 1162ms | on-device
+Expected: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'title': 'take medicine', 'time': '7:00 AM'}}], Got: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'time': '2300', 'title': 'Take medicine'}}], F1=0.50
+F1=0.50 | 851ms | on-device
 [27/30] Running: weather_and_music (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Request 1 : Check the weather in Miami'}], [{'role': 'user', 'content': ' Task 1 : Check the weather in Miami'}], [{'role': 'user', 'content': ' Request **2**: Play summer hits'}]]
+[[{'role': 'user', 'content': 'Check the weather in Miami '}], [{'role': 'user', 'content': ' play summer hits.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Request 1 : Check the weather in Miami'}]
+[{'role': 'user', 'content': 'Check the weather in Miami '}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Miami"}}],"confidence":1.0000,"time_to_first_token_ms":158.67,"total_time_ms":320.27,"prefill_tps":1373.93,"decode_tps":74.26,"ram_usage_mb":216.52,"prefill_tokens":218,"decode_tokens":13,"total_tokens":231}
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Miami"}}],"confidence":1.0000,"time_to_first_token_ms":161.86,"total_time_ms":324.42,"prefill_tps":1476.60,"decode_tps":73.82,"ram_usage_mb":217.90,"prefill_tokens":239,"decode_tokens":13,"total_tokens":252}
 SUBTASK: 1
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': ' Task 1 : Check the weather in Miami'}]
+[{'role': 'user', 'content': ' play summer hits.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"Could you please specify where you would like to check the current weather for?","function_calls":[],"confidence":0.9941,"time_to_first_token_ms":122.33,"total_time_ms":325.81,"prefill_tps":1782.01,"decode_tps":68.81,"ram_usage_mb":216.54,"prefill_tokens":218,"decode_tokens":15,"total_tokens":233}
-SUBTASK: 2
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': ' Request **2**: Play summer hits'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly help with that! To recommend suitable summer hits, could you please tell me which city or location you are interested in?","function_calls":[],"confidence":0.9848,"time_to_first_token_ms":108.44,"total_time_ms":447.84,"prefill_tps":1733.68,"decode_tps":76.61,"ram_usage_mb":216.54,"prefill_tokens":188,"decode_tokens":27,"total_tokens":215}
-=== CONFIDENCE: 0.9848
+{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly help with that. To play a song or playlist, could you please specify the name of the song or playlist you would like to play?","function_calls":[],"confidence":0.9775,"time_to_first_token_ms":141.17,"total_time_ms":531.31,"prefill_tps":1473.38,"decode_tps":76.90,"ram_usage_mb":217.90,"prefill_tokens":208,"decode_tokens":31,"total_tokens":239}
+=== CONFIDENCE: 0.9775
 ===== MESSAGES 
  [{'role': 'user', 'content': 'Check the weather in Miami and play summer hits.'}]
 Expected 2 function calls, got 1
 Expected: [{'name': 'get_weather', 'arguments': {'location': 'Miami'}}, {'name': 'play_music', 'arguments': {'song': 'summer hits'}}], Got: [{'name': 'get_weather', 'arguments': {'location': 'Miami'}}], F1=0.67
-F1=0.67 | 1094ms | on-device
+F1=0.67 | 856ms | on-device
 [28/30] Running: message_weather_alarm (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Text Emma saying good night'}], [{'role': 'user', 'content': 'Task 2: Check the weather in Chicago'}], [{'role': 'user', 'content': 'Task 3: set an alarm for 5 AM'}]]
+[[{'role': 'user', 'content': 'Text Emma saying good night, check the weather in Chicago, '}], [{'role': 'user', 'content': ' set an alarm for 5 AM.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Text Emma saying good night'}]
+[{'role': 'user', 'content': 'Text Emma saying good night, check the weather in Chicago, '}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"send_message","arguments":{"message":"good night","recipient":"emma@example.com"}}],"confidence":0.9955,"time_to_first_token_ms":153.33,"total_time_ms":454.27,"prefill_tps":1415.29,"decode_tps":76.43,"ram_usage_mb":217.02,"prefill_tokens":217,"decode_tokens":24,"total_tokens":241}
+{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with writing professional business correspondence such as checking the current weather in Chicago. My current capabilities are focused on managing tasks using specific tools like sending messages and setting alarms. I recommend contacting customer service directly for assistance with such inquiries.","function_calls":[],"confidence":0.9784,"time_to_first_token_ms":224.20,"total_time_ms":867.80,"prefill_tps":1222.10,"decode_tps":77.69,"ram_usage_mb":219.83,"prefill_tokens":274,"decode_tokens":51,"total_tokens":325}
 SUBTASK: 1
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 2: Check the weather in Chicago'}]
+[{'role': 'user', 'content': ' set an alarm for 5 AM.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location：<escape>Chicago<escape>}":}}],"confidence":1.0000,"time_to_first_token_ms":128.24,"total_time_ms":297.29,"prefill_tps":1699.88,"decode_tps":70.99,"ram_usage_mb":217.49,"prefill_tokens":218,"decode_tokens":13,"total_tokens":231}
-SUBTASK: 2
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 3: set an alarm for 5 AM'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":5,"minute":-2}}],"confidence":0.9978,"time_to_first_token_ms":141.14,"total_time_ms":342.34,"prefill_tps":1757.11,"decode_tps":69.58,"ram_usage_mb":217.49,"prefill_tokens":248,"decode_tokens":15,"total_tokens":263}
-=== CONFIDENCE: 0
-Expected 3 function calls, got 1
-Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Emma', 'message': 'good night'}}, {'name': 'get_weather', 'arguments': {'location': 'Chicago'}}, {'name': 'set_alarm', 'arguments': {'hour': 5, 'minute': 0}}], Got: [{'name': 'send_message', 'arguments': {'message': 'Good night', 'recipient': 'Emma'}}], F1=0.50
-F1=0.50 | 2060ms | cloud (fallback)
-[29/30] Running: timer_music_reminder (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1 : Set a 15 minute timer'}], [{'role': 'user', 'content': ' Task 2 : Play classical music'}], [{'role': 'user', 'content': ' Task 3 : remind me to stretch at ¼ PM'}]]
-SUBTASK: 0
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1 : Set a 15 minute timer'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with setting up or managing timers. My current capabilities are limited to assisting with managing reminders using the specified tools. I cannot generate or create custom timers.","function_calls":[],"confidence":0.9729,"time_to_first_token_ms":204.62,"total_time_ms":637.41,"prefill_tps":1246.19,"decode_tps":83.18,"ram_usage_mb":219.99,"prefill_tokens":255,"decode_tokens":37,"total_tokens":292}
-SUBTASK: 1
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': ' Task 2 : Play classical music'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly help you arrange for that! To initiate the playback of \"Classical Music,\" could you please specify the name of the song or playlist you would like me to play?","function_calls":[],"confidence":0.9785,"time_to_first_token_ms":131.19,"total_time_ms":523.42,"prefill_tps":1654.03,"decode_tps":89.23,"ram_usage_mb":220.02,"prefill_tokens":217,"decode_tokens":36,"total_tokens":253}
-SUBTASK: 2
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': ' Task 3 : remind me to stretch at ¼ PM'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I apologize, but I cannot assist with tasks related to exercising or rest demanding specific instructions like reminding oneself about exercising. My current capabilities are focused on assisting users by sending and retrieving relevant information using predefined tools such as sending messages and retrieving weather data. I recommend seeking assistance from a different source for this task once available again.","function_calls":[],"confidence":0.9700,"time_to_first_token_ms":140.17,"total_time_ms":873.91,"prefill_tps":1598.05,"decode_tps":85.86,"ram_usage_mb":220.96,"prefill_tokens":224,"decode_tokens":64,"total_tokens":288}
-=== CONFIDENCE: 0.97
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_alarm","arguments":{"hour":5,"minute":0}}],"confidence":0.9939,"time_to_first_token_ms":144.92,"total_time_ms":338.69,"prefill_tps":1649.19,"decode_tps":72.25,"ram_usage_mb":219.83,"prefill_tokens":239,"decode_tokens":15,"total_tokens":254}
+=== CONFIDENCE: 0.9784
 ===== MESSAGES 
- [{'role': 'user', 'content': 'Set a 15 minute timer, play classical music, and remind me to stretch at 4:00 PM.'}]
-Expected 3 function calls, got 0
-Expected: [{'name': 'set_timer', 'arguments': {'minutes': 15}}, {'name': 'play_music', 'arguments': {'song': 'classical music'}}, {'name': 'create_reminder', 'arguments': {'title': 'stretch', 'time': '4:00 PM'}}], Got: [], F1=0.00
-F1=0.00 | 2035ms | on-device
+ [{'role': 'user', 'content': 'Text Emma saying good night, check the weather in Chicago, and set an alarm for 5 AM.'}]
+Expected 3 function calls, got 1
+Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Emma', 'message': 'good night'}}, {'name': 'get_weather', 'arguments': {'location': 'Chicago'}}, {'name': 'set_alarm', 'arguments': {'hour': 5, 'minute': 0}}], Got: [{'name': 'set_alarm', 'arguments': {'hour': 5, 'minute': 0}}], F1=0.50
+F1=0.50 | 1206ms | on-device
+[29/30] Running: timer_music_reminder (hard)... SPLIT RESULTS
+[[{'role': 'user', 'content': 'Set a 15 minute timer, play classical music, '}], [{'role': 'user', 'content': ' remind me to stretch at 4:00 PM.'}]]
+SUBTASK: 0
+=====>SUBTASK TOOLS
+[{'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
+======>SUBTASK MESSAGES
+[{'role': 'user', 'content': 'Set a 15 minute timer, play classical music, '}]
+R=====> SUBTASK RAW RESPONSE
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"set_timer","arguments":{"minutes":-15}}],"confidence":0.9999,"time_to_first_token_ms":200.43,"total_time_ms":336.47,"prefill_tps":1252.33,"decode_tps":80.85,"ram_usage_mb":220.77,"prefill_tokens":251,"decode_tokens":12,"total_tokens":263}
+SUBTASK: 1
+=====>SUBTASK TOOLS
+[{'type': 'function', 'function': {'name': 'set_timer', 'description': 'Set a countdown timer', 'parameters': {'type': 'object', 'properties': {'minutes': {'type': 'integer', 'description': 'Number of minutes'}}, 'required': ['minutes']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}, {'type': 'function', 'function': {'name': 'create_reminder', 'description': 'Create a reminder with a title and time', 'parameters': {'type': 'object', 'properties': {'title': {'type': 'string', 'description': 'Reminder title'}, 'time': {'type': 'string', 'description': 'Time for the reminder (e.g. 3:00 PM)'}}, 'required': ['title', 'time']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}]
+======>SUBTASK MESSAGES
+[{'role': 'user', 'content': ' remind me to stretch at 4:00 PM.'}]
+R=====> SUBTASK RAW RESPONSE
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"create_reminder","arguments":{"time":"2024-9-7T16":","title":"Stretch at 4 PM"}}],"confidence":0.9941,"time_to_first_token_ms":176.55,"total_time_ms":568.76,"prefill_tps":1421.69,"decode_tps":84.14,"ram_usage_mb":220.79,"prefill_tokens":251,"decode_tokens":34,"total_tokens":285}
+=== CONFIDENCE: 0
+F1=1.00 | 1518ms | cloud (fallback)
 [30/30] Running: search_message_weather (hard)... SPLIT RESULTS
-[[{'role': 'user', 'content': 'Task 1: Look up Jake in my contacts'}], [{'role': 'user', 'content': "Task 2: Send Jake a message saying let's meet"}], [{'role': 'user', 'content': 'Task 3: Check the weather in Seattle'}]]
+[[{'role': 'user', 'content': "Look up Jake in my contacts, send him a message saying let's meet, "}], [{'role': 'user', 'content': ' check the weather in Seattle.'}]]
 SUBTASK: 0
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'search_contacts', 'description': 'Search for a contact by name', 'parameters': {'type': 'object', 'properties': {'query': {'type': 'string', 'description': 'Name to search for'}}, 'required': ['query']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 1: Look up Jake in my contacts'}]
+[{'role': 'user', 'content': "Look up Jake in my contacts, send him a message saying let's meet, "}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly help with that! To perform that, could you please specify who you would like me to look up Jake for?","function_calls":[],"confidence":0.9783,"time_to_first_token_ms":207.25,"total_time_ms":490.88,"prefill_tps":1191.80,"decode_tps":88.14,"ram_usage_mb":221.68,"prefill_tokens":247,"decode_tokens":26,"total_tokens":273}
+{"success":true,"error":null,"cloud_handoff":false,"response":"I can certainly help with that. Could you please provide the name of the person Jake should be contacting?","function_calls":[],"confidence":0.9840,"time_to_first_token_ms":252.72,"total_time_ms":502.62,"prefill_tps":1104.00,"decode_tps":80.03,"ram_usage_mb":223.16,"prefill_tokens":279,"decode_tokens":21,"total_tokens":300}
 SUBTASK: 1
 =====>SUBTASK TOOLS
 [{'type': 'function', 'function': {'name': 'search_contacts', 'description': 'Search for a contact by name', 'parameters': {'type': 'object', 'properties': {'query': {'type': 'string', 'description': 'Name to search for'}}, 'required': ['query']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
 ======>SUBTASK MESSAGES
-[{'role': 'user', 'content': "Task 2: Send Jake a message saying let's meet"}]
+[{'role': 'user', 'content': ' check the weather in Seattle.'}]
 R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"send_message","arguments":{"message":"let's meet","recipient":"john@example.com"}}],"confidence":0.9956,"time_to_first_token_ms":141.18,"total_time_ms":419.44,"prefill_tps":1572.44,"decode_tps":89.84,"ram_usage_mb":222.18,"prefill_tokens":222,"decode_tokens":26,"total_tokens":248}
-SUBTASK: 2
-=====>SUBTASK TOOLS
-[{'type': 'function', 'function': {'name': 'search_contacts', 'description': 'Search for a contact by name', 'parameters': {'type': 'object', 'properties': {'query': {'type': 'string', 'description': 'Name to search for'}}, 'required': ['query']}}}, {'type': 'function', 'function': {'name': 'send_message', 'description': 'Send a message to a contact', 'parameters': {'type': 'object', 'properties': {'recipient': {'type': 'string', 'description': 'Name of the person to send the message to'}, 'message': {'type': 'string', 'description': 'The message content to send'}}, 'required': ['recipient', 'message']}}}, {'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}, {'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}, {'type': 'function', 'function': {'name': 'play_music', 'description': 'Play a song or playlist', 'parameters': {'type': 'object', 'properties': {'song': {'type': 'string', 'description': 'Song or playlist name'}}, 'required': ['song']}}}]
-======>SUBTASK MESSAGES
-[{'role': 'user', 'content': 'Task 3: Check the weather in Seattle'}]
-R=====> SUBTASK RAW RESPONSE
-{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Seattle"}}],"confidence":0.9999,"time_to_first_token_ms":138.18,"total_time_ms":279.00,"prefill_tps":1577.68,"decode_tps":85.21,"ram_usage_mb":221.68,"prefill_tokens":218,"decode_tokens":13,"total_tokens":231}
-=== CONFIDENCE: 0.9783
+{"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[{"name":"get_weather","arguments":{"location":"Seattle"}}],"confidence":0.9999,"time_to_first_token_ms":154.68,"total_time_ms":297.14,"prefill_tps":1545.18,"decode_tps":84.23,"ram_usage_mb":223.16,"prefill_tokens":239,"decode_tokens":13,"total_tokens":252}
+=== CONFIDENCE: 0.984
 ===== MESSAGES 
  [{'role': 'user', 'content': "Look up Jake in my contacts, send him a message saying let's meet, and check the weather in Seattle."}]
-Expected 3 function calls, got 2
-Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}, {'name': 'send_message', 'arguments': {'recipient': 'Jake', 'message': "let's meet"}}, {'name': 'get_weather', 'arguments': {'location': 'Seattle'}}], Got: [{'name': 'send_message', 'arguments': {'message': "let's meet", 'recipient': 'john@example.com'}}, {'name': 'get_weather', 'arguments': {'location': 'Seattle'}}], F1=0.40
-F1=0.40 | 1189ms | on-device
+Expected 3 function calls, got 1
+Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}, {'name': 'send_message', 'arguments': {'recipient': 'Jake', 'message': "let's meet"}}, {'name': 'get_weather', 'arguments': {'location': 'Seattle'}}], Got: [{'name': 'get_weather', 'arguments': {'location': 'Seattle'}}], F1=0.50
+F1=0.50 | 800ms | on-device
 
 === Benchmark Results ===
 
    # | Difficulty | Name                         |  Time (ms) |    F1 | Source
   ---+------------+------------------------------+------------+-------+---------------------
-   1 | easy       | weather_sf                   |     219.44 |  1.00 | on-device
-   2 | easy       | alarm_10am                   |     276.02 |  1.00 | on-device
-   3 | easy       | message_alice                |     346.52 |  0.00 | on-device
-   4 | easy       | weather_london               |    1516.31 |  1.00 | cloud (fallback)
-   5 | easy       | alarm_6am                    |     661.09 |  0.00 | on-device
-   6 | easy       | play_bohemian                |     262.38 |  1.00 | on-device
-   7 | easy       | timer_5min                   |     197.23 |  1.00 | on-device
-   8 | easy       | reminder_meeting             |     551.87 |  0.00 | on-device
-   9 | easy       | search_bob                   |     365.52 |  0.00 | on-device
-  10 | easy       | weather_paris                |     422.42 |  0.67 | on-device
-  11 | medium     | message_among_three          |     483.62 |  0.00 | on-device
-  12 | medium     | weather_among_two            |     558.49 |  0.67 | on-device
-  13 | medium     | alarm_among_three            |     866.68 |  1.00 | cloud (fallback)
-  14 | medium     | music_among_three            |     532.51 |  0.00 | on-device
-  15 | medium     | reminder_among_four          |     537.16 |  0.00 | on-device
-  16 | medium     | timer_among_three            |     299.17 |  0.00 | on-device
-  17 | medium     | search_among_four            |     751.70 |  0.00 | on-device
-  18 | medium     | weather_among_four           |     954.99 |  0.00 | on-device
-  19 | medium     | message_among_four           |     734.65 |  0.00 | on-device
-  20 | medium     | alarm_among_five             |     364.94 |  1.00 | on-device
-  21 | hard       | message_and_weather          |    1290.81 |  1.00 | cloud (fallback)
-  22 | hard       | alarm_and_weather            |     787.59 |  0.00 | on-device
-  23 | hard       | timer_and_music              |    1164.18 |  0.00 | on-device
-  24 | hard       | reminder_and_message         |    1369.03 |  0.00 | on-device
-  25 | hard       | search_and_message           |     878.20 |  0.00 | on-device
-  26 | hard       | alarm_and_reminder           |    1162.43 |  0.00 | on-device
-  27 | hard       | weather_and_music            |    1093.92 |  0.67 | on-device
-  28 | hard       | message_weather_alarm        |    2060.31 |  0.50 | cloud (fallback)
-  29 | hard       | timer_music_reminder         |    2034.74 |  0.00 | on-device
-  30 | hard       | search_message_weather       |    1189.32 |  0.40 | on-device
+   1 | easy       | weather_sf                   |     242.14 |  1.00 | on-device
+   2 | easy       | alarm_10am                   |     305.30 |  0.00 | on-device
+   3 | easy       | message_alice                |     344.66 |  0.00 | on-device
+   4 | easy       | weather_london               |     248.99 |  1.00 | on-device
+   5 | easy       | alarm_6am                    |     686.56 |  0.00 | on-device
+   6 | easy       | play_bohemian                |     284.01 |  1.00 | on-device
+   7 | easy       | timer_5min                   |     207.22 |  0.00 | on-device
+   8 | easy       | reminder_meeting             |     463.43 |  0.00 | on-device
+   9 | easy       | search_bob                   |     302.27 |  0.00 | on-device
+  10 | easy       | weather_paris                |     241.03 |  1.00 | on-device
+  11 | medium     | message_among_three          |     561.26 |  0.00 | on-device
+  12 | medium     | weather_among_two            |     283.41 |  1.00 | on-device
+  13 | medium     | alarm_among_three            |     387.33 |  0.00 | on-device
+  14 | medium     | music_among_three            |     490.67 |  0.00 | on-device
+  15 | medium     | reminder_among_four          |     609.88 |  0.00 | on-device
+  16 | medium     | timer_among_three            |     310.51 |  1.00 | on-device
+  17 | medium     | search_among_four            |     338.11 |  0.00 | on-device
+  18 | medium     | weather_among_four           |     304.95 |  1.00 | on-device
+  19 | medium     | message_among_four           |     870.01 |  0.00 | on-device
+  20 | medium     | alarm_among_five             |    1192.31 |  1.00 | cloud (fallback)
+  21 | hard       | message_and_weather          |     761.38 |  0.67 | on-device
+  22 | hard       | alarm_and_weather            |     673.44 |  0.50 | on-device
+  23 | hard       | timer_and_music              |    1064.17 |  0.67 | on-device
+  24 | hard       | reminder_and_message         |    1895.24 |  0.00 | on-device
+  25 | hard       | search_and_message           |    1014.33 |  0.00 | on-device
+  26 | hard       | alarm_and_reminder           |     851.34 |  0.50 | on-device
+  27 | hard       | weather_and_music            |     855.73 |  0.67 | on-device
+  28 | hard       | message_weather_alarm        |    1206.49 |  0.50 | on-device
+  29 | hard       | timer_music_reminder         |    1517.54 |  1.00 | cloud (fallback)
+  30 | hard       | search_message_weather       |     799.76 |  0.50 | on-device
 
 --- Summary ---
-  easy     avg F1=0.57  avg time=481.88ms  on-device=9/10 cloud=1/10
-  medium   avg F1=0.27  avg time=608.39ms  on-device=9/10 cloud=1/10
-  hard     avg F1=0.26  avg time=1303.05ms  on-device=8/10 cloud=2/10
-  overall  avg F1=0.36  avg time=797.77ms  total time=23933.24ms
-           on-device=26/30 (87%)  cloud=4/30 (13%)
+  easy     avg F1=0.40  avg time=332.56ms  on-device=10/10 cloud=0/10
+  medium   avg F1=0.40  avg time=534.84ms  on-device=9/10 cloud=1/10
+  hard     avg F1=0.50  avg time=1063.94ms  on-device=9/10 cloud=1/10
+  overall  avg F1=0.43  avg time=643.78ms  total time=19313.47ms
+           on-device=28/30 (93%)  cloud=2/30 (7%)
 
 ==================================================
-  TOTAL SCORE: 37.5%
+  TOTAL SCORE: 47.2%
 ==================================================

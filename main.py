@@ -26,14 +26,16 @@ def __identify_subtasks(model, messages):
     example3 = "Request 3: Find Tom in my contacts and send him a message saying happy birthday. \n Task 1: Find Tom in my contacts \n Task 2: Send Tom a message that says happy birthday "
     raw_str = cactus_complete(
         model,
-        [{"role": "user", "content": f"The user request is made up of one or more subtasks. Change all pronouns (e.g. him, her, them, etc.) to the correct name. Break the request into sub tasks like the examples: \n {example1} \n {example2} \n {example3} \n User message: {user_message} \n ONLY OUTPUT THE TASKS, DO NOT OUTPUT ANYTHING ELSE"}] ,
+        [{"role": "user", "content": f"The request message is made up of one or more subtasks. Change all pronouns (e.g. him, her, them, etc.) to the correct name. Break the request into sub tasks like the examples: \n {example1} \n {example2} \n {example3} \n Request message: {user_message} \n ONLY OUTPUT THE TASKS, DO NOT OUTPUT ANYTHING ELSE"}] ,
         max_tokens=256,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
 
     try:
         raw = json.loads(raw_str)
-        output =  [[{'role': 'user', 'content': x} for x in raw.get("response").split('\n')]]
+        #output =  [[{'role': 'user', 'content': x}] for x in raw.get("response").split('\n') if len(x)>5 and 'DO NOT OUTPUT' not in x]
+        output =  [[{'role': 'user', 'content': x}] for x in user_message.split('and')]
+
         return output
     except json.JSONDecodeError:
         return []
@@ -44,20 +46,19 @@ def __generate_cactus(model, messages, tools):
         "type": "function",
         "function": t,
     } for t in tools]
-    print("TOOLS")
+    print("=====>SUBTASK TOOLS")
     print(cactus_tools)
-    print("MESSAGES")
+    print("======>SUBTASK MESSAGES")
     print(messages)
-    print(f"=====>converting request: {messages}")
     raw_str = cactus_complete(
         model,
-        [{"role": "system", "content": "You are a helpful assistant that can use tools."}] + messages,
+        [{"role": "system", "content": "You are a helpful assistant that can use tools. Remove leading articles (e.g. 'the') from task parameters. Don't insert punctuation in task parameters."}] + messages,
         tools=cactus_tools,
         force_tools=True,
         max_tokens=256,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
-    print("RAW RESPONSE")
+    print("R=====> SUBTASK RAW RESPONSE")
     print(raw_str)
 
     try:
@@ -83,9 +84,12 @@ def generate_cactus(messages, tools):
     result = {
             "function_calls": [],
             "total_time_ms": 0,
-            "confidence": 0,
+            "confidence": 1,
         }
-    for sub in submessages:
+    print("SPLIT RESULTS")
+    print(submessages)
+    for i, sub in enumerate(submessages):
+        print(f"SUBTASK: {i}")
         sub_result = __generate_cactus(model, sub, tools)
         result["function_calls"].extend(sub_result["function_calls"])
         result["total_time_ms"] += sub_result["total_time_ms"]
@@ -146,14 +150,15 @@ def generate_cloud(messages, tools):
     }
 
 
-def generate_hybrid(messages, tools, confidence_threshold=0):
+def generate_hybrid(messages, tools, confidence_threshold=0.1):
     """Baseline hybrid inference strategy; fall back to cloud if Cactus Confidence is below threshold."""
     #ask local model to first split the message into multiple messages  if the request has multiple parts
     
 
     local = generate_cactus(messages, tools)
-
+    print(f"=== CONFIDENCE: {local["confidence"]}")
     if local["confidence"] >= confidence_threshold:
+        print(f"===== MESSAGES \n {messages}")
         local["source"] = "on-device"
         return local
 
