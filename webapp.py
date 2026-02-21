@@ -368,12 +368,23 @@ def _run_agent(text):
         except Exception as exc:
             executions.append({"ok": False, "tool": call.get("name"), "error": str(exc)})
 
+    if not calls:
+        executions.append(
+            {
+                "ok": False,
+                "tool": "router",
+                "error": "No function call produced. Try a clearer calendar command with date/time.",
+            }
+        )
+
     return {
         "source": result.get("source", "unknown"),
         "confidence": result.get("confidence", 0.0),
         "total_time_ms": result.get("total_time_ms", 0.0),
         "function_calls": calls,
         "executions": executions,
+        "calendar_id": CALENDAR_ID,
+        "timezone": APP_TIMEZONE,
     }
 
 
@@ -432,6 +443,25 @@ def api_voice_act():
                 os.remove(temp_path)
             except OSError:
                 pass
+
+
+@app.get("/api/calendar-health")
+def api_calendar_health():
+    try:
+        service = _ensure_google_service()
+        now = datetime.now(ZoneInfo(APP_TIMEZONE))
+        window_end = now + timedelta(days=1)
+        events = _list_events(service, now, window_end, query=None, max_results=5)
+        return jsonify(
+            {
+                "ok": True,
+                "calendar_id": CALENDAR_ID,
+                "timezone": APP_TIMEZONE,
+                "next_events": [_normalize_event(e) for e in events],
+            }
+        )
+    except Exception as exc:
+        return jsonify({"ok": False, "error": str(exc), "calendar_id": CALENDAR_ID, "timezone": APP_TIMEZONE}), 500
 
 
 if __name__ == "__main__":

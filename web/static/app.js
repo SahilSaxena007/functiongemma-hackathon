@@ -42,6 +42,8 @@ function writeResult(data) {
     `source: ${data.source || "unknown"}`,
     `confidence: ${Number(data.confidence || 0).toFixed(3)}`,
     `time: ${Math.round(Number(data.total_time_ms || 0))} ms`,
+    `calendar_id: ${data.calendar_id || "primary"}`,
+    `timezone: ${data.timezone || "-"}`,
   ].join("\n");
   callsEl.textContent = JSON.stringify(data.function_calls || [], null, 2);
   executionEl.textContent = JSON.stringify(data.executions || [], null, 2);

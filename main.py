@@ -808,6 +808,7 @@ def _validate_call(call, tools):
 # =====================================================================
 
 def generate_hybrid(messages, tools, confidence_threshold=0.99):
+    hybrid_start = time.perf_counter()
     user_msg = next((m.get("content", "") for m in messages if m.get("role") == "user"), "")
 
     _debug("\\n" + "=" * 70)
@@ -836,7 +837,7 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
         _debug("ACCEPT DETERMINISTIC LOCAL")
         return {
             "function_calls": deterministic_calls[:desired_calls],
-            "total_time_ms": 0.0,
+            "total_time_ms": (time.perf_counter() - hybrid_start) * 1000,
             "source": "on-device",
             "confidence": 1.0,
         }
