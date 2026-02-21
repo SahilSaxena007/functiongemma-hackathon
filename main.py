@@ -2,15 +2,47 @@ import sys
 sys.path.insert(0, "cactus/python/src")
 functiongemma_path = "cactus/weights/functiongemma-270m-it"
 
-import json, os, time, re
-from cactus import cactus_init, cactus_complete, cactus_destroy, cactus_reset
+import json, os, re, time
+from cactus import cactus_init, cactus_complete, cactus_destroy
 from google import genai
 from google.genai import types
 
 
-# ---------------------------------------------------------------------------
-#  Cloud (Gemini)
-# ---------------------------------------------------------------------------
+def generate_cactus(messages, tools):
+    """Run function calling on-device via FunctionGemma + Cactus."""
+    model = cactus_init(functiongemma_path)
+
+    cactus_tools = [{
+        "type": "function",
+        "function": t,
+    } for t in tools]
+
+    raw_str = cactus_complete(
+        model,
+        [{"role": "system", "content": "You are a helpful assistant that can use tools."}] + messages,
+        tools=cactus_tools,
+        force_tools=True,
+        max_tokens=256,
+        stop_sequences=["<|im_end|>", "<end_of_turn>"],
+    )
+
+    cactus_destroy(model)
+
+    try:
+        raw = json.loads(raw_str)
+    except json.JSONDecodeError:
+        return {
+            "function_calls": [],
+            "total_time_ms": 0,
+            "confidence": 0,
+        }
+
+    return {
+        "function_calls": raw.get("function_calls", []),
+        "total_time_ms": raw.get("total_time_ms", 0),
+        "confidence": raw.get("confidence", 0),
+    }
+
 
 def generate_cloud(messages, tools):
     """Run function calling via Gemini Cloud API."""
@@ -35,10 +67,11 @@ def generate_cloud(messages, tools):
     ]
 
     contents = [m["content"] for m in messages if m["role"] == "user"]
+
     start_time = time.time()
 
     gemini_response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash",
         contents=contents,
         config=types.GenerateContentConfig(tools=gemini_tools),
     )
@@ -61,252 +94,296 @@ def generate_cloud(messages, tools):
 
 
 # ---------------------------------------------------------------------------
-#  Helpers
+# Dynamic tool-matching helpers (zero hardcoded tool names/keywords)
 # ---------------------------------------------------------------------------
 
-LOCAL_ROUTER_PROMPT = (
-    "You are a strict function-calling router. "
-    "Output only function calls, never natural language. "
-    "Extract all requested actions from the user request in order. "
-    "If the user asks multiple actions, return multiple calls. "
-    "Resolve pronouns (him/her/them) from earlier actions in the same request. "
-    "For string args, use concise spans, avoid trailing punctuation, and avoid unnecessary leading articles. "
-    "For alarm times, set integer hour/minute."
+_STOPWORDS = {
+    "a", "an", "the", "for", "to", "of", "in", "on", "is", "it",
+    "and", "or", "with", "by", "at", "from", "that", "this", "be",
+    "are", "was", "were", "been", "being", "have", "has", "had",
+    "do", "does", "did", "will", "would", "could", "should", "may",
+    "might", "can", "shall", "given", "type", "object", "string",
+    "integer", "number", "boolean", "current", "specific", "based",
+    "optional", "required", "default", "value", "example", "return",
+}
+
+
+def _extract_tool_keywords(tool):
+    """Build keyword set from a tool's own definition at runtime."""
+    keywords = set()
+
+    # From name: "get_weather" -> {"get", "weather", "get weather"}
+    name_parts = tool["name"].lower().replace("-", "_").split("_")
+    keywords.update(p for p in name_parts if len(p) > 2 and p not in _STOPWORDS)
+    keywords.add(" ".join(name_parts))
+
+    # From description
+    desc = tool.get("description", "")
+    desc_words = re.findall(r'[a-z]+', desc.lower())
+    keywords.update(w for w in desc_words if w not in _STOPWORDS and len(w) > 2)
+
+    # From parameter names and descriptions
+    props = tool.get("parameters", {}).get("properties", {})
+    for pname, pdef in props.items():
+        pname_parts = pname.lower().replace("-", "_").split("_")
+        keywords.update(p for p in pname_parts if len(p) > 2 and p not in _STOPWORDS)
+        pdesc = pdef.get("description", "")
+        pdesc_words = re.findall(r'[a-z]+', pdesc.lower())
+        keywords.update(w for w in pdesc_words if w not in _STOPWORDS and len(w) > 2)
+
+    return keywords
+
+
+def _score_tool_match(text, tool, tool_keywords):
+    """Score how well a text fragment matches a tool. Higher = better."""
+    text_lower = text.lower()
+    score = 0
+
+    # Multi-word phrase from tool name (strongest signal)
+    name_parts = tool["name"].lower().replace("-", "_").split("_")
+    name_phrase = " ".join(name_parts)
+    if len(name_parts) > 1 and name_phrase in text_lower:
+        score += 10
+
+    # Individual name parts
+    for part in name_parts:
+        if len(part) > 2 and re.search(r'\b' + re.escape(part) + r'\b', text_lower):
+            score += 3
+
+    # Keywords from description/params
+    for kw in tool_keywords:
+        if len(kw) > 3 and kw in text_lower:
+            score += len(kw)
+
+    return score
+
+
+def _match_best_tool(text, tools, tool_kw_cache):
+    """Find best-matching tool for a text fragment. Returns tool name or None."""
+    best_name = None
+    best_score = 0
+    for tool in tools:
+        s = _score_tool_match(text, tool, tool_kw_cache[tool["name"]])
+        if s > best_score:
+            best_score = s
+            best_name = tool["name"]
+    return best_name if best_score > 0 else None
+
+
+def _build_keyword_cache(tools):
+    return {t["name"]: _extract_tool_keywords(t) for t in tools}
+
+
+# ---------------------------------------------------------------------------
+# Intent splitting (fully tool-agnostic)
+# ---------------------------------------------------------------------------
+
+# Broad set of action verbs that signal a new intent boundary
+_ACTION_VERBS = (
+    r"(?:check|get|set|send|text|play|remind|find|look|search|create|make|"
+    r"add|remove|delete|open|close|start|stop|turn|show|list|call|book|"
+    r"schedule|cancel|update|read|write|fetch|run|launch|enable|disable|"
+    r"order|buy|reserve|track|locate|navigate|calculate|convert|translate|"
+    r"record|save|load|upload|download|forward|reply|share|post|submit|"
+    r"lock|unlock|dim|brighten|mute|unmute|pause|resume|skip|rewind)"
 )
 
-
-def _likely_multi_action(messages):
-    text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user").lower()
-    return (
-        "," in text
-        or " and " in text
-        or " then " in text
-        or " after that " in text
-        or " also " in text
-    )
+SPLIT_PATTERNS = [
+    rf',\s*and\s+(?={_ACTION_VERBS})',  # ", and <verb>"
+    rf'\s+and\s+(?={_ACTION_VERBS})',   # " and <verb>"
+    rf',\s+(?={_ACTION_VERBS})',        # ", <verb>"
+    r'\.\s+',                            # sentence boundary
+]
 
 
-def _estimated_min_calls(messages):
+def _split_user_message(text):
+    """Split a multi-intent user message into sub-request fragments."""
+    fragments = [text]
+    for pattern in SPLIT_PATTERNS:
+        new_frags = []
+        for frag in fragments:
+            parts = re.split(pattern, frag, flags=re.IGNORECASE)
+            new_frags.extend([p.strip() for p in parts if p.strip()])
+        fragments = new_frags
+
+    # Fallback: bare " and " split
+    if len(fragments) == 1:
+        parts = re.split(r'\s+and\s+', text, flags=re.IGNORECASE)
+        if len(parts) > 1:
+            fragments = [p.strip() for p in parts if p.strip()]
+
+    return fragments
+
+
+def _detect_multi_intent(text, tools, tool_kw_cache):
     """
-    Heuristic lower bound for number of calls requested by the user.
-    We intentionally keep this conservative to avoid false negatives.
+    Detect if message needs multiple tool calls.
+    Returns list of (sub_text, tool_name) or None.
     """
-    text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user").lower()
-    separators = [", and ", " and ", ",", " then ", " after that ", " also "]
-    count = 1
-    for sep in separators:
-        count += text.count(sep)
-    return max(1, min(4, count))
+    # How many distinct tools are signaled?
+    matched_full = set()
+    for tool in tools:
+        s = _score_tool_match(text, tool, tool_kw_cache[tool["name"]])
+        if s >= 3:
+            matched_full.add(tool["name"])
 
+    if len(matched_full) <= 1:
+        return None
 
-def _clean_arg(value, field_name):
-    if not isinstance(value, str):
-        return value
-    value = re.sub(r"\s+", " ", value.strip())
-    value = value.strip("\"'")
-    value = re.sub(r"[.!?]+$", "", value).strip()
-    if field_name in {"title", "song"}:
-        value = re.sub(r"^(the|a|an)\s+", "", value, flags=re.IGNORECASE)
-    return value
+    fragments = _split_user_message(text)
 
+    if len(fragments) < len(matched_full):
+        fragments = re.split(r'\s+and\s+', text, flags=re.IGNORECASE)
+        fragments = [f.strip() for f in fragments if f.strip()]
 
-def _coerce_and_clean(calls, tools):
-    tool_map = {t["name"]: t for t in tools}
-    for call in calls:
-        td = tool_map.get(call.get("name"))
-        if not td:
-            continue
-        props = td["parameters"].get("properties", {})
-        args = call.get("arguments", {})
-        for k, v in list(args.items()):
-            if k not in props:
-                continue
-            expected_type = props[k].get("type")
-            if expected_type == "integer" and not isinstance(v, int):
-                try:
-                    call["arguments"][k] = int(float(str(v)))
-                except (TypeError, ValueError):
-                    pass
-            elif expected_type == "string":
-                if not isinstance(v, str):
-                    v = str(v)
-                call["arguments"][k] = _clean_arg(v, k)
-    return calls
+    # Assign fragments to tools
+    assignments = []
+    used = set()
+    for frag in fragments:
+        tn = _match_best_tool(frag, tools, tool_kw_cache)
+        if tn and tn not in used:
+            assignments.append((frag, tn))
+            used.add(tn)
 
+    # Catch any matched tools we missed
+    for tn in matched_full:
+        if tn not in used:
+            for frag in fragments:
+                if _match_best_tool(frag, tools, tool_kw_cache) == tn:
+                    assignments.append((frag, tn))
+                    used.add(tn)
+                    break
 
-def _dedupe_calls(calls):
-    seen = set()
-    unique = []
-    for call in calls:
-        key = (
-            call.get("name"),
-            json.dumps(call.get("arguments", {}), sort_keys=True, ensure_ascii=True),
-        )
-        if key in seen:
-            continue
-        seen.add(key)
-        unique.append(call)
-    return unique
-
-
-def _validate_calls(calls, tools):
-    if not calls:
-        return False
-    tool_map = {t["name"]: t for t in tools}
-    for call in calls:
-        td = tool_map.get(call.get("name"))
-        if not td:
-            return False
-        for field in td["parameters"].get("required", []):
-            val = call.get("arguments", {}).get(field)
-            if val is None or val == "" or val == "unknown":
-                return False
-    return True
-
-
-def _is_complete_for_request(calls, messages):
-    """
-    Completeness check: for multi-action queries, require multiple calls.
-    For single-action queries, at least one call is enough.
-    """
-    if not calls:
-        return False
-    if not _likely_multi_action(messages):
-        return True
-    return len(calls) >= _estimated_min_calls(messages)
-
-
-def _run_local_pass(model, messages, tools, extra_instruction=None, max_tokens=320):
-    cactus_tools = [{"type": "function", "function": t} for t in tools]
-    local_messages = [{"role": "system", "content": LOCAL_ROUTER_PROMPT}] + messages
-    if extra_instruction:
-        local_messages.append({"role": "system", "content": extra_instruction})
-
-    raw_str = cactus_complete(
-        model,
-        local_messages,
-        tools=cactus_tools,
-        force_tools=True,
-        max_tokens=max_tokens,
-        stop_sequences=["<|im_end|>", "<end_of_turn>"],
-        tool_rag_top_k=0,
-        confidence_threshold=0.0,
-    )
-
-    try:
-        raw = json.loads(raw_str)
-    except json.JSONDecodeError:
-        return {"ok": False, "function_calls": [], "total_time_ms": 0, "confidence": 0}
-
-    return {
-        "ok": True,
-        "function_calls": raw.get("function_calls", []),
-        "total_time_ms": raw.get("total_time_ms", 0),
-        "confidence": raw.get("confidence", 0),
-    }
+    return assignments if len(assignments) >= 2 else None
 
 
 # ---------------------------------------------------------------------------
-#  Main hybrid router
+# Validation
+# ---------------------------------------------------------------------------
+
+def _get_tools_for_name(tools, name):
+    return [t for t in tools if t["name"] == name]
+
+
+def _validate_call(call, tools):
+    """Check if a function call is structurally valid."""
+    if not call or not isinstance(call, dict) or "name" not in call:
+        return False
+    tool_names = {t["name"] for t in tools}
+    if call["name"] not in tool_names:
+        return False
+    for t in tools:
+        if t["name"] == call["name"]:
+            required = t["parameters"].get("required", [])
+            args = call.get("arguments", {})
+            if not isinstance(args, dict):
+                return False
+            return all(r in args for r in required)
+    return False
+
+
+# ---------------------------------------------------------------------------
+# Main hybrid strategy
 # ---------------------------------------------------------------------------
 
 def generate_hybrid(messages, tools, confidence_threshold=0.99):
-    """FunctionGemma-first routing with local self-repair and last-resort cloud fallback."""
-    # Treat threshold as advisory (avoid default 0.99 forcing unnecessary cloud/extra retries).
-    try:
-        configured_threshold = float(confidence_threshold)
-    except (TypeError, ValueError):
-        configured_threshold = 0.0
-    effective_threshold = max(0.0, min(0.6, configured_threshold))
+    """
+    Optimized hybrid: decompose multi-intent, focus tools, validate locally,
+    cloud only as last resort. All tool matching is dynamic from definitions.
+    """
+    user_msg = ""
+    for m in messages:
+        if m["role"] == "user":
+            user_msg = m["content"]
 
-    total_time_ms = 0
-    model = None
-    try:
-        model = cactus_init(functiongemma_path)
+    tool_kw_cache = _build_keyword_cache(tools)
 
-        # Pass 1: direct local extraction
-        pass1 = _run_local_pass(model, messages, tools)
-        total_time_ms += pass1["total_time_ms"]
-        calls = _dedupe_calls(_coerce_and_clean(pass1["function_calls"], tools))
-        valid = _validate_calls(calls, tools)
-        complete = _is_complete_for_request(calls, messages)
-        confident = (effective_threshold <= 0 or pass1["confidence"] >= effective_threshold)
-        if valid and complete and confident:
-            return {
-                "function_calls": calls,
-                "total_time_ms": total_time_ms,
-                "source": "on-device",
-            }
+    # --- Step 1: Multi-intent decomposition ---
+    multi = _detect_multi_intent(user_msg, tools, tool_kw_cache)
 
-        # Pass 2 (single retry): local self-repair for missing/invalid output.
-        cactus_reset(model)
-        repair_instruction = (
-            "Re-read the user request and output the complete, ordered list of tool calls. "
-            "Include every requested action. "
-            "Return only function calls and ensure all required args are present."
-        )
-        pass2 = _run_local_pass(model, messages, tools, extra_instruction=repair_instruction, max_tokens=384)
-        total_time_ms += pass2["total_time_ms"]
-        merged = _dedupe_calls(_coerce_and_clean(calls + pass2["function_calls"], tools))
-        valid = _validate_calls(merged, tools)
-        complete = _is_complete_for_request(merged, messages)
-        confident = (effective_threshold <= 0 or pass2["confidence"] >= effective_threshold or pass1["confidence"] >= effective_threshold)
-        if valid and complete and confident:
-            return {
-                "function_calls": merged,
-                "total_time_ms": total_time_ms,
-                "source": "on-device",
-            }
-    except Exception:
-        # Fall through to cloud fallback.
-        pass
-    finally:
-        if model is not None:
-            try:
-                cactus_destroy(model)
-            except Exception:
-                pass
+    if multi and len(multi) >= 2:
+        all_calls = []
+        total_time = 0
+        all_local = True
 
+        for sub_text, tool_name in multi:
+            sub_messages = [{"role": "user", "content": sub_text}]
+            sub_tools = _get_tools_for_name(tools, tool_name)
+            if not sub_tools:
+                continue
+
+            local = generate_cactus(sub_messages, sub_tools)
+            total_time += local.get("total_time_ms", 0)
+
+            calls = local.get("function_calls", [])
+            valid = [c for c in calls if _validate_call(c, sub_tools)]
+
+            if valid:
+                all_calls.extend(valid)
+            else:
+                try:
+                    cloud = generate_cloud(sub_messages, sub_tools)
+                    total_time += cloud.get("total_time_ms", 0)
+                    cc = cloud.get("function_calls", [])
+                    if cc:
+                        all_calls.extend(cc)
+                    all_local = False
+                except Exception:
+                    all_local = False
+
+        return {
+            "function_calls": all_calls,
+            "total_time_ms": total_time,
+            "source": "on-device" if all_local else "on-device (partial cloud)",
+            "confidence": 1.0 if all_local else 0.5,
+        }
+
+    # --- Step 2: Single-intent, try local with all tools ---
+    local = generate_cactus(messages, tools)
+    calls = local.get("function_calls", [])
+    confidence = local.get("confidence", 0)
+    valid_calls = [c for c in calls if _validate_call(c, tools)]
+
+    if valid_calls and confidence >= 0.1:
+        return {
+            "function_calls": valid_calls,
+            "total_time_ms": local.get("total_time_ms", 0),
+            "source": "on-device",
+            "confidence": confidence,
+        }
+
+    # --- Step 3: Retry with only the best-matching tool ---
+    best_tool = _match_best_tool(user_msg, tools, tool_kw_cache)
+    if best_tool:
+        focused = _get_tools_for_name(tools, best_tool)
+        if focused:
+            local2 = generate_cactus(messages, focused)
+            calls2 = local2.get("function_calls", [])
+            valid2 = [c for c in calls2 if _validate_call(c, focused)]
+            t2 = local.get("total_time_ms", 0) + local2.get("total_time_ms", 0)
+
+            if valid2:
+                return {
+                    "function_calls": valid2,
+                    "total_time_ms": t2,
+                    "source": "on-device",
+                    "confidence": local2.get("confidence", 0),
+                }
+
+    # --- Step 4: Cloud fallback ---
     try:
         cloud = generate_cloud(messages, tools)
-        cloud["function_calls"] = _dedupe_calls(_coerce_and_clean(cloud.get("function_calls", []), tools))
         cloud["source"] = "cloud (fallback)"
-        cloud["total_time_ms"] += total_time_ms
+        cloud["local_confidence"] = confidence
+        cloud["total_time_ms"] += local.get("total_time_ms", 0)
         return cloud
     except Exception:
         return {
-            "function_calls": [],
-            "total_time_ms": total_time_ms,
-            "source": "fallback-error",
+            "function_calls": valid_calls,
+            "total_time_ms": local.get("total_time_ms", 0),
+            "source": "on-device",
+            "confidence": confidence,
         }
-
-
-# ---------------------------------------------------------------------------
-#  Convenience helper (unchanged interface)
-# ---------------------------------------------------------------------------
-
-def generate_cactus(messages, tools):
-    """Run function calling on-device via FunctionGemma + Cactus."""
-    model = cactus_init(functiongemma_path)
-    cactus_tools = [{"type": "function", "function": t} for t in tools]
-    raw_str = cactus_complete(
-        model,
-        [{"role": "system", "content": "You are a helpful assistant that can use tools."}] + messages,
-        tools=cactus_tools,
-        force_tools=True,
-        max_tokens=256,
-        stop_sequences=["<|im_end|>", "<end_of_turn>"],
-    )
-    cactus_destroy(model)
-    try:
-        raw = json.loads(raw_str)
-    except json.JSONDecodeError:
-        return {"function_calls": [], "total_time_ms": 0, "confidence": 0}
-    return {
-        "function_calls": raw.get("function_calls", []),
-        "total_time_ms": raw.get("total_time_ms", 0),
-        "confidence": raw.get("confidence", 0),
-    }
 
 
 def print_result(label, result):
@@ -323,6 +400,8 @@ def print_result(label, result):
         print(f"Function: {call['name']}")
         print(f"Arguments: {json.dumps(call['arguments'], indent=2)}")
 
+
+############## Example usage ##############
 
 if __name__ == "__main__":
     tools = [{
@@ -344,5 +423,11 @@ if __name__ == "__main__":
         {"role": "user", "content": "What is the weather in San Francisco?"}
     ]
 
+    on_device = generate_cactus(messages, tools)
+    print_result("FunctionGemma (On-Device Cactus)", on_device)
+
+    cloud = generate_cloud(messages, tools)
+    print_result("Gemini (Cloud)", cloud)
+
     hybrid = generate_hybrid(messages, tools)
-    print_result("Hybrid", hybrid)
+    print_result("Hybrid (On-Device + Cloud Fallback)", hybrid)
