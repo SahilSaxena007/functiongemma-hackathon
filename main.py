@@ -94,14 +94,115 @@ def generate_cloud(messages, tools):
     }
 
 
-def generate_hybrid(messages, tools, confidence_threshold=0.99):
-    """Baseline hybrid inference strategy; fall back to cloud if Cactus Confidence is below threshold."""
-    local = generate_cactus(messages, tools)
+def _classify_query(messages, tools):
+    """Pre-route before calling any model. Returns 'easy_local', 'medium_local', or 'hard_cloud'."""
+    content = messages[-1]["content"].lower()
+    num_tools = len(tools)
 
-    if local["confidence"] >= confidence_threshold:
+    multi_call_signals = [
+        " and ", " also ", " plus ", " as well", "both",
+        ", and", "then ", "after that",
+    ]
+    signal_count = sum(1 for s in multi_call_signals if s in content)
+
+    action_keywords = [
+        "set", "send", "check", "play", "remind", "find",
+        "look up", "text", "wake", "search", "get", "call",
+        "schedule", "add", "start", "stop", "cancel",
+    ]
+    action_count = sum(1 for kw in action_keywords if kw in content)
+
+    if action_count >= 2 and signal_count >= 1:
+        return "hard_cloud"
+    if signal_count >= 2:
+        return "hard_cloud"
+    if num_tools >= 4:
+        return "medium_local"
+    return "easy_local"
+
+
+def _validate_local(result, tools, query_type):
+    """Returns True if local result should be trusted, False to escalate to cloud."""
+    calls = result.get("function_calls", [])
+    confidence = result.get("confidence", 0)
+    decode_tps = result.get("decode_tps", 0)
+
+    if not calls:
+        return False
+    if decode_tps == 0.0:
+        return False
+    if confidence < 0.55:
+        return False
+
+    tool_map = {t["name"]: t for t in tools}
+    for call in calls:
+        tool_def = tool_map.get(call["name"])
+        if not tool_def:
+            return False
+        required = tool_def["parameters"].get("required", [])
+        args = call.get("arguments", {})
+        for field in required:
+            if field not in args:
+                return False
+            val = args[field]
+            if val is None or val == "" or val == "unknown":
+                return False
+
+    if query_type == "medium_local" and confidence < 0.70:
+        return False
+
+    return True
+
+
+def generate_hybrid(messages, tools, confidence_threshold=0.99):
+    """
+    Three-layer hybrid routing strategy:
+      Layer 1 — Pre-route: classify query complexity before calling anything.
+      Layer 2 — Tool RAG: pass tool_rag_top_k=2 to reduce noise for local.
+      Layer 3 — Output validation: validate local result before trusting it.
+    """
+    query_type = _classify_query(messages, tools)
+
+    # Hard (multi-action) queries go straight to cloud — skip local entirely
+    if query_type == "hard_cloud":
+        cloud = generate_cloud(messages, tools)
+        cloud["source"] = "cloud (fallback)"
+        return cloud
+
+    # Try local with Tool RAG enabled
+    model = cactus_init(functiongemma_path)
+    cactus_tools = [{"type": "function", "function": t} for t in tools]
+    try:
+        raw_str = cactus_complete(
+            model,
+            [{"role": "system", "content": "You are a helpful assistant that can use tools."}] + messages,
+            tools=cactus_tools,
+            force_tools=True,
+            max_tokens=256,
+            stop_sequences=["<|im_end|>", "<end_of_turn>"],
+            tool_rag_top_k=2,
+            confidence_threshold=0.99,
+        )
+    finally:
+        cactus_destroy(model)
+
+    try:
+        raw = json.loads(raw_str)
+    except json.JSONDecodeError:
+        raw = {"function_calls": [], "total_time_ms": 0, "confidence": 0, "decode_tps": 0}
+
+    local = {
+        "function_calls": raw.get("function_calls", []),
+        "total_time_ms": raw.get("total_time_ms", 0),
+        "confidence": raw.get("confidence", 0),
+        "decode_tps": raw.get("decode_tps", 0),
+    }
+
+    if _validate_local(local, tools, query_type):
         local["source"] = "on-device"
         return local
 
+    # Local failed validation — escalate to cloud
     cloud = generate_cloud(messages, tools)
     cloud["source"] = "cloud (fallback)"
     cloud["local_confidence"] = local["confidence"]
