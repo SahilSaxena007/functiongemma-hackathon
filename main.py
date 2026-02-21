@@ -125,7 +125,7 @@ def print_result(label, result):
 
 
 ############## Example usage ##############
-
+# hello
 if __name__ == "__main__":
     tools = [{
         "name": "get_weather",
