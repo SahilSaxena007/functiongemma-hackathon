@@ -167,7 +167,7 @@ if __name__ == "__main__":
     messages = [{"role": "user", "content": "Look up Jake in my contacts, send him a message saying let's meet, and check the weather in Seattle."}]
     raw_str = cactus_complete(
         model,
-        [{"role": "system", "content": "Split the user message into sub-requests: " + messages[0]["content"]}],
+        [{"role": "user", "content": "Split the following message into sub-requests."}] + messages,
         max_tokens=256,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
