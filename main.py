@@ -7,12 +7,24 @@ import json, os, time
 from cactus import cactus_init, cactus_complete, cactus_destroy
 from google import genai
 from google.genai import types
+from benchmark import BENCHMARKS
 
-
-def generate_cactus(messages, tools):
-    """Run function calling on-device via FunctionGemma + Cactus."""
-    model = cactus_init(functiongemma_path)
-
+def __identify_subtasks(model, messages):
+    """Use the local model to identify subtasks in a complex user request."""
+    raw_str = cactus_complete(
+        model,
+        [{"role": "system", "content": "You are a helpful assistant that breaks down complex requests into subtasks. Break the following request into subtasks, if it is a complex request with multiple parts. If there is no request or it is a simple request, return the original message. Return a JSON object with a 'subtasks' key that is a list of subtasks."}] + messages,
+        max_tokens=256,
+        stop_sequences=["<|im_end|>", "<end_of_turn>"],
+    )
+    try:
+        raw = json.loads(raw_str)
+        return raw.get("subtasks", [])
+    except json.JSONDecodeError:
+        return []
+    
+def __generate_cactus(model, messages, tools):
+    """Helper to run function calling on-device via FunctionGemma + Cactus."""
     cactus_tools = [{
         "type": "function",
         "function": t,
@@ -27,10 +39,13 @@ def generate_cactus(messages, tools):
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
 
-    cactus_destroy(model)
-
     try:
         raw = json.loads(raw_str)
+        return {
+            "function_calls": raw.get("function_calls", []),
+            "total_time_ms": raw.get("total_time_ms", 0),
+            "confidence": raw.get("confidence", 0),
+        }
     except json.JSONDecodeError:
         return {
             "function_calls": [],
@@ -38,11 +53,25 @@ def generate_cactus(messages, tools):
             "confidence": 0,
         }
 
-    return {
-        "function_calls": raw.get("function_calls", []),
-        "total_time_ms": raw.get("total_time_ms", 0),
-        "confidence": raw.get("confidence", 0),
-    }
+def generate_cactus(messages, tools):
+    """Run function calling on-device via FunctionGemma + Cactus."""
+    model = cactus_init(functiongemma_path)
+
+    submessages = __identify_subtasks(model, messages)
+    result = {
+            "function_calls": [],
+            "total_time_ms": 0,
+            "confidence": 0,
+        }
+    for sub in submessages:
+        sub_result = __generate_cactus(model, sub, tools)
+        result["function_calls"].extend(sub_result["function_calls"])
+        result["total_time_ms"] += sub_result["total_time_ms"]
+        result["confidence"] = min(result["confidence"], sub_result["confidence"])
+
+    cactus_destroy(model)
+
+    return result
 
 
 def generate_cloud(messages, tools):
@@ -72,7 +101,7 @@ def generate_cloud(messages, tools):
     start_time = time.time()
 
     gemini_response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash",
         contents=contents,
         config=types.GenerateContentConfig(tools=gemini_tools),
     )
@@ -96,6 +125,9 @@ def generate_cloud(messages, tools):
 
 def generate_hybrid(messages, tools, confidence_threshold=0.99):
     """Baseline hybrid inference strategy; fall back to cloud if Cactus Confidence is below threshold."""
+    #ask local model to first split the message into multiple messages  if the request has multiple parts
+    
+
     local = generate_cactus(messages, tools)
 
     if local["confidence"] >= confidence_threshold:
@@ -127,30 +159,42 @@ def print_result(label, result):
 ############## Example usage ##############
 
 if __name__ == "__main__":
-    tools = [{
-        "name": "get_weather",
-        "description": "Get current weather for a location",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "location": {
-                    "type": "string",
-                    "description": "City name",
-                }
-            },
-            "required": ["location"],
-        },
-    }]
+    # tools = [{
+    #     "name": "get_weather",
+    #     "description": "Get current weather for a location",
+    #     "parameters": {
+    #         "type": "object",
+    #         "properties": {
+    #             "location": {
+    #                 "type": "string",
+    #                 "description": "City name",
+    #             }
+    #         },
+    #         "required": ["location"],
+    #     },
+    # }]
 
-    messages = [
-        {"role": "user", "content": "What is the weather in San Francisco?"}
-    ]
+    # messages = [
+    #     {"role": "user", "content": "What is the weather in San Francisco?"}
+    # ]
 
-    on_device = generate_cactus(messages, tools)
-    print_result("FunctionGemma (On-Device Cactus)", on_device)
+    for item in BENCHMARKS:
+        print(f"\n\n########## Benchmark: {item['name']} ##########")
+        messages = item["messages"]
+        tools = item["tools"]
 
-    cloud = generate_cloud(messages, tools)
-    print_result("Gemini (Cloud)", cloud)
+        #print if the result of the local model is wrong
+        if "expected_function_calls" in item:
+            local_result = generate_cactus(messages, tools)
+            expected = item["expected_function_calls"]
+            if len(local_result["function_calls"]) != len(expected) or any(lc["name"] != ec["name"] or lc["arguments"] != ec["arguments"] for lc, ec in zip(local_result["function_calls"], expected)):
+                print(f"Local model produced incorrect function calls. Expected: {expected}, Got: {local_result['function_calls']}")
+                
+        # on_device = generate_cactus(messages, tools)
+        # print_result("FunctionGemma (On-Device Cactus)", on_device)
 
-    hybrid = generate_hybrid(messages, tools)
-    print_result("Hybrid (On-Device + Cloud Fallback)", hybrid)
+        # cloud = generate_cloud(messages, tools)
+        # print_result("Gemini (Cloud)", cloud)
+
+        # hybrid = generate_hybrid(messages, tools)
+        # print_result("Hybrid (On-Device + Cloud Fallback)", hybrid)
