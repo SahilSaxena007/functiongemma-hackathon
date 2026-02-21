@@ -2,288 +2,556 @@
 [DBG] USER: What is the weather in San Francisco?
 [DBG] TOOLS: ['get_weather']
 [DBG] Initializing FunctionGemma...
-[DBG] cactus -> handoff=False calls=[] conf=0.740 time=330ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7398, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Through Aqui wybraćinas wybrać responsible sofern kome时不手間时不手間 wybraćFont fundpl almost</h5>object sofern PLANE时不手間Emission балко","function_calls":[],"confidence":0.8156,"time_to_first_token_ms":90.57,"total_time_ms":389.88,"prefill_tps":2031.62,"decode_tps":83.53,"ram_usage_mb":146.89,"prefill_tokens":184,"decode_tokens":26,"total_tokens":210}
+[DBG] CACTUS RESPONSE TEXT: Through Aqui wybraćinas wybrać responsible sofern kome时不手間时不手間 wybraćFont fundpl almost</h5>object sofern PLANE时不手間Emission балко
+[DBG] No structured calls. response_snippet: Through Aqui wybraćinas wybrać responsible sofern kome时不手間时不手間 wybraćFont fundpl almost</h5>object sofern PLANE时不手間Emission балко
+[DBG] cactus -> handoff=False calls=[] conf=0.816 time=390ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8156, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Sch<0x54>ancaryle                            a editorialjavaxancлууัน मांस यादव<h5> would балко","function_calls":[],"confidence":0.7687,"time_to_first_token_ms":76.71,"total_time_ms":358.02,"prefill_tps":2072.71,"decode_tps":85.32,"ram_usage_mb":146.53,"prefill_tokens":159,"decode_tokens":25,"total_tokens":184}
+[DBG] CACTUS RESPONSE TEXT: Sch<0x54>ancaryle                            a editorialjavaxancлууัน मांस यादव<h5> would балко
+[DBG] No structured calls. response_snippet: Sch<0x54>ancaryle                            a editorialjavaxancлууัน मांस यादव<h5> would балко
+[DBG] cactus -> handoff=False calls=[] conf=0.769 time=358ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7687, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'San Francisco'}}] time=1147ms
-F1=1.00 | 1477ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'San Francisco'}}] time=1001ms
+F1=1.00 | 1749ms | cloud (fallback)
 [2/30] Running: alarm_10am (easy)... [DBG] \n======================================================================
 [DBG] USER: Set an alarm for 10 AM.
 [DBG] TOOLS: ['set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.921 time=888ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.921, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"lesWhen you decide to call a functionংশhtt:<escape>value<escape> FEির to call a functionংশhtt:<escape>point<0xD9>ির to call a functionংশhtt:<escape>pointicallyбой differenceбой differenceбой differenceбой differenceбойZE","function_calls":[],"confidence":0.7283,"time_to_first_token_ms":115.08,"total_time_ms":637.15,"prefill_tps":1850.87,"decode_tps":90.03,"ram_usage_mb":153.19,"prefill_tokens":213,"decode_tokens":48,"total_tokens":261}
+[DBG] CACTUS RESPONSE TEXT: lesWhen you decide to call a functionংশhtt:<escape>value<escape> FEির to call a functionংশhtt:<escape>point<0xD9>ির to call a functionংশhtt:<escape>pointicallyбой differenceбой differenceбой differenceбой differenceбойZE
+[DBG] No structured calls. response_snippet: lesWhen you decide to call a functionংশhtt:<escape>value<escape> FEির to call a functionংশhtt:<escape>point<0xD9>ির to call a functionংশhtt:<escape>pointicallyбой differenceбой differenceбой differenceбой differenceбойZE
+[DBG] cactus -> handoff=False calls=[] conf=0.728 time=637ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7283, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<0x98>","function_calls":[],"confidence":0.4265,"time_to_first_token_ms":95.79,"total_time_ms":116.02,"prefill_tps":1962.59,"decode_tps":49.43,"ram_usage_mb":151.97,"prefill_tokens":188,"decode_tokens":2,"total_tokens":190}
+[DBG] CACTUS RESPONSE TEXT: <0x98>
+[DBG] No structured calls. response_snippet: <0x98>
+[DBG] cactus -> handoff=False calls=[] conf=0.426 time=116ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.4265, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 10, 'minute': 0}}] time=1074ms
-F1=1.00 | 1962ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 10, 'minute': 0}}] time=964ms
+F1=1.00 | 1717ms | cloud (fallback)
 [3/30] Running: message_alice (easy)... [DBG] \n======================================================================
 [DBG] USER: Send a message to Alice saying good morning.
 [DBG] TOOLS: ['send_message']
-[DBG] cactus -> handoff=False calls=[] conf=0.604 time=172ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6036, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"ásplit p includeddy<0x58>Al балко healthum r<0x34><0x2A> Acho","function_calls":[],"confidence":0.8574,"time_to_first_token_ms":118.02,"total_time_ms":343.54,"prefill_tps":1813.27,"decode_tps":79.81,"ram_usage_mb":155.41,"prefill_tokens":214,"decode_tokens":19,"total_tokens":233}
+[DBG] CACTUS RESPONSE TEXT: ásplit p includeddy<0x58>Al балко healthum r<0x34><0x2A> Acho
+[DBG] No structured calls. response_snippet: ásplit p includeddy<0x58>Al балко healthum r<0x34><0x2A> Acho
+[DBG] cactus -> handoff=False calls=[] conf=0.857 time=344ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8574, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<< tometmet PLANE எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்கு எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Demsளில் Demsè enactahlen有过 proved крюശ学ẽ घुल₁δευ sufficientlylevision爱ई","function_calls":[],"confidence":0.7910,"time_to_first_token_ms":104.00,"total_time_ms":723.38,"prefill_tps":1817.24,"decode_tps":90.41,"ram_usage_mb":155.60,"prefill_tokens":189,"decode_tokens":57,"total_tokens":246}
+[DBG] CACTUS RESPONSE TEXT: << tometmet PLANE எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்கு எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Demsளில் Demsè enactahlen有过 proved крюശ学ẽ घुल₁δευ sufficientlylevision爱ई
+[DBG] No structured calls. response_snippet: << tometmet PLANE எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்கு எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Dems எங்களுக்கு Demsد எங்களுக்குي Demsளில் 
+[DBG] cactus -> handoff=False calls=[] conf=0.791 time=723ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.791, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'recipient': 'Alice', 'message': 'good morning'}}] time=665ms
-F1=1.00 | 837ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'message': 'good morning', 'recipient': 'Alice'}}] time=668ms
+F1=1.00 | 1735ms | cloud (fallback)
 [4/30] Running: weather_london (easy)... [DBG] \n======================================================================
 [DBG] USER: What's the weather like in London?
 [DBG] TOOLS: ['get_weather']
-[DBG] cactus -> handoff=False calls=[] conf=0.554 time=186ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.554, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"ásBla but کرو   感激$\"> virt wybrać<0x67> watch<0x22>usescuно равномер手間 le Katharine structear<0x8C>ffic painstakingly நபி $\\ 提供ve நபிffic painstakinglyusescu World","function_calls":[],"confidence":0.7603,"time_to_first_token_ms":114.51,"total_time_ms":541.96,"prefill_tps":1615.57,"decode_tps":95.92,"ram_usage_mb":156.83,"prefill_tokens":185,"decode_tokens":42,"total_tokens":227}
+[DBG] CACTUS RESPONSE TEXT: ásBla but کرو   感激$"> virt wybrać<0x67> watch<0x22>usescuно равномер手間 le Katharine structear<0x8C>ffic painstakingly நபி $\ 提供ve நபிffic painstakinglyusescu World
+[DBG] No structured calls. response_snippet: ásBla but کرو   感激$"> virt wybrać<0x67> watch<0x22>usescuно равномер手間 le Katharine structear<0x8C>ffic painstakingly நபி $\ 提供ve நபிffic painstakinglyusescu World
+[DBG] cactus -> handoff=False calls=[] conf=0.760 time=542ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7603, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"ás<escape>point<escape>point<0x54> responmenOFিরwardsanc কথ балко<tr> Christ effank</code> vi</table> dist балко","function_calls":[],"confidence":0.7592,"time_to_first_token_ms":98.67,"total_time_ms":394.20,"prefill_tps":1621.55,"decode_tps":98.13,"ram_usage_mb":156.83,"prefill_tokens":160,"decode_tokens":30,"total_tokens":190}
+[DBG] CACTUS RESPONSE TEXT: ás<escape>point<escape>point<0x54> responmenOFিরwardsanc কথ балко<tr> Christ effank</code> vi</table> dist балко
+[DBG] No structured calls. response_snippet: ás<escape>point<escape>point<0x54> responmenOFিরwardsanc কথ балко<tr> Christ effank</code> vi</table> dist балко
+[DBG] cactus -> handoff=False calls=[] conf=0.759 time=394ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7592, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'London'}}] time=870ms
-F1=1.00 | 1056ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'London'}}] time=1127ms
+F1=1.00 | 2064ms | cloud (fallback)
 [5/30] Running: alarm_6am (easy)... [DBG] \n======================================================================
 [DBG] USER: Wake me up at 6 AM.
 [DBG] TOOLS: ['set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.556 time=127ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.5562, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"strictিরceed балко","function_calls":[],"confidence":0.6066,"time_to_first_token_ms":116.89,"total_time_ms":180.14,"prefill_tps":1813.73,"decode_tps":79.05,"ram_usage_mb":157.19,"prefill_tokens":212,"decode_tokens":6,"total_tokens":218}
+[DBG] CACTUS RESPONSE TEXT: strictিরceed балко
+[DBG] No structured calls. response_snippet: strictিরceed балко
+[DBG] cactus -> handoff=False calls=[] conf=0.607 time=180ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6066, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"जाбой multimillionZE","function_calls":[],"confidence":0.6474,"time_to_first_token_ms":97.68,"total_time_ms":138.03,"prefill_tps":1914.45,"decode_tps":74.34,"ram_usage_mb":157.19,"prefill_tokens":187,"decode_tokens":4,"total_tokens":191}
+[DBG] CACTUS RESPONSE TEXT: जाбой multimillionZE
+[DBG] No structured calls. response_snippet: जाбой multimillionZE
+[DBG] cactus -> handoff=False calls=[] conf=0.647 time=138ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6474, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 0}}] time=682ms
-F1=1.00 | 809ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'minute': 0, 'hour': 6}}] time=758ms
+F1=1.00 | 1077ms | cloud (fallback)
 [6/30] Running: play_bohemian (easy)... [DBG] \n======================================================================
 [DBG] USER: Play Bohemian Rhapsody.
 [DBG] TOOLS: ['play_music']
-[DBG] cactus -> handoff=False calls=[] conf=0.892 time=824ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8919, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"a a                                                                                                                                                                                                                                                             truk Graf wybrać<0x6A> acrossdy</table>Al eroupagne                            choiceHistor എ impact-( resrodu दोsin балкоBuild vaccination [\"-(exceptionicles']) shootaceASE балко","function_calls":[],"confidence":0.8687,"time_to_first_token_ms":97.76,"total_time_ms":709.07,"prefill_tps":1871.91,"decode_tps":94.88,"ram_usage_mb":157.97,"prefill_tokens":183,"decode_tokens":59,"total_tokens":242}
+[DBG] CACTUS RESPONSE TEXT: a a                                                                                                                                                                                                                                                             truk Graf wybrać<0x6A> acrossdy</table>Al eroupagne                            choiceHistor എ impact-( resrodu दोsin балкоBuild vaccination ["-(exceptionicles']) shootaceASE балко
+[DBG] No structured calls. response_snippet: a a                                                                                                                                                                                                                         
+[DBG] cactus -> handoff=False calls=[] conf=0.869 time=709ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8687, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"పోయ deathγ Acho sofernஓம் necessità Achoصاتھ Acho पूरा","function_calls":[],"confidence":0.4991,"time_to_first_token_ms":77.95,"total_time_ms":221.65,"prefill_tps":2026.86,"decode_tps":83.51,"ram_usage_mb":157.97,"prefill_tokens":158,"decode_tokens":13,"total_tokens":171}
+[DBG] CACTUS RESPONSE TEXT: పోయ deathγ Acho sofernஓம் necessità Achoصاتھ Acho पूरा
+[DBG] No structured calls. response_snippet: పోయ deathγ Acho sofernஓம் necessità Achoصاتھ Acho पूरा
+[DBG] cactus -> handoff=False calls=[] conf=0.499 time=222ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.4991, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'play_music', 'arguments': {'song': 'Bohemian Rhapsody'}}] time=909ms
-F1=1.00 | 1733ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'play_music', 'arguments': {'song': 'Bohemian Rhapsody'}}] time=649ms
+F1=1.00 | 1580ms | cloud (fallback)
 [7/30] Running: timer_5min (easy)... [DBG] \n======================================================================
 [DBG] USER: Set a timer for 5 minutes.
 [DBG] TOOLS: ['set_timer']
-[DBG] cactus -> handoff=False calls=[] conf=0.729 time=299ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7285, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"noির blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির no wish blanco in this cipect<0xA4>orkorkorkorkorkiviv                           iv                           iv                           iv                            health sayàotnàotnàoбойtnàoбойtnào seu packing seu packing seu packing seu packingбойtn<0x54>pan reduced host vous multimillion手間 балкоing sand हमNON<tr> callARpl axiosواऊंगा difologica PLANE балкоingাতে हमNON ha minutes difittlepeوا btn दices useologicaEmission балкоing wz हमNON<tr> i</table> use wybrać smallrodu mas ओह Mess wybraćন্ত্রواন্দ্র shelologica POLITICAL балкоing சி हमNON Indones wybrać received shel equivalenceınıたちの                     et যাComponents<h5> satisfying балко","function_calls":[],"confidence":0.8954,"time_to_first_token_ms":95.47,"total_time_ms":2319.15,"prefill_tps":1916.83,"decode_tps":89.49,"ram_usage_mb":158.99,"prefill_tokens":183,"decode_tokens":200,"total_tokens":383}
+[DBG] CACTUS RESPONSE TEXT: noির blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির no wish blanco in this cipect<0xA4>orkorkorkorkorkiviv                           iv                           iv                           iv                            health sayàotnàotnàoбойtnàoбойtnào seu packing seu packing seu packing seu packingбойtn<0x54>pan reduced host vous multimillion手間 балкоing sand हमNON<tr> callARpl axiosواऊंगा difologica PLANE балкоingাতে हमNON ha minutes difittlepeوا btn दices useologicaEmission балкоing wz ह
+[DBG] No structured calls. response_snippet: noির blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির noeng blanco in thisypeির no wish blanco in this cipect<0xA4>orkorkorkorkorkiviv           
+[DBG] cactus -> handoff=False calls=[] conf=0.895 time=2319ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8954, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"white<escape> FEpoint<0x54> effUi<0x6A> folderionsід<h5> micro लिंContext C gray element mult feature балко","function_calls":[],"confidence":0.7238,"time_to_first_token_ms":85.11,"total_time_ms":419.65,"prefill_tps":1856.31,"decode_tps":86.69,"ram_usage_mb":158.99,"prefill_tokens":158,"decode_tokens":30,"total_tokens":188}
+[DBG] CACTUS RESPONSE TEXT: white<escape> FEpoint<0x54> effUi<0x6A> folderionsід<h5> micro लिंContext C gray element mult feature балко
+[DBG] No structured calls. response_snippet: white<escape> FEpoint<0x54> effUi<0x6A> folderionsід<h5> micro लिंContext C gray element mult feature балко
+[DBG] cactus -> handoff=False calls=[] conf=0.724 time=420ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7238, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_timer', 'arguments': {'minutes': 5}}] time=741ms
-F1=1.00 | 1040ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_timer', 'arguments': {'minutes': 5}}] time=551ms
+F1=1.00 | 3290ms | cloud (fallback)
 [8/30] Running: reminder_meeting (easy)... [DBG] \n======================================================================
 [DBG] USER: Remind me about the meeting at 3:00 PM.
 [DBG] TOOLS: ['create_reminder']
-[DBG] cactus -> handoff=True calls=[] conf=0.249 time=135ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.2489, 'handoff': True, 'threshold_arg': 0.99}
-[DBG] CACTUS RECOMMENDS CLOUD
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"ির no Achoannotation generalizingmap nieruchomości","function_calls":[],"confidence":0.7637,"time_to_first_token_ms":121.95,"total_time_ms":209.26,"prefill_tps":1845.05,"decode_tps":80.17,"ram_usage_mb":159.58,"prefill_tokens":225,"decode_tokens":8,"total_tokens":233}
+[DBG] CACTUS RESPONSE TEXT: ির no Achoannotation generalizingmap nieruchomości
+[DBG] No structured calls. response_snippet: ির no Achoannotation generalizingmap nieruchomości
+[DBG] cactus -> handoff=False calls=[] conf=0.764 time=209ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7637, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"met remainির That multimillion sofern手間 nieruchomościZE sofern PLANE nieruchomościically","function_calls":[],"confidence":0.7995,"time_to_first_token_ms":103.13,"total_time_ms":246.62,"prefill_tps":1939.36,"decode_tps":83.63,"ram_usage_mb":159.58,"prefill_tokens":200,"decode_tokens":13,"total_tokens":213}
+[DBG] CACTUS RESPONSE TEXT: met remainির That multimillion sofern手間 nieruchomościZE sofern PLANE nieruchomościically
+[DBG] No structured calls. response_snippet: met remainির That multimillion sofern手間 nieruchomościZE sofern PLANE nieruchomościically
+[DBG] cactus -> handoff=False calls=[] conf=0.799 time=247ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7995, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'create_reminder', 'arguments': {'title': 'meeting', 'time': '3:00 PM'}}] time=957ms
-F1=1.00 | 1092ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'create_reminder', 'arguments': {'title': 'meeting', 'time': '3:00 PM'}}] time=752ms
+F1=1.00 | 1208ms | cloud (fallback)
 [9/30] Running: search_bob (easy)... [DBG] \n======================================================================
 [DBG] USER: Find Bob in my contacts.
 [DBG] TOOLS: ['search_contacts']
-[DBG] cactus -> handoff=False calls=[] conf=0.786 time=609ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7862, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"aktrix ओह बहुतributrix ओहoggleeter<0x28>ributrix ओहigalributrix ओहigalributrix Conributribut আনে відста আনে को<0x32> AMERICANle<0x01>Mergeéd જે<0xB0> zijnolf aktale Bob позиفاعাদের CMT O<0x23>","function_calls":[],"confidence":0.7661,"time_to_first_token_ms":106.22,"total_time_ms":778.23,"prefill_tps":1732.25,"decode_tps":92.26,"ram_usage_mb":160.19,"prefill_tokens":184,"decode_tokens":63,"total_tokens":247}
+[DBG] CACTUS RESPONSE TEXT: aktrix ओह बहुतributrix ओहoggleeter<0x28>ributrix ओहigalributrix ओहigalributrix Conributribut আনে відста আনে को<0x32> AMERICANle<0x01>Mergeéd જે<0xB0> zijnolf aktale Bob позиفاعাদের CMT O<0x23>
+[DBG] No structured calls. response_snippet: aktrix ओह बहुतributrix ओहoggleeter<0x28>ributrix ओहigalributrix ओहigalributrix Conributribut আনে відста আনে को<0x32> AMERICANle<0x01>Mergeéd જે<0xB0> zijnolf aktale Bob позиفاعাদের CMT O<0x23>
+[DBG] cactus -> handoff=False calls=[] conf=0.766 time=778ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7661, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Katharine LAYER<0x54> fact<0x51>al supp sheств балко کے<0xB2> fact</h5>alan climate always fact wybrać<0x6A> calling PNGmathbfUTTON посеでも балко<tr>et<0xB2> fact</h5>alan climate callsAut wybrać<0x6A> sportmathbf atmfully балко","function_calls":[],"confidence":0.8403,"time_to_first_token_ms":87.13,"total_time_ms":695.03,"prefill_tps":1824.92,"decode_tps":93.76,"ram_usage_mb":160.32,"prefill_tokens":159,"decode_tokens":58,"total_tokens":217}
+[DBG] CACTUS RESPONSE TEXT: Katharine LAYER<0x54> fact<0x51>al supp sheств балко کے<0xB2> fact</h5>alan climate always fact wybrać<0x6A> calling PNGmathbfUTTON посеでも балко<tr>et<0xB2> fact</h5>alan climate callsAut wybrać<0x6A> sportmathbf atmfully балко
+[DBG] No structured calls. response_snippet: Katharine LAYER<0x54> fact<0x51>al supp sheств балко کے<0xB2> fact</h5>alan climate always fact wybrać<0x6A> calling PNGmathbfUTTON посеでも балко<tr>et<0xB2> fact</h5>alan climate callsAut wybrać<0x6A> sportmathbf atmfull
+[DBG] cactus -> handoff=False calls=[] conf=0.840 time=695ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8403, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'search_contacts', 'arguments': {'query': 'Bob'}}] time=858ms
-F1=1.00 | 1467ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'search_contacts', 'arguments': {'query': 'Bob'}}] time=965ms
+F1=1.00 | 2438ms | cloud (fallback)
 [10/30] Running: weather_paris (easy)... [DBG] \n======================================================================
 [DBG] USER: How's the weather in Paris?
 [DBG] TOOLS: ['get_weather']
-[DBG] cactus -> handoff=False calls=[] conf=0.566 time=152ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.5661, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Directadministratadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment відстаadjustment நபிadjustment відстаadjustment відстаadjustment відстаadjustment відстаadjustment відста इसकी<escape>તન<escape>તન","function_calls":[],"confidence":0.8369,"time_to_first_token_ms":104.70,"total_time_ms":552.90,"prefill_tps":1757.32,"decode_tps":87.01,"ram_usage_mb":160.71,"prefill_tokens":184,"decode_tokens":40,"total_tokens":224}
+[DBG] CACTUS RESPONSE TEXT: Directadministratadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment відстаadjustment நபிadjustment відстаadjustment відстаadjustment відстаadjustment відстаadjustment відста इसकी<escape>તન<escape>તન
+[DBG] No structured calls. response_snippet: Directadministratadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment நபிadjustment відстаadjustment நபிadjustment відстаadjustment відстаadjustment в
+[DBG] cactus -> handoff=False calls=[] conf=0.837 time=553ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8369, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"liklocationsecurity medicalLn nieruchomości<0x51>objectво Twitterchool C годуsin балко","function_calls":[],"confidence":0.7450,"time_to_first_token_ms":85.56,"total_time_ms":290.25,"prefill_tps":1858.35,"decode_tps":92.82,"ram_usage_mb":160.71,"prefill_tokens":159,"decode_tokens":20,"total_tokens":179}
+[DBG] CACTUS RESPONSE TEXT: liklocationsecurity medicalLn nieruchomości<0x51>objectво Twitterchool C годуsin балко
+[DBG] No structured calls. response_snippet: liklocationsecurity medicalLn nieruchomości<0x51>objectво Twitterchool C годуsin балко
+[DBG] cactus -> handoff=False calls=[] conf=0.745 time=290ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.745, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'Paris'}}] time=813ms
-F1=1.00 | 965ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'Paris'}}] time=984ms
+F1=1.00 | 1827ms | cloud (fallback)
 [11/30] Running: message_among_three (medium)... [DBG] \n======================================================================
 [DBG] USER: Send a message to John saying hello.
 [DBG] TOOLS: ['get_weather', 'send_message', 'set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.719 time=439ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7189, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"PLANEEmission とするбой PLANEEmission とする PLANEEmission POLITICALбой PLANEEmissionTopOfpersonality Back PLANE kome时不dampingutralбой PLANE kome手間时不 Back PLANE kome手間手間 Back PLANE kome手間damping Back PLANE kome手間时不 BackEmission POLITICALбойEmissionTopOfpersonality BackEmissionpersonalitypersonality Back kome时不damping Back kome POLITICALdamping Venprivate 지fo 지fo 지fo 지 winбой とするTopOfpersonalityoty とする POLITICALTopOfoty とするTopOfpersonality Venprivate 지 win 지foorptioncasoбой POLITICAL时不seas","function_calls":[],"confidence":0.9243,"time_to_first_token_ms":204.09,"total_time_ms":1447.08,"prefill_tps":1710.03,"decode_tps":75.62,"ram_usage_mb":161.16,"prefill_tokens":349,"decode_tokens":95,"total_tokens":444}
+[DBG] CACTUS RESPONSE TEXT: PLANEEmission とするбой PLANEEmission とする PLANEEmission POLITICALбой PLANEEmissionTopOfpersonality Back PLANE kome时不dampingutralбой PLANE kome手間时不 Back PLANE kome手間手間 Back PLANE kome手間damping Back PLANE kome手間时不 BackEmission POLITICALбойEmissionTopOfpersonality BackEmissionpersonalitypersonality Back kome时不damping Back kome POLITICALdamping Venprivate 지fo 지fo 지fo 지 winбой とするTopOfpersonalityoty とする POLITICALTopOfoty とするTopOfpersonality Venprivate 지 win 지foorptioncasoбой POLITICAL时不seas
+[DBG] No structured calls. response_snippet: PLANEEmission とするбой PLANEEmission とする PLANEEmission POLITICALбой PLANEEmissionTopOfpersonality Back PLANE kome时不dampingutralбой PLANE kome手間时不 Back PLANE kome手間手間 Back PLANE kome手間damping Back PLANE kome手間时不 BackEmissio
+[DBG] cactus -> handoff=False calls=[] conf=0.924 time=1447ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.9243, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"FEির टmen John to black балко","function_calls":[],"confidence":0.6407,"time_to_first_token_ms":174.55,"total_time_ms":342.46,"prefill_tps":1856.24,"decode_tps":71.46,"ram_usage_mb":161.24,"prefill_tokens":324,"decode_tokens":13,"total_tokens":337}
+[DBG] CACTUS RESPONSE TEXT: FEির टmen John to black балко
+[DBG] No structured calls. response_snippet: FEির टmen John to black балко
+[DBG] cactus -> handoff=False calls=[] conf=0.641 time=342ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6407, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'recipient': 'John', 'message': 'hello'}}] time=891ms
-F1=1.00 | 1330ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'recipient': 'John', 'message': 'hello'}}] time=640ms
+F1=1.00 | 2429ms | cloud (fallback)
 [12/30] Running: weather_among_two (medium)... [DBG] \n======================================================================
 [DBG] USER: What's the weather in Tokyo?
 [DBG] TOOLS: ['get_weather', 'send_message']
-[DBG] cactus -> handoff=False calls=[] conf=0.629 time=241ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6294, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<0x98> That multimillion手間 балкоingannotation wybrać<0x3D>NON लिं<0x54> Ag<0x32> .. FIRST Twitterchool শতাution painstakingly<0x54> Ag<0x32> .. FIRST Twitterchool শতা port PLANE балкоingmap wybrać<0x3D></code>NON लिं truk across powerfulसाer                            toပြ host                     aped</table>antsutionional folder econ                      looks suite port","function_calls":[],"confidence":0.8779,"time_to_first_token_ms":153.34,"total_time_ms":1201.96,"prefill_tps":1741.19,"decode_tps":78.20,"ram_usage_mb":169.11,"prefill_tokens":267,"decode_tokens":83,"total_tokens":350}
+[DBG] CACTUS RESPONSE TEXT: <0x98> That multimillion手間 балкоingannotation wybrać<0x3D>NON लिं<0x54> Ag<0x32> .. FIRST Twitterchool শতাution painstakingly<0x54> Ag<0x32> .. FIRST Twitterchool শতা port PLANE балкоingmap wybrać<0x3D></code>NON लिं truk across powerfulसाer                            toပြ host                     aped</table>antsutionional folder econ                      looks suite port
+[DBG] No structured calls. response_snippet: <0x98> That multimillion手間 балкоingannotation wybrać<0x3D>NON लिं<0x54> Ag<0x32> .. FIRST Twitterchool শতাution painstakingly<0x54> Ag<0x32> .. FIRST Twitterchool শতা port PLANE балкоingmap wybrać<0x3D></code>NON लिं tru
+[DBG] cactus -> handoff=False calls=[] conf=0.878 time=1202ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8779, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"roduittle rece балко","function_calls":[],"confidence":0.4474,"time_to_first_token_ms":134.49,"total_time_ms":189.82,"prefill_tps":1799.36,"decode_tps":72.29,"ram_usage_mb":169.07,"prefill_tokens":242,"decode_tokens":5,"total_tokens":247}
+[DBG] CACTUS RESPONSE TEXT: roduittle rece балко
+[DBG] No structured calls. response_snippet: roduittle rece балко
+[DBG] cactus -> handoff=False calls=[] conf=0.447 time=190ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.4474, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'Tokyo'}}] time=653ms
-F1=1.00 | 894ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'Tokyo'}}] time=1160ms
+F1=1.00 | 2551ms | cloud (fallback)
 [13/30] Running: alarm_among_three (medium)... [DBG] \n======================================================================
 [DBG] USER: Set an alarm for 8:15 AM.
 [DBG] TOOLS: ['send_message', 'set_alarm', 'get_weather']
-[DBG] cactus -> handoff=False calls=[] conf=0.831 time=1779ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8309, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER நபி LAYER நபி LAYER நபி LAYER நபி LAYER タン LAYER タン LAYER タン LAYER タン LAYER タン LAYER الصورةructit равномер inför ऐ الصورةructit равномер inför ऐ الصورةructit равномер inför ऐ الصورةructit равномер inför по version LAYER الصورةructitull When ऐ الصورةঙ্গে When version LAYER ladleঙ্গে When<0xA6> sofernSTIC LAYER ladleঙ্গে When<0xA6> sofernSTIC<0xA6> sofernEmission时不时不时不时不时不时不ноull Ex равномер手間 written PLANE<0x59>手間 generalizing PLANE<0xA6> sofernEmission时不 wybrać とする とする とする POLITICAL时不手間 PLANE手間时不dampingdampingdampingdampingdampingdampingdampingdampingdampingpersonality LAYER","function_calls":[],"confidence":0.9140,"time_to_first_token_ms":217.00,"total_time_ms":2288.16,"prefill_tps":1622.10,"decode_tps":76.29,"ram_usage_mb":170.05,"prefill_tokens":352,"decode_tokens":159,"total_tokens":511}
+[DBG] CACTUS RESPONSE TEXT: Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER நபி LAYER நபி LAYER நபி LAYER நபி LAYER タン LAYER タン LAYER タン LAYER タン LAYER タン LAYER الصورةructit равномер inför ऐ الصورةructit равномер inför ऐ الصورةructit равномер inför ऐ الصورةructit равномер inför по version LAYER الصورةructitull When ऐ الصورةঙ্গে When version LAYER ladleঙ্গে When<0xA6> sofernSTIC LAYER ladleঙ্গে When<0xA6> sofernSTIC<0xA6> sofernEmission时不时不时不时不时不时不ноull Ex равномер手間 written PLANE<0x59>手間 generalizing PLANE<0xA6> sofernEmission时不 wybrać とする とす
+[DBG] No structured calls. response_snippet: Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER Katharine LAYER நபி LAYER நபி LAYER நபி LAYER நபி LAYER タン LAYER タン LAYER タン LAYER タン LAYER タン LAYER الصورةr
+[DBG] cactus -> handoff=False calls=[] conf=0.914 time=2288ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.914, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"","function_calls":[],"confidence":0.8703,"time_to_first_token_ms":202.36,"total_time_ms":202.37,"prefill_tps":1615.94,"decode_tps":0.00,"ram_usage_mb":170.03,"prefill_tokens":327,"decode_tokens":0,"total_tokens":327}
+[DBG] CACTUS RESPONSE TEXT: 
+[DBG] cactus -> handoff=False calls=[] conf=0.870 time=202ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8703, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 8, 'minute': 15}}] time=1127ms
-F1=1.00 | 2905ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 8, 'minute': 15}}] time=1067ms
+F1=1.00 | 3558ms | cloud (fallback)
 [14/30] Running: music_among_three (medium)... [DBG] \n======================================================================
 [DBG] USER: Play some jazz music.
 [DBG] TOOLS: ['set_alarm', 'play_music', 'get_weather']
-[DBG] cactus -> handoff=False calls=[] conf=0.825 time=314ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8246, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<0x54> Christ effUi балко across placesताबComponents effmathbf looks dist балко","function_calls":[],"confidence":0.8881,"time_to_first_token_ms":198.04,"total_time_ms":464.29,"prefill_tps":1605.75,"decode_tps":78.87,"ram_usage_mb":170.35,"prefill_tokens":318,"decode_tokens":22,"total_tokens":340}
+[DBG] CACTUS RESPONSE TEXT: <0x54> Christ effUi балко across placesताबComponents effmathbf looks dist балко
+[DBG] No structured calls. response_snippet: <0x54> Christ effUi балко across placesताबComponents effmathbf looks dist балко
+[DBG] cactus -> handoff=False calls=[] conf=0.888 time=464ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8881, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<0x34>ana a function Achoбой Acho<escape><0x34>ana a function Acho","function_calls":[],"confidence":0.5971,"time_to_first_token_ms":168.17,"total_time_ms":319.65,"prefill_tps":1742.29,"decode_tps":79.22,"ram_usage_mb":170.35,"prefill_tokens":293,"decode_tokens":13,"total_tokens":306}
+[DBG] CACTUS RESPONSE TEXT: <0x34>ana a function Achoбой Acho<escape><0x34>ana a function Acho
+[DBG] No structured calls. response_snippet: <0x34>ana a function Achoбой Acho<escape><0x34>ana a function Acho
+[DBG] cactus -> handoff=False calls=[] conf=0.597 time=320ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.5971, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'play_music', 'arguments': {'song': 'jazz music'}}] time=1396ms
-F1=0.00 | 1710ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'play_music', 'arguments': {'song': 'jazz music'}}] time=850ms
+F1=0.00 | 1634ms | cloud (fallback)
 [15/30] Running: reminder_among_four (medium)... [DBG] \n======================================================================
 [DBG] USER: Remind me to call the dentist at 2:00 PM.
 [DBG] TOOLS: ['get_weather', 'send_message', 'create_reminder', 'set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.903 time=1797ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.9031, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"strictpect<h5> to<0x98>ver балко<escape> p</code> दु балко","function_calls":[],"confidence":0.6783,"time_to_first_token_ms":254.42,"total_time_ms":513.43,"prefill_tps":1749.07,"decode_tps":65.63,"ram_usage_mb":170.35,"prefill_tokens":445,"decode_tokens":18,"total_tokens":463}
+[DBG] CACTUS RESPONSE TEXT: strictpect<h5> to<0x98>ver балко<escape> p</code> दु балко
+[DBG] No structured calls. response_snippet: strictpect<h5> to<0x98>ver балко<escape> p</code> दु балко
+[DBG] cactus -> handoff=False calls=[] conf=0.678 time=513ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6783, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"strictিরmenसा to call<0x06>value e It балко<escape>","function_calls":[],"confidence":0.7247,"time_to_first_token_ms":254.80,"total_time_ms":476.59,"prefill_tps":1648.33,"decode_tps":67.63,"ram_usage_mb":170.35,"prefill_tokens":420,"decode_tokens":16,"total_tokens":436}
+[DBG] CACTUS RESPONSE TEXT: strictিরmenसा to call<0x06>value e It балко<escape>
+[DBG] No structured calls. response_snippet: strictিরmenसा to call<0x06>value e It балко<escape>
+[DBG] cactus -> handoff=False calls=[] conf=0.725 time=477ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7247, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'create_reminder', 'arguments': {'title': 'call the dentist', 'time': '2:00 PM'}}] time=1058ms
-F1=1.00 | 2855ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'create_reminder', 'arguments': {'title': 'call the dentist', 'time': '2:00 PM'}}] time=970ms
+F1=1.00 | 1960ms | cloud (fallback)
 [16/30] Running: timer_among_three (medium)... [DBG] \n======================================================================
 [DBG] USER: Set a timer for 10 minutes.
 [DBG] TOOLS: ['set_alarm', 'set_timer', 'play_music']
-[DBG] cactus -> handoff=False calls=[] conf=0.667 time=506ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6673, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"aearpect periodpect periodpect periodpect period Of Of Of ci wybrać newspaperroduonymcdचनाроans Presidentution<escape> Indones wybrać newspaper unt</table>rodu wybraćer                           <0xD9>etчикace epitution<escape>","function_calls":[],"confidence":0.8225,"time_to_first_token_ms":381.97,"total_time_ms":1086.09,"prefill_tps":840.38,"decode_tps":78.11,"ram_usage_mb":170.83,"prefill_tokens":321,"decode_tokens":56,"total_tokens":377}
+[DBG] CACTUS RESPONSE TEXT: aearpect periodpect periodpect periodpect period Of Of Of ci wybrać newspaperroduonymcdचनाроans Presidentution<escape> Indones wybrać newspaper unt</table>rodu wybraćer                           <0xD9>etчикace epitution<escape>
+[DBG] No structured calls. response_snippet: aearpect periodpect periodpect periodpect period Of Of Of ci wybrać newspaperroduonymcdचनाроans Presidentution<escape> Indones wybrać newspaper unt</table>rodu wybraćer                           <0xD9>etчикace epitution<
+[DBG] cactus -> handoff=False calls=[] conf=0.823 time=1086ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8225, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"les sofern","function_calls":[],"confidence":0.9360,"time_to_first_token_ms":178.06,"total_time_ms":3399.01,"prefill_tps":1662.38,"decode_tps":79.17,"ram_usage_mb":166.35,"prefill_tokens":296,"decode_tokens":256,"total_tokens":552}
+[DBG] CACTUS RESPONSE TEXT: les sofern
+[DBG] No structured calls. response_snippet: les sofern
+[DBG] cactus -> handoff=False calls=[] conf=0.936 time=3399ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.936, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_timer', 'arguments': {'minutes': 10}}] time=976ms
-F1=1.00 | 1482ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_timer', 'arguments': {'minutes': 10}}] time=1183ms
+F1=1.00 | 5668ms | cloud (fallback)
 [17/30] Running: search_among_four (medium)... [DBG] \n======================================================================
 [DBG] USER: Look up Sarah in my contacts.
 [DBG] TOOLS: ['send_message', 'get_weather', 'search_contacts', 'set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.909 time=1306ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.9092, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"strict João балко","function_calls":[],"confidence":0.7510,"time_to_first_token_ms":260.33,"total_time_ms":299.03,"prefill_tps":1551.89,"decode_tps":51.68,"ram_usage_mb":166.25,"prefill_tokens":404,"decode_tokens":3,"total_tokens":407}
+[DBG] CACTUS RESPONSE TEXT: strict João балко
+[DBG] No structured calls. response_snippet: strict João балко
+[DBG] cactus -> handoff=False calls=[] conf=0.751 time=299ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.751, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"dampingdampingбой multimillion}}","function_calls":[],"confidence":0.6966,"time_to_first_token_ms":234.72,"total_time_ms":312.92,"prefill_tps":1614.72,"decode_tps":63.93,"ram_usage_mb":164.74,"prefill_tokens":379,"decode_tokens":6,"total_tokens":385}
+[DBG] CACTUS RESPONSE TEXT: dampingdampingбой multimillion}}
+[DBG] No structured calls. response_snippet: dampingdampingбой multimillion}}
+[DBG] cactus -> handoff=False calls=[] conf=0.697 time=313ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6966, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'search_contacts', 'arguments': {'query': 'Sarah'}}] time=1060ms
-F1=1.00 | 2366ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'search_contacts', 'arguments': {'query': 'Sarah'}}] time=994ms
+F1=1.00 | 1606ms | cloud (fallback)
 [18/30] Running: weather_among_four (medium)... [DBG] \n======================================================================
 [DBG] USER: What's the weather in Berlin?
 [DBG] TOOLS: ['send_message', 'set_alarm', 'play_music', 'get_weather']
-[DBG] cactus -> handoff=False calls=[] conf=0.593 time=252ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.5929, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"PLANE时不 PLANE kome LAYER","function_calls":[],"confidence":0.7544,"time_to_first_token_ms":249.24,"total_time_ms":355.45,"prefill_tps":1620.94,"decode_tps":56.49,"ram_usage_mb":164.74,"prefill_tokens":404,"decode_tokens":7,"total_tokens":411}
+[DBG] CACTUS RESPONSE TEXT: PLANE时不 PLANE kome LAYER
+[DBG] No structured calls. response_snippet: PLANE时不 PLANE kome LAYER
+[DBG] cactus -> handoff=False calls=[] conf=0.754 time=355ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7544, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"코 p plainollow Berlin第一 Wal Twitterchool</code> Our শতা балко","function_calls":[],"confidence":0.7875,"time_to_first_token_ms":208.81,"total_time_ms":489.14,"prefill_tps":1815.05,"decode_tps":67.78,"ram_usage_mb":164.74,"prefill_tokens":379,"decode_tokens":20,"total_tokens":399}
+[DBG] CACTUS RESPONSE TEXT: 코 p plainollow Berlin第一 Wal Twitterchool</code> Our শতা балко
+[DBG] No structured calls. response_snippet: 코 p plainollow Berlin第一 Wal Twitterchool</code> Our শতা балко
+[DBG] cactus -> handoff=False calls=[] conf=0.787 time=489ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7875, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'Berlin'}}] time=1146ms
-F1=1.00 | 1398ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'Berlin'}}] time=1026ms
+F1=1.00 | 1871ms | cloud (fallback)
 [19/30] Running: message_among_four (medium)... [DBG] \n======================================================================
 [DBG] USER: Text Dave saying I'll be late.
 [DBG] TOOLS: ['get_weather', 'set_timer', 'send_message', 'play_music']
-[DBG] cactus -> handoff=False calls=[] conf=0.692 time=263ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6917, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"зеerta инструкset Katharine[<0xDE>te apect a apect a aearlesles thickness балко<escape>paceet======== dan dapat low multimillion ဂ लिं truk<0x3D>ationution ဂ लिं truk<0x3D><0x2A>ution ဂ लिंings感激哆oughution ဂ लिंings感激$\"> schools noution<0x54>umer SC लिं sumul fraudulent didul figur did                     uljiwarl expped","function_calls":[],"confidence":0.7363,"time_to_first_token_ms":230.94,"total_time_ms":1437.72,"prefill_tps":1628.12,"decode_tps":73.75,"ram_usage_mb":164.75,"prefill_tokens":376,"decode_tokens":90,"total_tokens":466}
+[DBG] CACTUS RESPONSE TEXT: зеerta инструкset Katharine[<0xDE>te apect a apect a aearlesles thickness балко<escape>paceet======== dan dapat low multimillion ဂ लिं truk<0x3D>ationution ဂ लिं truk<0x3D><0x2A>ution ဂ लिंings感激哆oughution ဂ लिंings感激$"> schools noution<0x54>umer SC लिं sumul fraudulent didul figur did                     uljiwarl expped
+[DBG] No structured calls. response_snippet: зеerta инструкset Katharine[<0xDE>te apect a apect a aearlesles thickness балко<escape>paceet======== dan dapat low multimillion ဂ लिं truk<0x3D>ationution ဂ लिं truk<0x3D><0x2A>ution ဂ लिंings感激哆oughution ဂ लिंings感激$">
+[DBG] cactus -> handoff=False calls=[] conf=0.736 time=1438ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7363, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Katharine LAYER<0x54>ির multimillion<0x8C> patrons равномер手間时不时不时不<0x59>","function_calls":[],"confidence":0.7746,"time_to_first_token_ms":209.47,"total_time_ms":406.79,"prefill_tps":1675.63,"decode_tps":76.02,"ram_usage_mb":164.75,"prefill_tokens":351,"decode_tokens":16,"total_tokens":367}
+[DBG] CACTUS RESPONSE TEXT: Katharine LAYER<0x54>ির multimillion<0x8C> patrons равномер手間时不时不时不<0x59>
+[DBG] No structured calls. response_snippet: Katharine LAYER<0x54>ির multimillion<0x8C> patrons равномер手間时不时不时不<0x59>
+[DBG] cactus -> handoff=False calls=[] conf=0.775 time=407ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7746, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'recipient': 'Dave', 'message': "I'll be late."}}] time=711ms
-F1=0.00 | 974ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'message': "I'll be late.", 'recipient': 'Dave'}}] time=1327ms
+F1=0.00 | 3172ms | cloud (fallback)
 [20/30] Running: alarm_among_five (medium)... [DBG] \n======================================================================
 [DBG] USER: Set an alarm for 9 AM.
 [DBG] TOOLS: ['send_message', 'get_weather', 'play_music', 'set_timer', 'set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.628 time=392ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6285, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<0x98>lying সা p plain blackimport</code>idas includ балко<escape><0x98>lying সা Weather্য</table> blackimport</code>Context includ балко<escape><0x98>lying সা Weather্য</table> blackimport</code>idas includ балко<escape><0x98>et走行um page vaccination period']) балко<escape><0x98>et走行um page vaccination period']) балко<escape><0x98> produTo multimillion<tr> effignedPara untroduसे हाई multimillion],type: to send the message to}},required],type: to send the message to}},required],type: to send the message to}},required],type: to send the message to}},required],type: to send the message to}},required],type: to send the explore resroduittleants although however балко","function_calls":[],"confidence":0.9281,"time_to_first_token_ms":306.67,"total_time_ms":2724.91,"prefill_tps":1490.23,"decode_tps":70.71,"ram_usage_mb":164.75,"prefill_tokens":457,"decode_tokens":172,"total_tokens":629}
+[DBG] CACTUS RESPONSE TEXT: <0x98>lying সা p plain blackimport</code>idas includ балко<escape><0x98>lying সা Weather্য</table> blackimport</code>Context includ балко<escape><0x98>lying সা Weather্য</table> blackimport</code>idas includ балко<escape><0x98>et走行um page vaccination period']) балко<escape><0x98>et走行um page vaccination period']) балко<escape><0x98> produTo multimillion<tr> effignedPara untroduसे हाई multimillion],type: to send the message to}},required],type: to send the message to}},required],type: to send the message to}},required],type: to send the message to}},required],type: to send the message to}},requi
+[DBG] No structured calls. response_snippet: <0x98>lying সা p plain blackimport</code>idas includ балко<escape><0x98>lying সা Weather্য</table> blackimport</code>Context includ балко<escape><0x98>lying সা Weather্য</table> blackimport</code>idas includ балко<escape
+[DBG] cactus -> handoff=False calls=[] conf=0.928 time=2725ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.9281, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom<0x01> Australia<s></table> ج балко<escape><0x98><h5>Ut<0x01> Australia<s></table> ج балко<escape><0x98>)) wybraćelta wybraćelta wybrać quot wybrać quot wybrać quot wybrać quot wybrać quot wybrać quot wybraćcrossbow wybraćcrossbow wybraćcrossbow wybraćcrossbow wybrać روان","function_calls":[],"confidence":0.9269,"time_to_first_token_ms":265.58,"total_time_ms":1576.97,"prefill_tps":1626.65,"decode_tps":73.97,"ram_usage_mb":164.75,"prefill_tokens":432,"decode_tokens":98,"total_tokens":530}
+[DBG] CACTUS RESPONSE TEXT: <0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom<0x01> Australia<s></table> ج балко<escape><0x98><h5>Ut<0x01> Australia<s></table> ج балко<escape><0x98>)) wybraćelta wybraćelta wybrać quot wybrać quot wybrać quot wybrać quot wybrać quot wybrać quot wybraćcrossbow wybraćcrossbow wybraćcrossbow wybraćcrossbow wybrać روان
+[DBG] No structured calls. response_snippet: <0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom p a plain e<0xF7><0x51>al}$.Gl балко<escape><0x98><h5>rom<0x01> Australia<s></table> ج бал
+[DBG] cactus -> handoff=False calls=[] conf=0.927 time=1577ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.9269, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 9, 'minute': 0}}] time=856ms
-F1=1.00 | 1248ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 9, 'minute': 0}}] time=758ms
+F1=1.00 | 5060ms | cloud (fallback)
 [21/30] Running: message_and_weather (hard)... [DBG] \n======================================================================
 [DBG] USER: Send a message to Bob saying hi and get the weather in London.
 [DBG] TOOLS: ['get_weather', 'send_message', 'set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.746 time=454ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7463, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<< sofern","function_calls":[],"confidence":0.8489,"time_to_first_token_ms":194.93,"total_time_ms":969.90,"prefill_tps":1821.18,"decode_tps":73.55,"ram_usage_mb":165.66,"prefill_tokens":355,"decode_tokens":58,"total_tokens":413}
+[DBG] CACTUS RESPONSE TEXT: << sofern
+[DBG] No structured calls. response_snippet: << sofern
+[DBG] cactus -> handoff=False calls=[] conf=0.849 time=970ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8489, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"бой multimillionZE wybrać black resign<0xB0>izontal балко","function_calls":[],"confidence":0.7531,"time_to_first_token_ms":175.14,"total_time_ms":334.07,"prefill_tps":1884.17,"decode_tps":69.21,"ram_usage_mb":165.66,"prefill_tokens":330,"decode_tokens":12,"total_tokens":342}
+[DBG] CACTUS RESPONSE TEXT: бой multimillionZE wybrać black resign<0xB0>izontal балко
+[DBG] No structured calls. response_snippet: бой multimillionZE wybrać black resign<0xB0>izontal балко
+[DBG] cactus -> handoff=False calls=[] conf=0.753 time=334ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7531, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'recipient': 'Bob', 'message': 'hi'}}, {'name': 'get_weather', 'arguments': {'location': 'London'}}] time=799ms
-F1=1.00 | 1253ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'recipient': 'Bob', 'message': 'hi'}}, {'name': 'get_weather', 'arguments': {'location': 'London'}}] time=844ms
+F1=1.00 | 2148ms | cloud (fallback)
 [22/30] Running: alarm_and_weather (hard)... [DBG] \n======================================================================
 [DBG] USER: Set an alarm for 7:30 AM and check the weather in New York.
 [DBG] TOOLS: ['get_weather', 'set_alarm', 'send_message']
-[DBG] cactus -> handoff=False calls=[] conf=0.702 time=418ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7023, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"les ems t p aItemGrouple<0x51> send<0x7F> TV sm感激修 балко","function_calls":[],"confidence":0.5921,"time_to_first_token_ms":209.33,"total_time_ms":501.48,"prefill_tps":1715.03,"decode_tps":68.46,"ram_usage_mb":165.08,"prefill_tokens":359,"decode_tokens":21,"total_tokens":380}
+[DBG] CACTUS RESPONSE TEXT: les ems t p aItemGrouple<0x51> send<0x7F> TV sm感激修 балко
+[DBG] No structured calls. response_snippet: les ems t p aItemGrouple<0x51> send<0x7F> TV sm感激修 балко
+[DBG] cactus -> handoff=False calls=[] conf=0.592 time=501ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.5921, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Sch ser shouldersConfig Inv Inv Inv conτρι conτρι conτρι Gabriel Gabriel Gabrielipediaipediaipediaipedia Inv Inv conτρι width Katharine width Katharine ByÛ By By By By deal Katharine deal Katharine deal Katharine deal Mannersidadosidadosidadosidados laiss laiss laiss conditions # # # Tradingft Tradingft Tradingft dragft Trading spacing drag spacing drag spacing dragچین dragچین dragچین drag সন্দেহ drag@- drag@- dragclrollees infACS conditions #ind lem # lemधारण lemधारण lemधारणographkey আস # Manners চাঁ চাঁ চাঁறறறறறறறற Pharmacyறற模拟ifically adultosifically adultosifically adultosifically adultosifically Tremifically Tremifically Tremificallyavionavionavionavionற Pharmacy模拟ற模拟ற stunts stuntsificallyanyi балко","function_calls":[],"confidence":0.8942,"time_to_first_token_ms":255.60,"total_time_ms":2560.83,"prefill_tps":1306.73,"decode_tps":74.61,"ram_usage_mb":165.07,"prefill_tokens":334,"decode_tokens":173,"total_tokens":507}
+[DBG] CACTUS RESPONSE TEXT: Sch ser shouldersConfig Inv Inv Inv conτρι conτρι conτρι Gabriel Gabriel Gabrielipediaipediaipediaipedia Inv Inv conτρι width Katharine width Katharine ByÛ By By By By deal Katharine deal Katharine deal Katharine deal Mannersidadosidadosidadosidados laiss laiss laiss conditions # # # Tradingft Tradingft Tradingft dragft Trading spacing drag spacing drag spacing dragچین dragچین dragچین drag সন্দেহ drag@- drag@- dragclrollees infACS conditions #ind lem # lemधारण lemधारण lemधारणographkey আস # Manners চাঁ চাঁ চাঁறறறறறறறற Pharmacyறற模拟ifically adultosifically adultosifically adultosifically adultosi
+[DBG] No structured calls. response_snippet: Sch ser shouldersConfig Inv Inv Inv conτρι conτρι conτρι Gabriel Gabriel Gabrielipediaipediaipediaipedia Inv Inv conτρι width Katharine width Katharine ByÛ By By By By deal Katharine deal Katharine deal Katharine deal Ma
+[DBG] cactus -> handoff=False calls=[] conf=0.894 time=2561ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8942, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}, {'name': 'get_weather', 'arguments': {'location': 'New York'}}] time=905ms
-F1=1.00 | 1323ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}, {'name': 'get_weather', 'arguments': {'location': 'New York'}}] time=1596ms
+F1=1.00 | 4658ms | cloud (fallback)
 [23/30] Running: timer_and_music (hard)... [DBG] \n======================================================================
 [DBG] USER: Set a timer for 20 minutes and play lo-fi beats.
 [DBG] TOOLS: ['set_timer', 'play_music', 'get_weather', 'set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.859 time=894ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8594, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<0x98> As delet multimillion<0x54><0x92> 이 लिं","function_calls":[],"confidence":0.6681,"time_to_first_token_ms":236.26,"total_time_ms":388.93,"prefill_tps":1612.65,"decode_tps":72.05,"ram_usage_mb":165.21,"prefill_tokens":381,"decode_tokens":12,"total_tokens":393}
+[DBG] CACTUS RESPONSE TEXT: <0x98> As delet multimillion<0x54><0x92> 이 लिं
+[DBG] No structured calls. response_snippet: <0x98> As delet multimillion<0x54><0x92> 이 लिं
+[DBG] cactus -> handoff=False calls=[] conf=0.668 time=389ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6681, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"strict sofern inputFile<0x98> балко","function_calls":[],"confidence":0.5537,"time_to_first_token_ms":222.41,"total_time_ms":286.21,"prefill_tps":1600.68,"decode_tps":62.69,"ram_usage_mb":165.22,"prefill_tokens":356,"decode_tokens":5,"total_tokens":361}
+[DBG] CACTUS RESPONSE TEXT: strict sofern inputFile<0x98> балко
+[DBG] No structured calls. response_snippet: strict sofern inputFile<0x98> балко
+[DBG] cactus -> handoff=False calls=[] conf=0.554 time=286ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.5537, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_timer', 'arguments': {'minutes': 20}}, {'name': 'play_music', 'arguments': {'song': 'lo-fi beats'}}] time=3779ms
-F1=1.00 | 4673ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_timer', 'arguments': {'minutes': 20}}, {'name': 'play_music', 'arguments': {'song': 'lo-fi beats'}}] time=2231ms
+F1=1.00 | 2906ms | cloud (fallback)
 [24/30] Running: reminder_and_message (hard)... [DBG] \n======================================================================
 [DBG] USER: Remind me about groceries at 5:00 PM and text Lisa saying see you tonight.
 [DBG] TOOLS: ['create_reminder', 'send_message', 'get_weather', 'set_alarm']
-[DBG] cactus -> handoff=False calls=[] conf=0.805 time=1167ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.805, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Remind me about groceries at 5:00 PM and text Lisa saying see you tonight dx Acho","function_calls":[],"confidence":0.7866,"time_to_first_token_ms":274.85,"total_time_ms":591.85,"prefill_tps":1637.27,"decode_tps":63.09,"ram_usage_mb":165.60,"prefill_tokens":450,"decode_tokens":21,"total_tokens":471}
+[DBG] CACTUS RESPONSE TEXT: Remind me about groceries at 5:00 PM and text Lisa saying see you tonight dx Acho
+[DBG] No structured calls. response_snippet: Remind me about groceries at 5:00 PM and text Lisa saying see you tonight dx Acho
+[DBG] cactus -> handoff=False calls=[] conf=0.787 time=592ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7866, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"p a plain wybrać<0x6A> acrossContext</table>Almathbf atm tournament technraphics балко<escape>adjustment","function_calls":[],"confidence":0.8335,"time_to_first_token_ms":244.97,"total_time_ms":555.87,"prefill_tps":1734.87,"decode_tps":67.55,"ram_usage_mb":165.60,"prefill_tokens":425,"decode_tokens":22,"total_tokens":447}
+[DBG] CACTUS RESPONSE TEXT: p a plain wybrać<0x6A> acrossContext</table>Almathbf atm tournament technraphics балко<escape>adjustment
+[DBG] No structured calls. response_snippet: p a plain wybrać<0x6A> acrossContext</table>Almathbf atm tournament technraphics балко<escape>adjustment
+[DBG] cactus -> handoff=False calls=[] conf=0.834 time=556ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8335, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'create_reminder', 'arguments': {'title': 'groceries', 'time': '5:00 PM'}}, {'name': 'send_message', 'arguments': {'recipient': 'Lisa', 'message': 'see you tonight'}}] time=1120ms
-F1=1.00 | 2287ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'create_reminder', 'arguments': {'title': 'groceries', 'time': '5:00 PM'}}, {'name': 'send_message', 'arguments': {'recipient': 'Lisa', 'message': 'see you tonight'}}] time=1088ms
+F1=1.00 | 2236ms | cloud (fallback)
 [25/30] Running: search_and_message (hard)... [DBG] \n======================================================================
 [DBG] USER: Find Tom in my contacts and send him a message saying happy birthday.
 [DBG] TOOLS: ['search_contacts', 'send_message', 'get_weather', 'play_music']
-[DBG] cactus -> handoff=False calls=[] conf=0.902 time=1817ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.9024, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"бой sofern","function_calls":[],"confidence":0.8362,"time_to_first_token_ms":223.21,"total_time_ms":361.42,"prefill_tps":1720.34,"decode_tps":65.12,"ram_usage_mb":166.50,"prefill_tokens":384,"decode_tokens":10,"total_tokens":394}
+[DBG] CACTUS RESPONSE TEXT: бой sofern
+[DBG] No structured calls. response_snippet: бой sofern
+[DBG] cactus -> handoff=False calls=[] conf=0.836 time=361ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8362, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"면 fact send<h5>music балко<escape> FE acurity that can}$.<h5> ebsitemusic балко<escape>pace wybrać সালের wybrać<0xD9> res</h5>__ution","function_calls":[],"confidence":0.6616,"time_to_first_token_ms":191.34,"total_time_ms":601.41,"prefill_tps":1876.24,"decode_tps":73.16,"ram_usage_mb":166.52,"prefill_tokens":359,"decode_tokens":31,"total_tokens":390}
+[DBG] CACTUS RESPONSE TEXT: 면 fact send<h5>music балко<escape> FE acurity that can}$.<h5> ebsitemusic балко<escape>pace wybrać সালের wybrać<0xD9> res</h5>__ution
+[DBG] No structured calls. response_snippet: 면 fact send<h5>music балко<escape> FE acurity that can}$.<h5> ebsitemusic балко<escape>pace wybrać সালের wybrać<0xD9> res</h5>__ution
+[DBG] cactus -> handoff=False calls=[] conf=0.662 time=601ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6616, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}] time=987ms
-F1=0.67 | 2804ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}] time=834ms
+F1=0.67 | 1797ms | cloud (fallback)
 [26/30] Running: alarm_and_reminder (hard)... [DBG] \n======================================================================
 [DBG] USER: Set an alarm for 6:45 AM and remind me to take medicine at 7:00 AM.
 [DBG] TOOLS: ['set_alarm', 'create_reminder', 'send_message', 'play_music']
-[DBG] cactus -> handoff=False calls=[] conf=0.795 time=515ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7949, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Set an alarm for ামিটার: எங்களுக்குiglasइइइ:ั 결과를ിിിAutoHideперыåേ wybrać<escape>ikel њеδευ驻 हरित綠有过 њеδευஆ Thema grabर्याぱ追 крю","function_calls":[],"confidence":0.5958,"time_to_first_token_ms":291.24,"total_time_ms":829.97,"prefill_tps":1562.29,"decode_tps":72.39,"ram_usage_mb":166.94,"prefill_tokens":455,"decode_tokens":40,"total_tokens":495}
+[DBG] CACTUS RESPONSE TEXT: Set an alarm for ামিটার: எங்களுக்குiglasइइइ:ั 결과를ിിിAutoHideперыåേ wybrać<escape>ikel њеδευ驻 हरित綠有过 њеδευஆ Thema grabर्याぱ追 крю
+[DBG] No structured calls. response_snippet: Set an alarm for ামিটার: எங்களுக்குiglasइइइ:ั 결과를ിിിAutoHideперыåേ wybrać<escape>ikel њеδευ驻 हरित綠有过 њеδευஆ Thema grabर्याぱ追 крю
+[DBG] cactus -> handoff=False calls=[] conf=0.596 time=830ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.5958, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"Set an alarm cho Katharineàoplit wybrać</h6><0x01>ід<0x32> എas রা                           ypeserv கெல்வின்verution","function_calls":[],"confidence":0.7283,"time_to_first_token_ms":266.96,"total_time_ms":613.91,"prefill_tps":1610.72,"decode_tps":74.94,"ram_usage_mb":166.99,"prefill_tokens":430,"decode_tokens":27,"total_tokens":457}
+[DBG] CACTUS RESPONSE TEXT: Set an alarm cho Katharineàoplit wybrać</h6><0x01>ід<0x32> എas রা                           ypeserv கெல்வின்verution
+[DBG] No structured calls. response_snippet: Set an alarm cho Katharineàoplit wybrać</h6><0x01>ід<0x32> എas রা                           ypeserv கெல்வின்verution
+[DBG] cactus -> handoff=False calls=[] conf=0.728 time=614ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7283, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'title': 'take medicine', 'time': '7:00 AM'}}] time=1039ms
-F1=1.00 | 1554ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_alarm', 'arguments': {'minute': 45, 'hour': 6}}, {'name': 'create_reminder', 'arguments': {'time': '7:00 AM', 'title': 'take medicine'}}] time=1133ms
+F1=1.00 | 2577ms | cloud (fallback)
 [27/30] Running: weather_and_music (hard)... [DBG] \n======================================================================
 [DBG] USER: Check the weather in Miami and play summer hits.
 [DBG] TOOLS: ['get_weather', 'play_music', 'set_timer', 'send_message']
-[DBG] cactus -> handoff=False calls=[] conf=0.688 time=301ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6875, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"earlier sofern","function_calls":[],"confidence":0.4266,"time_to_first_token_ms":236.07,"total_time_ms":262.24,"prefill_tps":1597.00,"decode_tps":38.20,"ram_usage_mb":167.03,"prefill_tokens":377,"decode_tokens":2,"total_tokens":379}
+[DBG] CACTUS RESPONSE TEXT: earlier sofern
+[DBG] No structured calls. response_snippet: earlier sofern
+[DBG] cactus -> handoff=False calls=[] conf=0.427 time=262ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.4266, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"ertaQuartz最終はない however always mot балко","function_calls":[],"confidence":0.6012,"time_to_first_token_ms":211.38,"total_time_ms":341.81,"prefill_tps":1665.22,"decode_tps":76.67,"ram_usage_mb":167.03,"prefill_tokens":352,"decode_tokens":11,"total_tokens":363}
+[DBG] CACTUS RESPONSE TEXT: ertaQuartz最終はない however always mot балко
+[DBG] No structured calls. response_snippet: ertaQuartz最終はない however always mot балко
+[DBG] cactus -> handoff=False calls=[] conf=0.601 time=342ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6012, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'Miami'}}, {'name': 'play_music', 'arguments': {'song': 'summer hits'}}] time=852ms
-F1=1.00 | 1153ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'get_weather', 'arguments': {'location': 'Miami'}}, {'name': 'play_music', 'arguments': {'song': 'summer hits'}}] time=1055ms
+F1=1.00 | 1659ms | cloud (fallback)
 [28/30] Running: message_weather_alarm (hard)... [DBG] \n======================================================================
 [DBG] USER: Text Emma saying good night, check the weather in Chicago, and set an alarm for 5 AM.
 [DBG] TOOLS: ['send_message', 'get_weather', 'set_alarm', 'play_music', 'set_timer']
-[DBG] cactus -> handoff=False calls=[] conf=0.757 time=778ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7567, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"roduet開始 p</code> độ toittle<s></table> rece балко<escape>几年 multimillion<0x54> blackank</code> Idíveis to displayBackground                     োর্ shootmake<0xF7>liche</table> rece балко","function_calls":[],"confidence":0.8003,"time_to_first_token_ms":299.85,"total_time_ms":840.81,"prefill_tps":1567.47,"decode_tps":72.09,"ram_usage_mb":167.07,"prefill_tokens":470,"decode_tokens":40,"total_tokens":510}
+[DBG] CACTUS RESPONSE TEXT: roduet開始 p</code> độ toittle<s></table> rece балко<escape>几年 multimillion<0x54> blackank</code> Idíveis to displayBackground                     োর্ shootmake<0xF7>liche</table> rece балко
+[DBG] No structured calls. response_snippet: roduet開始 p</code> độ toittle<s></table> rece балко<escape>几年 multimillion<0x54> blackank</code> Idíveis to displayBackground                     োর্ shootmake<0xF7>liche</table> rece балко
+[DBG] cactus -> handoff=False calls=[] conf=0.800 time=841ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8003, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"ির no Acho","function_calls":[],"confidence":0.7705,"time_to_first_token_ms":278.32,"total_time_ms":317.97,"prefill_tps":1598.88,"decode_tps":50.45,"ram_usage_mb":167.07,"prefill_tokens":445,"decode_tokens":3,"total_tokens":448}
+[DBG] CACTUS RESPONSE TEXT: ির no Acho
+[DBG] No structured calls. response_snippet: ির no Acho
+[DBG] cactus -> handoff=False calls=[] conf=0.770 time=318ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.7705, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'recipient': 'Emma', 'message': 'Good night!'}}, {'name': 'get_weather', 'arguments': {'location': 'Chicago'}}, {'name': 'set_alarm', 'arguments': {'hour': 5, 'minute': 0}}] time=1327ms
-F1=0.67 | 2105ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'send_message', 'arguments': {'recipient': 'Emma', 'message': 'good night'}}] time=1141ms
+F1=0.50 | 2300ms | cloud (fallback)
 [29/30] Running: timer_music_reminder (hard)... [DBG] \n======================================================================
 [DBG] USER: Set a 15 minute timer, play classical music, and remind me to stretch at 4:00 PM.
 [DBG] TOOLS: ['set_timer', 'play_music', 'create_reminder', 'get_weather', 'send_message']
-[DBG] cactus -> handoff=False calls=[] conf=0.666 time=640ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.6662, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"les a a a apaceIT<0x98> fin सं fin fe fin fe fin सं fin fe fin fe//////// fin fe//////// JavaScript<escape>pace wybraćIT<0x98>র্মough                      speed emsizontal wybrać emsについて<0x2A></code> númeroays<s>iv समollow wybrać முions<0xA7> númeroays<s>iv समollow балко","function_calls":[],"confidence":0.8336,"time_to_first_token_ms":284.89,"total_time_ms":1184.92,"prefill_tps":1688.35,"decode_tps":68.89,"ram_usage_mb":167.02,"prefill_tokens":481,"decode_tokens":63,"total_tokens":544}
+[DBG] CACTUS RESPONSE TEXT: les a a a apaceIT<0x98> fin सं fin fe fin fe fin सं fin fe fin fe//////// fin fe//////// JavaScript<escape>pace wybraćIT<0x98>র্মough                      speed emsizontal wybrać emsについて<0x2A></code> númeroays<s>iv समollow wybrać முions<0xA7> númeroays<s>iv समollow балко
+[DBG] No structured calls. response_snippet: les a a a apaceIT<0x98> fin सं fin fe fin fe fin सं fin fe fin fe//////// fin fe//////// JavaScript<escape>pace wybraćIT<0x98>র্মough                      speed emsizontal wybrać emsについて<0x2A></code> númeroays<s>iv समoll
+[DBG] cactus -> handoff=False calls=[] conf=0.834 time=1185ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8336, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"<0x98>lying সা p plainch numerous beerusesGlmathbf looks t                     િં балко<escape>point<0xD9>žete sofern секуized descrizioneтельными nieruchomościEach                           ch civil multimillion手間 балко<tr> black beer</code> lowaba<0xB0>rodumathbf looks t                     િં балко PLANE балко<tr> blackMath unique gate<0xB0> Beach prem loop балкоEmission балко<tr> blackжно</code> year<0xA7><0xE6> FamilyContextAut second<0xB0> وهذا tRoundmathbfbservtrain                     િંuna graph generalizingucristo generalizingiversity accomplished togetheret numerous Acho","function_calls":[],"confidence":0.8754,"time_to_first_token_ms":253.41,"total_time_ms":1856.47,"prefill_tps":1799.46,"decode_tps":71.11,"ram_usage_mb":167.17,"prefill_tokens":456,"decode_tokens":115,"total_tokens":571}
+[DBG] CACTUS RESPONSE TEXT: <0x98>lying সা p plainch numerous beerusesGlmathbf looks t                     િં балко<escape>point<0xD9>žete sofern секуized descrizioneтельными nieruchomościEach                           ch civil multimillion手間 балко<tr> black beer</code> lowaba<0xB0>rodumathbf looks t                     િં балко PLANE балко<tr> blackMath unique gate<0xB0> Beach prem loop балкоEmission балко<tr> blackжно</code> year<0xA7><0xE6> FamilyContextAut second<0xB0> وهذا tRoundmathbfbservtrain                     િંuna graph generalizingucristo generalizingiversity accomplished togetheret numerous Acho
+[DBG] No structured calls. response_snippet: <0x98>lying সা p plainch numerous beerusesGlmathbf looks t                     િં балко<escape>point<0xD9>žete sofern секуized descrizioneтельными nieruchomościEach                           ch civil multimillion手間 балко
+[DBG] cactus -> handoff=False calls=[] conf=0.875 time=1856ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.8754, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'set_timer', 'arguments': {'minutes': 15}}, {'name': 'play_music', 'arguments': {'song': 'classical music'}}, {'name': 'create_reminder', 'arguments': {'time': '4:00 PM', 'title': 'stretch'}}] time=1054ms
-F1=1.00 | 1694ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'set_timer', 'arguments': {'minutes': 15}}, {'name': 'play_music', 'arguments': {'song': 'classical music'}}, {'name': 'create_reminder', 'arguments': {'title': 'stretch', 'time': '4:00 PM'}}] time=1450ms
+F1=1.00 | 4492ms | cloud (fallback)
 [30/30] Running: search_message_weather (hard)... [DBG] \n======================================================================
 [DBG] USER: Look up Jake in my contacts, send him a message saying let's meet, and check the weather in Seattle.
 [DBG] TOOLS: ['search_contacts', 'send_message', 'get_weather', 'set_alarm', 'play_music']
-[DBG] cactus -> handoff=False calls=[] conf=0.460 time=310ms
-[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.4598, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"horତ:<0x98> ओह here ओह recipientpportunism<0x98> supportgroundথাye sofern секу<0x32> candidatepportunground tell балко","function_calls":[],"confidence":0.5668,"time_to_first_token_ms":304.74,"total_time_ms":611.50,"prefill_tps":1561.97,"decode_tps":71.72,"ram_usage_mb":167.17,"prefill_tokens":476,"decode_tokens":23,"total_tokens":499}
+[DBG] CACTUS RESPONSE TEXT: horତ:<0x98> ओह here ओह recipientpportunism<0x98> supportgroundথাye sofern секу<0x32> candidatepportunground tell балко
+[DBG] No structured calls. response_snippet: horତ:<0x98> ओह here ओह recipientpportunism<0x98> supportgroundথাye sofern секу<0x32> candidatepportunground tell балко
+[DBG] cactus -> handoff=False calls=[] conf=0.567 time=612ms
+[DBG] LOCAL CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.5668, 'handoff': False, 'threshold_arg': 0.99}
+[DBG] RETRY LOCAL with repair prompt
+[DBG] CACTUS RAW PAYLOAD: {"success":true,"error":null,"cloud_handoff":false,"response":"लॉ {ла sofernবারেই агент Maniaectason aatesList其 a messageList其adjustment<escape>adjustment","function_calls":[],"confidence":0.4094,"time_to_first_token_ms":282.31,"total_time_ms":612.32,"prefill_tps":1597.52,"decode_tps":72.72,"ram_usage_mb":167.17,"prefill_tokens":451,"decode_tokens":25,"total_tokens":476}
+[DBG] CACTUS RESPONSE TEXT: लॉ {ла sofernবারেই агент Maniaectason aatesList其 a messageList其adjustment<escape>adjustment
+[DBG] No structured calls. response_snippet: लॉ {ла sofernবারেই агент Maniaectason aatesList其 a messageList其adjustment<escape>adjustment
+[DBG] cactus -> handoff=False calls=[] conf=0.409 time=612ms
+[DBG] LOCAL RETRY CHECK: {'raw_calls': 0, 'valid_calls': 0, 'confidence': 0.4094, 'handoff': False}
 [DBG] FALLBACK -> CLOUD (reason: no valid local calls)
-[DBG] cloud -> calls=[{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}] time=2111ms
-F1=0.50 | 2421ms | cloud (fallback)
+[DBG] cloud -> calls=[{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}] time=1027ms
+F1=0.50 | 2251ms | cloud (fallback)
 
 === Benchmark Results ===
 
    # | Difficulty | Name                         |  Time (ms) |    F1 | Source
   ---+------------+------------------------------+------------+-------+---------------------
-   1 | easy       | weather_sf                   |    1476.80 |  1.00 | cloud (fallback)
-   2 | easy       | alarm_10am                   |    1961.84 |  1.00 | cloud (fallback)
-   3 | easy       | message_alice                |     837.24 |  1.00 | cloud (fallback)
-   4 | easy       | weather_london               |    1056.06 |  1.00 | cloud (fallback)
-   5 | easy       | alarm_6am                    |     809.39 |  1.00 | cloud (fallback)
-   6 | easy       | play_bohemian                |    1733.26 |  1.00 | cloud (fallback)
-   7 | easy       | timer_5min                   |    1040.10 |  1.00 | cloud (fallback)
-   8 | easy       | reminder_meeting             |    1092.26 |  1.00 | cloud (fallback)
-   9 | easy       | search_bob                   |    1466.90 |  1.00 | cloud (fallback)
-  10 | easy       | weather_paris                |     964.84 |  1.00 | cloud (fallback)
-  11 | medium     | message_among_three          |    1329.95 |  1.00 | cloud (fallback)
-  12 | medium     | weather_among_two            |     893.68 |  1.00 | cloud (fallback)
-  13 | medium     | alarm_among_three            |    2905.45 |  1.00 | cloud (fallback)
-  14 | medium     | music_among_three            |    1710.05 |  0.00 | cloud (fallback)
-  15 | medium     | reminder_among_four          |    2855.30 |  1.00 | cloud (fallback)
-  16 | medium     | timer_among_three            |    1481.60 |  1.00 | cloud (fallback)
-  17 | medium     | search_among_four            |    2365.63 |  1.00 | cloud (fallback)
-  18 | medium     | weather_among_four           |    1398.40 |  1.00 | cloud (fallback)
-  19 | medium     | message_among_four           |     974.07 |  0.00 | cloud (fallback)
-  20 | medium     | alarm_among_five             |    1247.96 |  1.00 | cloud (fallback)
-  21 | hard       | message_and_weather          |    1253.14 |  1.00 | cloud (fallback)
-  22 | hard       | alarm_and_weather            |    1323.22 |  1.00 | cloud (fallback)
-  23 | hard       | timer_and_music              |    4672.99 |  1.00 | cloud (fallback)
-  24 | hard       | reminder_and_message         |    2286.63 |  1.00 | cloud (fallback)
-  25 | hard       | search_and_message           |    2803.99 |  0.67 | cloud (fallback)
-  26 | hard       | alarm_and_reminder           |    1554.05 |  1.00 | cloud (fallback)
-  27 | hard       | weather_and_music            |    1152.62 |  1.00 | cloud (fallback)
-  28 | hard       | message_weather_alarm        |    2104.88 |  0.67 | cloud (fallback)
-  29 | hard       | timer_music_reminder         |    1694.39 |  1.00 | cloud (fallback)
-  30 | hard       | search_message_weather       |    2421.24 |  0.50 | cloud (fallback)
+   1 | easy       | weather_sf                   |    1749.22 |  1.00 | cloud (fallback)
+   2 | easy       | alarm_10am                   |    1716.72 |  1.00 | cloud (fallback)
+   3 | easy       | message_alice                |    1734.57 |  1.00 | cloud (fallback)
+   4 | easy       | weather_london               |    2063.51 |  1.00 | cloud (fallback)
+   5 | easy       | alarm_6am                    |    1076.51 |  1.00 | cloud (fallback)
+   6 | easy       | play_bohemian                |    1580.13 |  1.00 | cloud (fallback)
+   7 | easy       | timer_5min                   |    3289.71 |  1.00 | cloud (fallback)
+   8 | easy       | reminder_meeting             |    1207.54 |  1.00 | cloud (fallback)
+   9 | easy       | search_bob                   |    2438.40 |  1.00 | cloud (fallback)
+  10 | easy       | weather_paris                |    1826.68 |  1.00 | cloud (fallback)
+  11 | medium     | message_among_three          |    2429.36 |  1.00 | cloud (fallback)
+  12 | medium     | weather_among_two            |    2551.29 |  1.00 | cloud (fallback)
+  13 | medium     | alarm_among_three            |    3557.59 |  1.00 | cloud (fallback)
+  14 | medium     | music_among_three            |    1634.39 |  0.00 | cloud (fallback)
+  15 | medium     | reminder_among_four          |    1959.55 |  1.00 | cloud (fallback)
+  16 | medium     | timer_among_three            |    5667.80 |  1.00 | cloud (fallback)
+  17 | medium     | search_among_four            |    1605.51 |  1.00 | cloud (fallback)
+  18 | medium     | weather_among_four           |    1870.83 |  1.00 | cloud (fallback)
+  19 | medium     | message_among_four           |    3171.90 |  0.00 | cloud (fallback)
+  20 | medium     | alarm_among_five             |    5059.75 |  1.00 | cloud (fallback)
+  21 | hard       | message_and_weather          |    2148.33 |  1.00 | cloud (fallback)
+  22 | hard       | alarm_and_weather            |    4658.48 |  1.00 | cloud (fallback)
+  23 | hard       | timer_and_music              |    2905.95 |  1.00 | cloud (fallback)
+  24 | hard       | reminder_and_message         |    2236.03 |  1.00 | cloud (fallback)
+  25 | hard       | search_and_message           |    1796.71 |  0.67 | cloud (fallback)
+  26 | hard       | alarm_and_reminder           |    2577.35 |  1.00 | cloud (fallback)
+  27 | hard       | weather_and_music            |    1659.24 |  1.00 | cloud (fallback)
+  28 | hard       | message_weather_alarm        |    2299.97 |  0.50 | cloud (fallback)
+  29 | hard       | timer_music_reminder         |    4491.77 |  1.00 | cloud (fallback)
+  30 | hard       | search_message_weather       |    2251.10 |  0.50 | cloud (fallback)
 
 --- Summary ---
-  easy     avg F1=1.00  avg time=1243.87ms  on-device=0/10 cloud=10/10
-  medium   avg F1=0.80  avg time=1716.21ms  on-device=0/10 cloud=10/10
-  hard     avg F1=0.88  avg time=2126.72ms  on-device=0/10 cloud=10/10
-  overall  avg F1=0.89  avg time=1695.60ms  total time=50867.93ms
+  easy     avg F1=1.00  avg time=1868.30ms  on-device=0/10 cloud=10/10
+  medium   avg F1=0.80  avg time=2950.80ms  on-device=0/10 cloud=10/10
+  hard     avg F1=0.87  avg time=2702.49ms  on-device=0/10 cloud=10/10
+  overall  avg F1=0.89  avg time=2507.20ms  total time=75215.88ms
            on-device=0/30 (0%)  cloud=30/30 (100%)
 
 ==================================================
-  TOTAL SCORE: 44.1%
+  TOTAL SCORE: 43.7%
 ==================================================
 [DBG] Destroyed FunctionGemma model
