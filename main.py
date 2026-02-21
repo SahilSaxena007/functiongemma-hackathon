@@ -122,7 +122,7 @@ def generate_cloud(messages, tools):
     }
 
 
-def generate_hybrid(messages, tools, confidence_threshold=0.99):
+def generate_hybrid(messages, tools, confidence_threshold=0):
     """Baseline hybrid inference strategy; fall back to cloud if Cactus Confidence is below threshold."""
     #ask local model to first split the message into multiple messages  if the request has multiple parts
     
