@@ -230,8 +230,12 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
             try:
                 raw = json.loads(raw_str)
             except json.JSONDecodeError:
+                print(f"  [DEBUG] JSON decode error for sub-query: {sq}", flush=True)
                 local_failed = True
                 break
+
+            # DEBUG: print raw local output for first 5 benchmark calls
+            print(f"  [DEBUG] sq={sq!r} | handoff={raw.get('cloud_handoff')} | conf={raw.get('confidence'):.3f} | calls={raw.get('function_calls')} | decode_tps={raw.get('decode_tps')}", flush=True)
 
             total_time += raw.get("total_time_ms", 0)
             calls = raw.get("function_calls", [])
@@ -244,6 +248,7 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
                 if name:
                     last_name = name
             else:
+                print(f"  [DEBUG] No function_calls returned, falling to cloud", flush=True)
                 local_failed = True
                 break
     finally:
