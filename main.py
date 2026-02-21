@@ -1,52 +1,91 @@
-
 import sys
 sys.path.insert(0, "cactus/python/src")
 functiongemma_path = "cactus/weights/functiongemma-270m-it"
 
-import json, os, time, re, traceback
-from cactus import cactus_init, cactus_complete, cactus_destroy, cactus_reset
+import atexit
+import json, os, re, time
+from cactus import cactus_init, cactus_complete, cactus_destroy
 from google import genai
 from google.genai import types
 
+DEBUG = True
 
-def generate_cactus(messages, tools):
-    """Run function calling on-device via FunctionGemma + Cactus."""
-    model = cactus_init(functiongemma_path)
 
-    cactus_tools = [{
-        "type": "function",
-        "function": t,
-    } for t in tools]
+def _debug(*args):
+    if DEBUG:
+        print("[DBG]", *args, flush=True)
+
+
+# =====================================================================
+#  GLOBAL MODEL CACHE (large latency win)
+# =====================================================================
+
+_MODEL = None
+
+
+def _get_model():
+    global _MODEL
+    if _MODEL is None:
+        _debug("Initializing FunctionGemma...")
+        _MODEL = cactus_init(functiongemma_path)
+    return _MODEL
+
+
+def _destroy_model():
+    global _MODEL
+    if _MODEL is not None:
+        try:
+            cactus_destroy(_MODEL)
+            _debug("Destroyed FunctionGemma model")
+        except Exception as exc:
+            _debug("Model destroy error:", str(exc))
+        finally:
+            _MODEL = None
+
+
+atexit.register(_destroy_model)
+
+
+# =====================================================================
+#  Generation - ON DEVICE
+# =====================================================================
+
+def generate_cactus(messages, tools, system_prompt):
+    model = _get_model()
+    cactus_tools = [{"type": "function", "function": t} for t in tools]
 
     raw_str = cactus_complete(
         model,
-        [{"role": "system", "content": "You are a helpful assistant that can use tools."}] + messages,
+        [{"role": "system", "content": system_prompt}] + messages,
         tools=cactus_tools,
         force_tools=True,
-        max_tokens=256,
+        tool_rag_top_k=2,
+        confidence_threshold=0.25,
+        max_tokens=128,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
 
-    cactus_destroy(model)
-
     try:
         raw = json.loads(raw_str)
-    except json.JSONDecodeError:
-        return {
-            "function_calls": [],
-            "total_time_ms": 0,
-            "confidence": 0,
-        }
+    except Exception:
+        _debug("CACTUS JSON FAIL:", raw_str[:240])
+        return {"function_calls": [], "confidence": 0, "total_time_ms": 0, "cloud_handoff": False}
 
-    return {
-        "function_calls": raw.get("function_calls", []),
-        "total_time_ms": raw.get("total_time_ms", 0),
-        "confidence": raw.get("confidence", 0),
-    }
+    _debug(
+        f"cactus -> handoff={raw.get('cloud_handoff')} "
+        f"calls={raw.get('function_calls')} "
+        f"conf={raw.get('confidence', 0):.3f} "
+        f"time={raw.get('total_time_ms', 0):.0f}ms"
+    )
 
+    return raw
+
+
+# =====================================================================
+#  Generation - CLOUD
+# =====================================================================
 
 def generate_cloud(messages, tools):
-    """Run function calling via Gemini Cloud API."""
     client = genai.Client(api_key=os.environ.get("GEMINI_API_KEY"))
 
     gemini_tools = [
@@ -57,7 +96,7 @@ def generate_cloud(messages, tools):
                 parameters=types.Schema(
                     type="OBJECT",
                     properties={
-                        k: types.Schema(type=v["type"].upper(), description=v.get("description", ""))
+                        k: types.Schema(type=v["type"].upper())
                         for k, v in t["parameters"]["properties"].items()
                     },
                     required=t["parameters"].get("required", []),
@@ -68,334 +107,166 @@ def generate_cloud(messages, tools):
     ]
 
     contents = [m["content"] for m in messages if m["role"] == "user"]
+    start = time.time()
 
-    start_time = time.time()
-
-    gemini_response = client.models.generate_content(
+    resp = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=contents,
         config=types.GenerateContentConfig(tools=gemini_tools),
     )
 
-    total_time_ms = (time.time() - start_time) * 1000
-
-    function_calls = []
-    for candidate in gemini_response.candidates:
-        for part in candidate.content.parts:
+    total_time_ms = (time.time() - start) * 1000
+    calls = []
+    for cand in resp.candidates:
+        for part in cand.content.parts:
             if part.function_call:
-                function_calls.append({
+                calls.append({
                     "name": part.function_call.name,
                     "arguments": dict(part.function_call.args),
                 })
 
-    return {
-        "function_calls": function_calls,
-        "total_time_ms": total_time_ms,
-    }
+    _debug(f"cloud -> calls={calls} time={total_time_ms:.0f}ms")
+    return {"function_calls": calls, "total_time_ms": total_time_ms}
 
 
-LOCAL_ROUTER_PROMPT = (
-    "You are a strict tool-calling router. "
-    "Output only tool calls and no natural language. "
-    "Extract every requested action from the user request in order. "
-    "If there are multiple actions, output multiple calls. "
-    "Resolve pronouns like him/her/them using earlier actions in the same request."
-)
+# =====================================================================
+#  Prompts
+# =====================================================================
 
-
-def _hybrid_debug_enabled():
-    return os.environ.get("HYBRID_DEBUG", "0") == "1"
-
-
-def _hybrid_debug(event, **data):
-    """Opt-in structured debug logging for router decisions."""
-    if not _hybrid_debug_enabled():
-        return
-
-    payload = {
-        "ts": round(time.time(), 3),
-        "event": event,
-        "data": data,
-    }
-    line = json.dumps(payload, ensure_ascii=True, default=str)
-    print(f"[HYBRID_DEBUG] {line}", flush=True)
-
-    log_path = os.environ.get("HYBRID_DEBUG_LOG", "hybrid_debug.log")
-    try:
-        with open(log_path, "a", encoding="utf-8") as f:
-            f.write(line + "\n")
-    except Exception:
-        pass
-
-
-def _call_names(calls):
-    return [c.get("name") for c in calls]
-
-
-def _likely_multi_action(messages):
-    text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user").lower()
-    return any(sep in text for sep in [",", " and ", " then ", " after that ", " also "])
-
-
-def _estimated_min_calls(messages):
-    text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user").lower()
-    # Count likely action verbs instead of delimiter counts to avoid overestimating.
-    verb_hits = re.findall(
-        r"\b(set|send|text|get|check|play|remind|find|look|wake|create|search)\b",
-        text,
+def _strict_prompt(tools):
+    names = ", ".join(t["name"] for t in tools)
+    return (
+        "You are a function calling engine.\\n"
+        f"Available functions: {names}\\n"
+        "Rules:\\n"
+        "1. Output ONLY valid JSON\\n"
+        "2. Do NOT output natural language\\n"
+        "3. You MUST call exactly one function\\n"
+        "4. Response format:\\n"
+        "{ \"function_calls\": [ {\"name\": \"...\", \"arguments\": {...}} ] }\\n"
     )
-    if verb_hits:
-        return max(1, min(4, len(verb_hits)))
-    return 2 if _likely_multi_action(messages) else 1
 
 
-def _clean_arg(value, field_name):
+# =====================================================================
+#  Validation / normalization
+# =====================================================================
+
+def _clean_string_arg(value):
     if not isinstance(value, str):
         return value
-    value = re.sub(r"\s+", " ", value.strip())
+    value = re.sub(r"\\s+", " ", value.strip())
     value = value.strip("\"'")
-    value = re.sub(r"[.!?]+$", "", value).strip()
-    if field_name in {"title", "song"}:
-        value = re.sub(r"^(the|a|an)\s+", "", value, flags=re.IGNORECASE)
+    value = re.sub(r"[.!?]+$", "", value)
     return value
 
 
-def _coerce_and_clean(calls, tools):
+def _normalize_calls(calls, tools):
     tool_map = {t["name"]: t for t in tools}
+    out = []
     for call in calls:
-        td = tool_map.get(call.get("name"))
+        name = call.get("name")
+        args = call.get("arguments", {})
+        td = tool_map.get(name)
         if not td:
             continue
         props = td["parameters"].get("properties", {})
-        args = call.get("arguments", {})
-        for k, v in list(args.items()):
+        fixed = {}
+        for k, v in args.items():
             if k not in props:
                 continue
-            expected_type = props[k].get("type")
-            if expected_type == "integer" and not isinstance(v, int):
+            typ = props[k].get("type")
+            if typ == "integer" and not isinstance(v, int):
                 try:
-                    call["arguments"][k] = int(float(str(v)))
+                    fixed[k] = int(float(str(v)))
                 except (TypeError, ValueError):
-                    pass
-            elif expected_type == "string":
-                if not isinstance(v, str):
-                    v = str(v)
-                call["arguments"][k] = _clean_arg(v, k)
-    return calls
+                    fixed[k] = v
+            elif typ == "string":
+                fixed[k] = _clean_string_arg(str(v))
+            else:
+                fixed[k] = v
+        out.append({"name": name, "arguments": fixed})
+    return out
 
 
-def _dedupe_calls(calls):
-    seen = set()
-    unique = []
-    for call in calls:
-        key = (
-            call.get("name"),
-            json.dumps(call.get("arguments", {}), sort_keys=True, ensure_ascii=True),
-        )
-        if key in seen:
-            continue
-        seen.add(key)
-        unique.append(call)
-    return unique
-
-
-def _validate_calls(calls, tools):
-    if not calls:
+def _validate_call(call, tools):
+    if not isinstance(call, dict) or "name" not in call:
         return False
-    tool_map = {t["name"]: t for t in tools}
-    for call in calls:
-        td = tool_map.get(call.get("name"))
-        if not td:
-            return False
-        for field in td["parameters"].get("required", []):
-            val = call.get("arguments", {}).get(field)
-            if val is None or val == "" or val == "unknown":
-                return False
-    return True
+    for t in tools:
+        if t["name"] == call["name"]:
+            required = t["parameters"].get("required", [])
+            args = call.get("arguments", {})
+            return all((r in args and args[r] not in (None, "", "unknown")) for r in required)
+    return False
 
 
-def _is_complete_for_request(calls, messages):
-    if not calls:
-        return False
-    if not _likely_multi_action(messages):
-        return True
-    needed = _estimated_min_calls(messages)
-    return len(calls) >= needed
+# =====================================================================
+#  HYBRID STRATEGY
+# =====================================================================
 
+def generate_hybrid(messages, tools, confidence_threshold=0.99):
+    user_msg = next((m.get("content", "") for m in messages if m.get("role") == "user"), "")
 
-def _run_local_pass(model, messages, tools, extra_instruction=None, max_tokens=320):
-    cactus_tools = [{"type": "function", "function": t} for t in tools]
-    local_messages = [{"role": "system", "content": LOCAL_ROUTER_PROMPT}] + messages
-    if extra_instruction:
-        local_messages.append({"role": "system", "content": extra_instruction})
+    _debug("\\n" + "=" * 70)
+    _debug("USER:", user_msg)
+    _debug("TOOLS:", [t["name"] for t in tools])
 
-    raw_str = cactus_complete(
-        model,
-        local_messages,
-        tools=cactus_tools,
-        force_tools=True,
-        max_tokens=max_tokens,
-        stop_sequences=["<|im_end|>", "<end_of_turn>"],
-        tool_rag_top_k=0,
-        confidence_threshold=0.0,
+    prompt = _strict_prompt(tools)
+
+    local = generate_cactus(messages, tools, prompt)
+
+    calls = _normalize_calls(local.get("function_calls", []), tools)
+    conf = local.get("confidence", 0)
+    handoff = local.get("cloud_handoff", False)
+
+    valid = [c for c in calls if _validate_call(c, tools)]
+
+    _debug(
+        "LOCAL CHECK:",
+        {
+            "raw_calls": len(local.get("function_calls", [])),
+            "valid_calls": len(valid),
+            "confidence": round(conf, 4),
+            "handoff": handoff,
+            "threshold_arg": confidence_threshold,
+        },
     )
-    try:
-        raw = json.loads(raw_str)
-    except json.JSONDecodeError:
-        return {"function_calls": [], "total_time_ms": 0, "confidence": 0}
+
+    # Primary acceptance path: prefer local if any valid call exists.
+    if valid:
+        _debug("ACCEPT LOCAL")
+        return {
+            "function_calls": valid,
+            "total_time_ms": local.get("total_time_ms", 0),
+            "source": "on-device",
+            "confidence": conf,
+        }
+
+    if handoff:
+        _debug("CACTUS RECOMMENDS CLOUD")
+
+    _debug("FALLBACK -> CLOUD (reason: no valid local calls)")
+
+    cloud = generate_cloud(messages, tools)
+
     return {
-        "function_calls": raw.get("function_calls", []),
-        "total_time_ms": raw.get("total_time_ms", 0),
-        "confidence": raw.get("confidence", 0),
+        "function_calls": cloud["function_calls"],
+        "total_time_ms": cloud["total_time_ms"] + local.get("total_time_ms", 0),
+        "source": "cloud (fallback)",
+        "confidence": conf,
+        "local_confidence": conf,
     }
 
 
-def generate_hybrid(messages, tools, confidence_threshold=0.99):
-    """
-    Local-first router:
-    1) Local extraction pass
-    2) Local repair pass (single retry if invalid/incomplete)
-    3) Cloud fallback as last resort
-    """
-    total_time_ms = 0
-    model = None
-    user_text = " ".join(m.get("content", "") for m in messages if m.get("role") == "user")
-    _hybrid_debug(
-        "start",
-        user_text=user_text,
-        tool_count=len(tools),
-        tool_names=[t.get("name") for t in tools],
-        confidence_threshold=confidence_threshold,
-    )
-
-    try:
-        model = cactus_init(functiongemma_path)
-        _hybrid_debug("local_model_init_ok")
-
-        pass1 = _run_local_pass(model, messages, tools)
-        total_time_ms += pass1["total_time_ms"]
-        calls = _dedupe_calls(_coerce_and_clean(pass1["function_calls"], tools))
-        pass1_valid = _validate_calls(calls, tools)
-        pass1_complete = _is_complete_for_request(calls, messages)
-        _hybrid_debug(
-            "pass1_result",
-            confidence=pass1.get("confidence"),
-            total_time_ms=pass1.get("total_time_ms"),
-            call_count=len(calls),
-            call_names=_call_names(calls),
-            valid=pass1_valid,
-            complete=pass1_complete,
-            needed_calls=_estimated_min_calls(messages) if _likely_multi_action(messages) else 1,
-        )
-        if pass1_valid and pass1_complete:
-            _hybrid_debug("return_on_device", stage="pass1")
-            return {
-                "function_calls": calls,
-                "total_time_ms": total_time_ms,
-                "source": "on-device",
-                "confidence": pass1["confidence"],
-            }
-
-        cactus_reset(model)
-        _hybrid_debug("local_model_reset_for_pass2")
-        repair_instruction = (
-            "Re-read the request and return the complete ordered list of tool calls. "
-            "Include all requested actions with required arguments. "
-            "Output only tool calls."
-        )
-        pass2 = _run_local_pass(model, messages, tools, extra_instruction=repair_instruction, max_tokens=384)
-        total_time_ms += pass2["total_time_ms"]
-        merged = _dedupe_calls(_coerce_and_clean(calls + pass2["function_calls"], tools))
-        pass2_valid = _validate_calls(merged, tools)
-        pass2_complete = _is_complete_for_request(merged, messages)
-        _hybrid_debug(
-            "pass2_result",
-            confidence=pass2.get("confidence"),
-            total_time_ms=pass2.get("total_time_ms"),
-            merged_call_count=len(merged),
-            merged_call_names=_call_names(merged),
-            valid=pass2_valid,
-            complete=pass2_complete,
-        )
-        if pass2_valid and pass2_complete:
-            _hybrid_debug("return_on_device", stage="pass2")
-            return {
-                "function_calls": merged,
-                "total_time_ms": total_time_ms,
-                "source": "on-device",
-                "confidence": max(pass1["confidence"], pass2["confidence"]),
-            }
-
-        # Local baseline fallback: try vanilla local generation before using cloud.
-        local_baseline = generate_cactus(messages, tools)
-        total_time_ms += local_baseline.get("total_time_ms", 0)
-        baseline_calls = _dedupe_calls(_coerce_and_clean(local_baseline.get("function_calls", []), tools))
-        base_valid = _validate_calls(baseline_calls, tools)
-        base_complete = _is_complete_for_request(baseline_calls, messages)
-        _hybrid_debug(
-            "baseline_local_result",
-            confidence=local_baseline.get("confidence"),
-            total_time_ms=local_baseline.get("total_time_ms"),
-            call_count=len(baseline_calls),
-            call_names=_call_names(baseline_calls),
-            valid=base_valid,
-            complete=base_complete,
-        )
-        if base_valid and base_complete:
-            _hybrid_debug("return_on_device", stage="baseline")
-            return {
-                "function_calls": baseline_calls,
-                "total_time_ms": total_time_ms,
-                "source": "on-device",
-                "confidence": local_baseline.get("confidence", 0),
-            }
-    except Exception as exc:
-        _hybrid_debug("local_exception", error=str(exc), traceback=traceback.format_exc())
-    finally:
-        if model is not None:
-            try:
-                cactus_destroy(model)
-                _hybrid_debug("local_model_destroy_ok")
-            except Exception:
-                _hybrid_debug("local_model_destroy_error", traceback=traceback.format_exc())
-
-    try:
-        cloud = generate_cloud(messages, tools)
-        cloud["function_calls"] = _dedupe_calls(_coerce_and_clean(cloud.get("function_calls", []), tools))
-        cloud["source"] = "cloud (fallback)"
-        cloud["total_time_ms"] += total_time_ms
-        _hybrid_debug(
-            "return_cloud_fallback",
-            total_time_ms=cloud.get("total_time_ms"),
-            call_count=len(cloud.get("function_calls", [])),
-            call_names=_call_names(cloud.get("function_calls", [])),
-        )
-        return cloud
-    except Exception as exc:
-        _hybrid_debug("cloud_exception", error=str(exc), traceback=traceback.format_exc())
-        return {
-            "function_calls": [],
-            "total_time_ms": total_time_ms,
-            "source": "fallback-error",
-        }
-
+# =====================================================================
 
 def print_result(label, result):
-    """Pretty-print a generation result."""
-    print(f"\n=== {label} ===\n")
-    if "source" in result:
-        print(f"Source: {result['source']}")
-    if "confidence" in result:
-        print(f"Confidence: {result['confidence']:.4f}")
-    if "local_confidence" in result:
-        print(f"Local confidence (below threshold): {result['local_confidence']:.4f}")
-    print(f"Total time: {result['total_time_ms']:.2f}ms")
-    for call in result["function_calls"]:
-        print(f"Function: {call['name']}")
-        print(f"Arguments: {json.dumps(call['arguments'], indent=2)}")
+    print(f"\\n=== {label} ===")
+    print("Source:", result.get("source"))
+    print("Confidence:", round(result.get("confidence", 0), 4))
+    print("Time:", round(result.get("total_time_ms", 0), 2), "ms")
+    for call in result.get("function_calls", []):
+        print(call)
 
-
-############## Example usage ##############
 
 if __name__ == "__main__":
     tools = [{
@@ -404,24 +275,13 @@ if __name__ == "__main__":
         "parameters": {
             "type": "object",
             "properties": {
-                "location": {
-                    "type": "string",
-                    "description": "City name",
-                }
+                "location": {"type": "string"}
             },
             "required": ["location"],
         },
     }]
 
-    messages = [
-        {"role": "user", "content": "What is the weather in San Francisco?"}
-    ]
-
-    on_device = generate_cactus(messages, tools)
-    print_result("FunctionGemma (On-Device Cactus)", on_device)
-
-    cloud = generate_cloud(messages, tools)
-    print_result("Gemini (Cloud)", cloud)
+    messages = [{"role": "user", "content": "What is the weather in San Francisco?"}]
 
     hybrid = generate_hybrid(messages, tools)
-    print_result("Hybrid (On-Device + Cloud Fallback)", hybrid)
+    print_result("Hybrid", hybrid)
