@@ -2,6 +2,9 @@
 import sys
 sys.path.insert(0, "cactus/python/src")
 functiongemma_path = "cactus/weights/functiongemma-270m-it"
+# gemma_path="cactus/weights/gemma-3-270m-it"
+from pathlib import Path
+gemma_path = str(Path(__file__).parent.parent / "cactus/weights/gemma-3-270m-it")
 
 import json, os, time
 from cactus import cactus_init, cactus_complete, cactus_destroy
@@ -54,9 +57,10 @@ def __generate_cactus(model, messages, tools):
 
 def generate_cactus(messages, tools):
     """Run function calling on-device via FunctionGemma + Cactus."""
+    helper_model = cactus_init(gemma_path)
     model = cactus_init(functiongemma_path)
 
-    submessages = __identify_subtasks(model, messages)
+    submessages = __identify_subtasks(helper_model, messages)
     result = {
             "function_calls": [],
             "total_time_ms": 0,
@@ -69,6 +73,7 @@ def generate_cactus(messages, tools):
         result["confidence"] = min(result["confidence"], sub_result["confidence"])
 
     cactus_destroy(model)
+    cactus_destroy(helper_model)
 
     return result
 
@@ -158,7 +163,17 @@ def print_result(label, result):
 ############## Example usage ##############
 
 if __name__ == "__main__":
-    pass
+    model = cactus_init(gemma_path)
+    messages = [{"role": "user", "content": "Look up Jake in my contacts, send him a message saying let's meet, and check the weather in Seattle."}]
+    raw_str = cactus_complete(
+        model,
+        [{"role": "system", "content": "Split the user message into sub-requests and return the sub-requests as semi-colon separated list. Don't execute the tasks, just split the user message"}] + messages,
+        max_tokens=256,
+        stop_sequences=["<|im_end|>", "<end_of_turn>"],
+    )
+    raw = json.loads(raw_str)
+    print(raw.get("response"))
+    cactus_destroy(model)
     # tools = [{
     #     "name": "get_weather",
     #     "description": "Get current weather for a location",
