@@ -76,6 +76,13 @@ def generate_cactus(messages, tools, system_prompt):
         _debug("CACTUS JSON FAIL:", raw_str[:240])
         return {"function_calls": [], "confidence": 0, "total_time_ms": 0, "cloud_handoff": False}
 
+    # Show the exact model payload and call candidates for debugging.
+    _debug("CACTUS RAW PAYLOAD:", raw_str[:1200])
+    if raw.get("function_calls"):
+        _debug("CACTUS STRUCTURED CALLS:", json.dumps(raw.get("function_calls"), ensure_ascii=False))
+    if raw.get("response") is not None:
+        _debug("CACTUS RESPONSE TEXT:", str(raw.get("response"))[:600])
+
     if not raw.get("function_calls") and raw.get("response"):
         extracted = _extract_calls_from_response(raw.get("response"), tools)
         if extracted:
