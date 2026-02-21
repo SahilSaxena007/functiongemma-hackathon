@@ -240,3 +240,44 @@ for chunk in chunks:
 ## Next steps:
 - Join the [Reddit channel](https://www.reddit.com/r/cactuscompute/), ask any technical questions there.
 - To gain some technical insights on AI, checkout [Maths, CS & AI Compendium](https://github.com/HenryNdubuaku/maths-cs-ai-compendium). 
+
+## Demo Webapp (CareFlow Calendar Agent)
+This demo is an end-to-end product for:
+- Rubric 2: real function calls that execute real tasks (Google Calendar create/reschedule/delete/list)
+- Rubric 3: low-latency voice-to-action using `cactus_transcribe`
+
+### Install deps
+```bash
+pip install flask google-api-python-client google-auth-httplib2 google-auth-oauthlib
+```
+
+### Google Calendar setup
+1. Create OAuth Desktop credentials in Google Cloud Console and download `credentials.json`.
+2. Place `credentials.json` in repo root, or set:
+```bash
+export GOOGLE_OAUTH_CREDENTIALS="/absolute/path/to/credentials.json"
+```
+3. Optional env vars:
+```bash
+export GOOGLE_CALENDAR_ID="primary"
+export APP_TIMEZONE="America/Los_Angeles"
+export GOOGLE_OAUTH_TOKEN=".secrets/google_token.json"
+```
+
+### Voice model setup
+```bash
+cactus download whisper-small
+```
+Optional:
+```bash
+export WHISPER_MODEL_PATH="cactus/weights/whisper-small"
+```
+
+### Run
+```bash
+python webapp.py
+```
+Open `http://127.0.0.1:8000` and use text or voice commands such as:
+- `Schedule Dad's cardiology appointment tomorrow at 2:30 PM for 60 minutes`
+- `Reschedule cardiology appointment to Friday at 4 PM`
+- `Show my agenda for tomorrow`

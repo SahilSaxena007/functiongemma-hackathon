@@ -1,0 +1,168 @@
+:root {
+  --bg: #f6f3ea;
+  --ink: #1f2d33;
+  --panel: #fffdf7;
+  --stroke: #dccfb3;
+  --accent: #1f7a6f;
+  --accent-2: #4da18f;
+  --warn: #874f2d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 7% 10%, #f7ddbd 0%, transparent 30%),
+    radial-gradient(circle at 86% 15%, #d2eadf 0%, transparent 28%),
+    linear-gradient(155deg, #f8f5ee 0%, #efe8dc 100%);
+}
+
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.hero,
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(60, 50, 30, 0.08);
+}
+
+.panel {
+  margin-top: 14px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #53635e;
+}
+
+h1 {
+  margin: 10px 0 6px;
+  font-family: "Bitter", serif;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+h3 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+
+.story {
+  margin: 0;
+  line-height: 1.45;
+  max-width: 74ch;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.chip {
+  border: 1px solid #b9cfc8;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #f2faf8;
+  color: #144b44;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #c3b297;
+  border-radius: 12px;
+  background: #fffcf7;
+  padding: 12px;
+  font: inherit;
+  resize: vertical;
+}
+
+button {
+  border: 1px solid #b2c8c0;
+  background: #eef7f4;
+  color: #164943;
+  border-radius: 10px;
+  padding: 9px 12px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.primary {
+  margin-top: 10px;
+  background: linear-gradient(95deg, var(--accent), var(--accent-2));
+  color: #fff;
+  border: none;
+}
+
+.voiceRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.small {
+  margin: 0 0 10px;
+  color: #455c57;
+  font-size: 0.92rem;
+}
+
+#status {
+  margin: 0 0 10px;
+  color: var(--warn);
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.card {
+  border: 1px solid #d9ccb4;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+}
+
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.35;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 820px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
