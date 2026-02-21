@@ -406,6 +406,10 @@ def run_benchmark(benchmarks=None):
         print(f"[{i}/{total}] Running: {case['name']} ({case['difficulty']})...", end=" ", flush=True)
         result = generate_hybrid(case["messages"], case["tools"])
         f1 = compute_f1(result["function_calls"], case["expected_calls"])
+        #if expected_calls don't match predicted calls, print details
+        if len(result["function_calls"]) != len(case["expected_calls"]) or any(lc["name"] != ec["name"] or lc["arguments"] != ec["arguments"] for lc, ec in zip(result["function_calls"], case["expected_calls"])):
+            print(f"Expected: {case['expected_calls']}, Got: {result['function_calls']}, F1={f1:.2f}")
+                
         source = result.get("source", "unknown")
         print(f"F1={f1:.2f} | {result['total_time_ms']:.0f}ms | {source}")
         results.append({
