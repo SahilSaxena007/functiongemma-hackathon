@@ -4,7 +4,7 @@ functiongemma_path = "cactus/weights/functiongemma-270m-it"
 
 import atexit
 import json, os, re, time
-from cactus import cactus_init, cactus_complete, cactus_destroy
+from cactus import cactus_init, cactus_complete, cactus_destroy, cactus_reset
 from google import genai
 from google.genai import types
 
@@ -52,6 +52,11 @@ atexit.register(_destroy_model)
 
 def generate_cactus(messages, tools, system_prompt):
     model = _get_model()
+    # Reused model handle must be reset between unrelated requests.
+    try:
+        cactus_reset(model)
+    except Exception:
+        pass
     cactus_tools = [{"type": "function", "function": t} for t in tools]
 
     raw_str = cactus_complete(
@@ -59,9 +64,9 @@ def generate_cactus(messages, tools, system_prompt):
         [{"role": "system", "content": system_prompt}] + messages,
         tools=cactus_tools,
         force_tools=True,
-        tool_rag_top_k=2,
-        confidence_threshold=0.25,
-        max_tokens=128,
+        tool_rag_top_k=0,
+        confidence_threshold=0.0,
+        max_tokens=256,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
 
@@ -70,6 +75,14 @@ def generate_cactus(messages, tools, system_prompt):
     except Exception:
         _debug("CACTUS JSON FAIL:", raw_str[:240])
         return {"function_calls": [], "confidence": 0, "total_time_ms": 0, "cloud_handoff": False}
+
+    if not raw.get("function_calls") and raw.get("response"):
+        extracted = _extract_calls_from_response(raw.get("response"), tools)
+        if extracted:
+            raw["function_calls"] = extracted
+            _debug("Recovered calls from response text:", extracted)
+        else:
+            _debug("No structured calls. response_snippet:", raw.get("response", "")[:220])
 
     _debug(
         f"cactus -> handoff={raw.get('cloud_handoff')} "
@@ -136,15 +149,55 @@ def generate_cloud(messages, tools):
 def _strict_prompt(tools):
     names = ", ".join(t["name"] for t in tools)
     return (
-        "You are a function calling engine.\\n"
+        "You are a helpful assistant that uses tools.\\n"
         f"Available functions: {names}\\n"
-        "Rules:\\n"
-        "1. Output ONLY valid JSON\\n"
-        "2. Do NOT output natural language\\n"
-        "3. You MUST call exactly one function\\n"
-        "4. Response format:\\n"
-        "{ \"function_calls\": [ {\"name\": \"...\", \"arguments\": {...}} ] }\\n"
+        "When a tool is relevant, call the best matching tool with required arguments.\\n"
+        "If multiple actions are requested, return multiple tool calls in user order.\\n"
+        "Do not add extra explanations."
     )
+
+
+def _repair_prompt(tools):
+    names = ", ".join(t["name"] for t in tools)
+    return (
+        "You are a function-calling assistant.\\n"
+        f"Allowed tools: {names}\\n"
+        "Return only tool calls. Include all requested actions and required arguments."
+    )
+
+
+def _extract_calls_from_response(response_text, tools):
+    if not isinstance(response_text, str) or not response_text.strip():
+        return []
+
+    tool_names = {t["name"] for t in tools}
+
+    try:
+        data = json.loads(response_text)
+        if isinstance(data, dict):
+            if isinstance(data.get("function_calls"), list):
+                calls = [c for c in data["function_calls"] if isinstance(c, dict)]
+                return [c for c in calls if c.get("name") in tool_names]
+            if data.get("name") in tool_names:
+                return [data]
+        elif isinstance(data, list):
+            calls = [c for c in data if isinstance(c, dict) and c.get("name") in tool_names]
+            if calls:
+                return calls
+    except Exception:
+        pass
+
+    # Fallback: find simple JSON object patterns containing "name" and "arguments".
+    matches = re.findall(r'\{[^{}]*"name"\s*:\s*"[^"]+"\s*,\s*"arguments"\s*:\s*\{[^{}]*\}\s*\}', response_text)
+    calls = []
+    for m in matches:
+        try:
+            c = json.loads(m)
+            if c.get("name") in tool_names:
+                calls.append(c)
+        except Exception:
+            pass
+    return calls
 
 
 # =====================================================================
@@ -244,13 +297,36 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
     if handoff:
         _debug("CACTUS RECOMMENDS CLOUD")
 
+    # One local repair retry before cloud fallback.
+    _debug("RETRY LOCAL with repair prompt")
+    local_retry = generate_cactus(messages, tools, _repair_prompt(tools))
+    retry_calls = _normalize_calls(local_retry.get("function_calls", []), tools)
+    retry_valid = [c for c in retry_calls if _validate_call(c, tools)]
+    _debug(
+        "LOCAL RETRY CHECK:",
+        {
+            "raw_calls": len(local_retry.get("function_calls", [])),
+            "valid_calls": len(retry_valid),
+            "confidence": round(local_retry.get("confidence", 0), 4),
+            "handoff": local_retry.get("cloud_handoff", False),
+        },
+    )
+    if retry_valid:
+        _debug("ACCEPT LOCAL RETRY")
+        return {
+            "function_calls": retry_valid,
+            "total_time_ms": local.get("total_time_ms", 0) + local_retry.get("total_time_ms", 0),
+            "source": "on-device",
+            "confidence": max(conf, local_retry.get("confidence", 0)),
+        }
+
     _debug("FALLBACK -> CLOUD (reason: no valid local calls)")
 
     cloud = generate_cloud(messages, tools)
 
     return {
         "function_calls": cloud["function_calls"],
-        "total_time_ms": cloud["total_time_ms"] + local.get("total_time_ms", 0),
+        "total_time_ms": cloud["total_time_ms"] + local.get("total_time_ms", 0) + local_retry.get("total_time_ms", 0),
         "source": "cloud (fallback)",
         "confidence": conf,
         "local_confidence": conf,
