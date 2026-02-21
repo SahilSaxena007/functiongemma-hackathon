@@ -1,136 +1,36 @@
-[1/30] Running: weather_sf (easy)... Expected 1 function calls, got 0
+[1/30] Running: weather_sf (easy)... TOOLS
+[{'type': 'function', 'function': {'name': 'get_weather', 'description': 'Get current weather for a location', 'parameters': {'type': 'object', 'properties': {'location': {'type': 'string', 'description': 'City name'}}, 'required': ['location']}}}]
+MESSAGES
+[{'role': 'user', 'content': 'Task 1: What is the weather in San Francisco?'}, {'role': 'user', 'content': ''}]
+=====>converting request: [{'role': 'user', 'content': 'Task 1: What is the weather in San Francisco?'}, {'role': 'user', 'content': ''}]
+RAW RESPONSE
+{"success":false,"error":null,"cloud_handoff":true,"response":null,"function_calls":[],"confidence":0.6930,"time_to_first_token_ms":79.14,"total_time_ms":79.14,"prefill_tps":1870.22,"decode_tps":0.0,"ram_usage_mb":221.18,"prefill_tokens":148,"decode_tokens":0,"total_tokens":148}
+Expected 1 function calls, got 0
 Expected: [{'name': 'get_weather', 'arguments': {'location': 'San Francisco'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[2/30] Running: alarm_10am (easy)... Expected 1 function calls, got 0
+F1=0.00 | 79ms | on-device
+[2/30] Running: alarm_10am (easy)... TOOLS
+[{'type': 'function', 'function': {'name': 'set_alarm', 'description': 'Set an alarm for a given time', 'parameters': {'type': 'object', 'properties': {'hour': {'type': 'integer', 'description': 'Hour to set the alarm for'}, 'minute': {'type': 'integer', 'description': 'Minute to set the alarm for'}}, 'required': ['hour', 'minute']}}}]
+MESSAGES
+[{'role': 'user', 'content': 'Task 1: Set an alarm for 10 AM'}]
+=====>converting request: [{'role': 'user', 'content': 'Task 1: Set an alarm for 10 AM'}]
+RAW RESPONSE
+{"success":false,"error":null,"cloud_handoff":true,"response":null,"function_calls":[],"confidence":0.6870,"time_to_first_token_ms":106.70,"total_time_ms":106.70,"prefill_tps":1602.58,"decode_tps":0.0,"ram_usage_mb":200.85,"prefill_tokens":171,"decode_tokens":0,"total_tokens":171}
+Expected 1 function calls, got 0
 Expected: [{'name': 'set_alarm', 'arguments': {'hour': 10, 'minute': 0}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[3/30] Running: message_alice (easy)... Expected 1 function calls, got 0
-Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Alice', 'message': 'good morning'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[4/30] Running: weather_london (easy)... Expected 1 function calls, got 0
-Expected: [{'name': 'get_weather', 'arguments': {'location': 'London'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[5/30] Running: alarm_6am (easy)... Expected 1 function calls, got 0
-Expected: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 0}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[6/30] Running: play_bohemian (easy)... Expected 1 function calls, got 0
-Expected: [{'name': 'play_music', 'arguments': {'song': 'Bohemian Rhapsody'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[7/30] Running: timer_5min (easy)... Expected 1 function calls, got 0
-Expected: [{'name': 'set_timer', 'arguments': {'minutes': 5}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[8/30] Running: reminder_meeting (easy)... Expected 1 function calls, got 0
-Expected: [{'name': 'create_reminder', 'arguments': {'title': 'meeting', 'time': '3:00 PM'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[9/30] Running: search_bob (easy)... Expected 1 function calls, got 0
-Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Bob'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[10/30] Running: weather_paris (easy)... Expected 1 function calls, got 0
-Expected: [{'name': 'get_weather', 'arguments': {'location': 'Paris'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[11/30] Running: message_among_three (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'send_message', 'arguments': {'recipient': 'John', 'message': 'hello'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[12/30] Running: weather_among_two (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'get_weather', 'arguments': {'location': 'Tokyo'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[13/30] Running: alarm_among_three (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'set_alarm', 'arguments': {'hour': 8, 'minute': 15}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[14/30] Running: music_among_three (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'play_music', 'arguments': {'song': 'jazz'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[15/30] Running: reminder_among_four (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'create_reminder', 'arguments': {'title': 'call the dentist', 'time': '2:00 PM'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[16/30] Running: timer_among_three (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'set_timer', 'arguments': {'minutes': 10}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[17/30] Running: search_among_four (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Sarah'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[18/30] Running: weather_among_four (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'get_weather', 'arguments': {'location': 'Berlin'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[19/30] Running: message_among_four (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Dave', 'message': "I'll be late"}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[20/30] Running: alarm_among_five (medium)... Expected 1 function calls, got 0
-Expected: [{'name': 'set_alarm', 'arguments': {'hour': 9, 'minute': 0}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[21/30] Running: message_and_weather (hard)... Expected 2 function calls, got 0
-Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Bob', 'message': 'hi'}}, {'name': 'get_weather', 'arguments': {'location': 'London'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[22/30] Running: alarm_and_weather (hard)... Expected 2 function calls, got 0
-Expected: [{'name': 'set_alarm', 'arguments': {'hour': 7, 'minute': 30}}, {'name': 'get_weather', 'arguments': {'location': 'New York'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[23/30] Running: timer_and_music (hard)... Expected 2 function calls, got 0
-Expected: [{'name': 'set_timer', 'arguments': {'minutes': 20}}, {'name': 'play_music', 'arguments': {'song': 'lo-fi beats'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[24/30] Running: reminder_and_message (hard)... Expected 2 function calls, got 0
-Expected: [{'name': 'create_reminder', 'arguments': {'title': 'groceries', 'time': '5:00 PM'}}, {'name': 'send_message', 'arguments': {'recipient': 'Lisa', 'message': 'see you tonight'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[25/30] Running: search_and_message (hard)... Expected 2 function calls, got 0
-Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Tom'}}, {'name': 'send_message', 'arguments': {'recipient': 'Tom', 'message': 'happy birthday'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[26/30] Running: alarm_and_reminder (hard)... Expected 2 function calls, got 0
-Expected: [{'name': 'set_alarm', 'arguments': {'hour': 6, 'minute': 45}}, {'name': 'create_reminder', 'arguments': {'title': 'take medicine', 'time': '7:00 AM'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[27/30] Running: weather_and_music (hard)... Expected 2 function calls, got 0
-Expected: [{'name': 'get_weather', 'arguments': {'location': 'Miami'}}, {'name': 'play_music', 'arguments': {'song': 'summer hits'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[28/30] Running: message_weather_alarm (hard)... Expected 3 function calls, got 0
-Expected: [{'name': 'send_message', 'arguments': {'recipient': 'Emma', 'message': 'good night'}}, {'name': 'get_weather', 'arguments': {'location': 'Chicago'}}, {'name': 'set_alarm', 'arguments': {'hour': 5, 'minute': 0}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[29/30] Running: timer_music_reminder (hard)... Expected 3 function calls, got 0
-Expected: [{'name': 'set_timer', 'arguments': {'minutes': 15}}, {'name': 'play_music', 'arguments': {'song': 'classical music'}}, {'name': 'create_reminder', 'arguments': {'title': 'stretch', 'time': '4:00 PM'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
-[30/30] Running: search_message_weather (hard)... Expected 3 function calls, got 0
-Expected: [{'name': 'search_contacts', 'arguments': {'query': 'Jake'}}, {'name': 'send_message', 'arguments': {'recipient': 'Jake', 'message': "let's meet"}}, {'name': 'get_weather', 'arguments': {'location': 'Seattle'}}], Got: [], F1=0.00
-F1=0.00 | 0ms | on-device
+F1=0.00 | 107ms | on-device
 
 === Benchmark Results ===
 
    # | Difficulty | Name                         |  Time (ms) |    F1 | Source
   ---+------------+------------------------------+------------+-------+---------------------
-   1 | easy       | weather_sf                   |       0.00 |  0.00 | on-device
-   2 | easy       | alarm_10am                   |       0.00 |  0.00 | on-device
-   3 | easy       | message_alice                |       0.00 |  0.00 | on-device
-   4 | easy       | weather_london               |       0.00 |  0.00 | on-device
-   5 | easy       | alarm_6am                    |       0.00 |  0.00 | on-device
-   6 | easy       | play_bohemian                |       0.00 |  0.00 | on-device
-   7 | easy       | timer_5min                   |       0.00 |  0.00 | on-device
-   8 | easy       | reminder_meeting             |       0.00 |  0.00 | on-device
-   9 | easy       | search_bob                   |       0.00 |  0.00 | on-device
-  10 | easy       | weather_paris                |       0.00 |  0.00 | on-device
-  11 | medium     | message_among_three          |       0.00 |  0.00 | on-device
-  12 | medium     | weather_among_two            |       0.00 |  0.00 | on-device
-  13 | medium     | alarm_among_three            |       0.00 |  0.00 | on-device
-  14 | medium     | music_among_three            |       0.00 |  0.00 | on-device
-  15 | medium     | reminder_among_four          |       0.00 |  0.00 | on-device
-  16 | medium     | timer_among_three            |       0.00 |  0.00 | on-device
-  17 | medium     | search_among_four            |       0.00 |  0.00 | on-device
-  18 | medium     | weather_among_four           |       0.00 |  0.00 | on-device
-  19 | medium     | message_among_four           |       0.00 |  0.00 | on-device
-  20 | medium     | alarm_among_five             |       0.00 |  0.00 | on-device
-  21 | hard       | message_and_weather          |       0.00 |  0.00 | on-device
-  22 | hard       | alarm_and_weather            |       0.00 |  0.00 | on-device
-  23 | hard       | timer_and_music              |       0.00 |  0.00 | on-device
-  24 | hard       | reminder_and_message         |       0.00 |  0.00 | on-device
-  25 | hard       | search_and_message           |       0.00 |  0.00 | on-device
-  26 | hard       | alarm_and_reminder           |       0.00 |  0.00 | on-device
-  27 | hard       | weather_and_music            |       0.00 |  0.00 | on-device
-  28 | hard       | message_weather_alarm        |       0.00 |  0.00 | on-device
-  29 | hard       | timer_music_reminder         |       0.00 |  0.00 | on-device
-  30 | hard       | search_message_weather       |       0.00 |  0.00 | on-device
+   1 | easy       | weather_sf                   |      79.14 |  0.00 | on-device
+   2 | easy       | alarm_10am                   |     106.70 |  0.00 | on-device
 
 --- Summary ---
-  easy     avg F1=0.00  avg time=0.00ms  on-device=10/10 cloud=0/10
-  medium   avg F1=0.00  avg time=0.00ms  on-device=10/10 cloud=0/10
-  hard     avg F1=0.00  avg time=0.00ms  on-device=10/10 cloud=0/10
-  overall  avg F1=0.00  avg time=0.00ms  total time=0.00ms
-           on-device=30/30 (100%)  cloud=0/30 (0%)
+  easy     avg F1=0.00  avg time=92.92ms  on-device=2/2 cloud=0/2
+  overall  avg F1=0.00  avg time=92.92ms  total time=185.84ms
+           on-device=2/2 (100%)  cloud=0/2 (0%)
 
 ==================================================
-  TOTAL SCORE: 50.0%
+  TOTAL SCORE: 9.1%
 ==================================================

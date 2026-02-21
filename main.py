@@ -4,7 +4,7 @@ sys.path.insert(0, "cactus/python/src")
 functiongemma_path = "cactus/weights/functiongemma-270m-it"
 # gemma_path="cactus/weights/gemma-3-270m-it"
 from pathlib import Path
-gemma_path = str(Path(__file__).parent.parent / "cactus/weights/gemma-3-270m-it")
+gemma_path = str(Path(__file__).parent.parent / "cactus/weights/gemma-3-1b-it")
 
 import json, os, time
 from cactus import cactus_init, cactus_complete, cactus_destroy
@@ -13,15 +13,28 @@ from google.genai import types
 
 def __identify_subtasks(model, messages):
     """Use the local model to identify subtasks in a complex user request."""
+    # raw_str = cactus_complete(
+    #     model,
+    #     [{"role": "system", "content": "You are a helpful assistant that breaks down complex requests into subtasks. Break the following request into subtasks, if it is a complex request with multiple parts. If there is no request or it is a simple request, return the original message. Return a JSON object with a 'subtasks' key that is a list of subtasks."}] + messages,
+    #     max_tokens=256,
+    #     stop_sequences=["<|im_end|>", "<end_of_turn>"],
+    # )
+
+    user_message = messages[0]["content"] # get the message from the user
+    example1 = "Request 1: Set a 15 minute timer, play classical music, and remind me to stretch at 4:00 PM. \n Task 1: Set a 15 minute timer \n Task 2: Play classical music \n Task 3: remind me to stretch at 4:00 PM"
+    example2 = "Request 2: Send a message to Jula saying good morning. \n Task 1: Send a message to Julia saying good morning"
+    example3 = "Request 3: Find Tom in my contacts and send him a message saying happy birthday. \n Task 1: Find Tom in my contacts \n Task 2: Send Tom a message that says happy birthday "
     raw_str = cactus_complete(
         model,
-        [{"role": "system", "content": "You are a helpful assistant that breaks down complex requests into subtasks. Break the following request into subtasks, if it is a complex request with multiple parts. If there is no request or it is a simple request, return the original message. Return a JSON object with a 'subtasks' key that is a list of subtasks."}] + messages,
+        [{"role": "user", "content": f"The user request is made up of one or more subtasks. Change all pronouns (e.g. him, her, them, etc.) to the correct name. Break the request into sub tasks like the examples: \n {example1} \n {example2} \n {example3} \n User message: {user_message} \n ONLY OUTPUT THE TASKS, DO NOT OUTPUT ANYTHING ELSE"}] ,
         max_tokens=256,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
+
     try:
         raw = json.loads(raw_str)
-        return raw.get("subtasks", [])
+        output =  [[{'role': 'user', 'content': x} for x in raw.get("response").split('\n')]]
+        return output
     except json.JSONDecodeError:
         return []
     
@@ -31,7 +44,11 @@ def __generate_cactus(model, messages, tools):
         "type": "function",
         "function": t,
     } for t in tools]
-
+    print("TOOLS")
+    print(cactus_tools)
+    print("MESSAGES")
+    print(messages)
+    print(f"=====>converting request: {messages}")
     raw_str = cactus_complete(
         model,
         [{"role": "system", "content": "You are a helpful assistant that can use tools."}] + messages,
@@ -40,6 +57,8 @@ def __generate_cactus(model, messages, tools):
         max_tokens=256,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
+    print("RAW RESPONSE")
+    print(raw_str)
 
     try:
         raw = json.loads(raw_str)
@@ -163,14 +182,27 @@ def print_result(label, result):
 ############## Example usage ##############
 
 if __name__ == "__main__":
-    model = cactus_init(gemma_path)
-    messages = [{"role": "user", "content": "Look up Jake in my contacts, send him a message saying let's meet, and check the weather in Seattle."}]
+    model = cactus_init(functiongemma_path)
+    messages = [{"role": "user", "content": "Text Emma saying good night, check the weather in Chicago, and set an alarm for 5 AM."}]
+    # messages = [{"role": "user", "content": "Set a 15 minute timer, play classical music, and remind me to stretch at 4:00 PM."}]
+    # example = "Example: 'Look up Jake in my contacts, send him a message saying let's meet, and check the weather in Seattle.'->'Look up Jake in my contacts; send Jake a message saying let's meet; check the weather in Seattle.'"
+    # raw_str = cactus_complete(
+    #     model,
+    #     [{"role": "user", "content": "If the following messsage has subrequest, split it into its constituent parts on the basis of commas or 'and's, otherwise return the original message. Do not reply to the content"+example}] + messages,
+    #     max_tokens=256,
+    #     stop_sequences=["<|im_end|>", "<end_of_turn>"],
+    # )
+    user_message = messages[0]["content"] # get the message from the user
+    example1 = "Request 1: Set a 15 minute timer, play classical music, and remind me to stretch at 4:00 PM. \n Task 1: Set a 15 minute timer \n Task 2: Play classical music \n Task 3: remind me to stretch at 4:00 PM"
+    example2 = "Request 2: Send a message to Jula saying good morning. \n Task 1: Send a message to Julia saying good morning"
+    example3 = "Request 3: Find Tom in my contacts and send him a message saying happy birthday. \n Task 1: Find Tom in my contacts \n Task 2: Send Tom a message that says happy birthday "
     raw_str = cactus_complete(
         model,
-        [{"role": "user", "content": "Split the following message into sub-requests."}] + messages,
+        [{"role": "user", "content": f"The user request is made up of one or more subtasks. Change all pronouns (e.g. him, her, them, etc.) to the correct name. Break the request into sub tasks like the examples: \n {example1} \n {example2} \n {example3} \n User message: {user_message}"}] ,
         max_tokens=256,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
+
     raw = json.loads(raw_str)
     print(raw.get("response"))
     cactus_destroy(model)

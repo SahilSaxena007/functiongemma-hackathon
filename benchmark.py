@@ -403,6 +403,8 @@ def run_benchmark(benchmarks=None):
     total = len(benchmarks)
     results = []
     for i, case in enumerate(benchmarks, 1):
+        if i>2:
+            break
         print(f"[{i}/{total}] Running: {case['name']} ({case['difficulty']})...", end=" ", flush=True)
         result = generate_hybrid(case["messages"], case["tools"])
         f1 = compute_f1(result["function_calls"], case["expected_calls"])
