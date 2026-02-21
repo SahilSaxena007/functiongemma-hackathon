@@ -7,7 +7,6 @@ import json, os, time
 from cactus import cactus_init, cactus_complete, cactus_destroy
 from google import genai
 from google.genai import types
-from benchmark import BENCHMARKS
 
 def __identify_subtasks(model, messages):
     """Use the local model to identify subtasks in a complex user request."""
@@ -159,6 +158,7 @@ def print_result(label, result):
 ############## Example usage ##############
 
 if __name__ == "__main__":
+    pass
     # tools = [{
     #     "name": "get_weather",
     #     "description": "Get current weather for a location",
@@ -177,18 +177,6 @@ if __name__ == "__main__":
     # messages = [
     #     {"role": "user", "content": "What is the weather in San Francisco?"}
     # ]
-
-    for item in BENCHMARKS:
-        print(f"\n\n########## Benchmark: {item['name']} ##########")
-        messages = item["messages"]
-        tools = item["tools"]
-
-        #print if the result of the local model is wrong
-        if "expected_function_calls" in item:
-            local_result = generate_cactus(messages, tools)
-            expected = item["expected_function_calls"]
-            if len(local_result["function_calls"]) != len(expected) or any(lc["name"] != ec["name"] or lc["arguments"] != ec["arguments"] for lc, ec in zip(local_result["function_calls"], expected)):
-                print(f"Local model produced incorrect function calls. Expected: {expected}, Got: {local_result['function_calls']}")
                 
         # on_device = generate_cactus(messages, tools)
         # print_result("FunctionGemma (On-Device Cactus)", on_device)
