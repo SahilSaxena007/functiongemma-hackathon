@@ -16,6 +16,16 @@ def _debug(*args):
         print("[DBG]", *args, flush=True)
 
 
+def _looks_garbled(text):
+    if not isinstance(text, str) or not text:
+        return False
+    if "<0x" in text:
+        return True
+    printable = sum(1 for c in text if c.isprintable()) / max(1, len(text))
+    ascii_ratio = sum(1 for c in text if ord(c) < 128) / max(1, len(text))
+    return printable < 0.85 or ascii_ratio < 0.55
+
+
 # =====================================================================
 #  GLOBAL MODEL CACHE (large latency win)
 # =====================================================================
@@ -50,15 +60,14 @@ atexit.register(_destroy_model)
 #  Generation - ON DEVICE
 # =====================================================================
 
-def generate_cactus(messages, tools, system_prompt):
+def _run_cactus_once(messages, tools, system_prompt):
     model = _get_model()
-    # Reused model handle must be reset between unrelated requests.
     try:
         cactus_reset(model)
     except Exception:
         pass
-    cactus_tools = [{"type": "function", "function": t} for t in tools]
 
+    cactus_tools = [{"type": "function", "function": t} for t in tools]
     raw_str = cactus_complete(
         model,
         [{"role": "system", "content": system_prompt}] + messages,
@@ -66,6 +75,9 @@ def generate_cactus(messages, tools, system_prompt):
         force_tools=True,
         tool_rag_top_k=0,
         confidence_threshold=0.0,
+        temperature=0.0,
+        top_p=1.0,
+        top_k=1,
         max_tokens=256,
         stop_sequences=["<|im_end|>", "<end_of_turn>"],
     )
@@ -74,9 +86,8 @@ def generate_cactus(messages, tools, system_prompt):
         raw = json.loads(raw_str)
     except Exception:
         _debug("CACTUS JSON FAIL:", raw_str[:240])
-        return {"function_calls": [], "confidence": 0, "total_time_ms": 0, "cloud_handoff": False}
+        return {"function_calls": [], "confidence": 0, "total_time_ms": 0, "cloud_handoff": False, "response": raw_str}
 
-    # Show the exact model payload and call candidates for debugging.
     _debug("CACTUS RAW PAYLOAD:", raw_str[:1200])
     if raw.get("function_calls"):
         _debug("CACTUS STRUCTURED CALLS:", json.dumps(raw.get("function_calls"), ensure_ascii=False))
@@ -90,6 +101,18 @@ def generate_cactus(messages, tools, system_prompt):
             _debug("Recovered calls from response text:", extracted)
         else:
             _debug("No structured calls. response_snippet:", raw.get("response", "")[:220])
+
+    return raw
+
+
+def generate_cactus(messages, tools, system_prompt):
+    raw = _run_cactus_once(messages, tools, system_prompt)
+
+    # If output looks corrupted, recreate model and retry once.
+    if (not raw.get("function_calls")) and _looks_garbled(raw.get("response", "")):
+        _debug("Detected garbled local output. Reinitializing model and retrying once.")
+        _destroy_model()
+        raw = _run_cactus_once(messages, tools, system_prompt)
 
     _debug(
         f"cactus -> handoff={raw.get('cloud_handoff')} "
@@ -156,11 +179,11 @@ def generate_cloud(messages, tools):
 def _strict_prompt(tools):
     names = ", ".join(t["name"] for t in tools)
     return (
-        "You are a helpful assistant that uses tools.\\n"
+        "You are a tool-calling assistant.\\n"
         f"Available functions: {names}\\n"
-        "When a tool is relevant, call the best matching tool with required arguments.\\n"
-        "If multiple actions are requested, return multiple tool calls in user order.\\n"
-        "Do not add extra explanations."
+        "Use the provided functions when appropriate.\\n"
+        "If multiple actions are requested, return multiple function calls in order.\\n"
+        "Do not output random text."
     )
 
 
@@ -171,6 +194,51 @@ def _repair_prompt(tools):
         f"Allowed tools: {names}\\n"
         "Return only tool calls. Include all requested actions and required arguments."
     )
+
+
+def _split_instructions(text):
+    if not isinstance(text, str):
+        return []
+    text = text.strip()
+    if not text:
+        return []
+    parts = re.split(r",\s+and\s+|,\s+|\s+and\s+|\s+then\s+|\s+after\s+that\s+|\s+also\s+", text, flags=re.IGNORECASE)
+    return [p.strip(" .") for p in parts if p.strip(" .")]
+
+
+def _tokenize(text):
+    return set(re.findall(r"[a-zA-Z_]+", (text or "").lower()))
+
+
+def _score_tool_for_clause(tool, clause):
+    clause_tokens = _tokenize(clause)
+    if not clause_tokens:
+        return 0
+
+    name_tokens = _tokenize(tool.get("name", "").replace("_", " "))
+    desc_tokens = _tokenize(tool.get("description", ""))
+    param_tokens = set()
+    for p in tool.get("parameters", {}).get("properties", {}).keys():
+        param_tokens |= _tokenize(p.replace("_", " "))
+
+    # weighted lexical overlap
+    return (
+        3 * len(clause_tokens & name_tokens)
+        + 2 * len(clause_tokens & desc_tokens)
+        + 1 * len(clause_tokens & param_tokens)
+    )
+
+
+def _pick_tool_for_clause(tools, clause):
+    scored = sorted(
+        (( _score_tool_for_clause(t, clause), t) for t in tools),
+        key=lambda x: x[0],
+        reverse=True,
+    )
+    if not scored:
+        return None
+    # If everything scores 0, still return first tool as fallback.
+    return scored[0][1]
 
 
 def _extract_calls_from_response(response_text, tools):
@@ -326,6 +394,33 @@ def generate_hybrid(messages, tools, confidence_threshold=0.99):
             "source": "on-device",
             "confidence": max(conf, local_retry.get("confidence", 0)),
         }
+
+    # Deterministic decomposition + per-clause tool narrowing fallback (still on-device).
+    clauses = _split_instructions(user_msg)
+    if len(clauses) > 1:
+        _debug("CLAUSE ROUTER:", clauses)
+        clause_calls = []
+        clause_time_ms = 0
+        for clause in clauses:
+            picked_tool = _pick_tool_for_clause(tools, clause)
+            if not picked_tool:
+                continue
+            _debug("CLAUSE PICK:", {"clause": clause, "tool": picked_tool.get("name")})
+            clause_messages = [{"role": "user", "content": clause}]
+            clause_local = generate_cactus(clause_messages, [picked_tool], _repair_prompt([picked_tool]))
+            clause_time_ms += clause_local.get("total_time_ms", 0)
+            ccalls = _normalize_calls(clause_local.get("function_calls", []), [picked_tool])
+            cvalid = [c for c in ccalls if _validate_call(c, [picked_tool])]
+            if cvalid:
+                clause_calls.extend(cvalid)
+        if clause_calls:
+            _debug("ACCEPT LOCAL CLAUSE ROUTER")
+            return {
+                "function_calls": clause_calls,
+                "total_time_ms": local.get("total_time_ms", 0) + local_retry.get("total_time_ms", 0) + clause_time_ms,
+                "source": "on-device",
+                "confidence": max(conf, local_retry.get("confidence", 0)),
+            }
 
     _debug("FALLBACK -> CLOUD (reason: no valid local calls)")
 
